@@ -1,6 +1,6 @@
 import XCTest
 
-final class SwiftTemplateServerTests: XCTestCase {
+final class SwiftFrostflakeTests: XCTestCase {
     override func setUp() {
         super.setUp()
     }

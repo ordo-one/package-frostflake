@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-template-server",
+    name: "swift-frostflake",
     platforms: [.macOS(.v10_15)],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", .upToNextMajor(from: "1.1.0")),
@@ -18,7 +18,7 @@ let package = Package(
 
     targets: [
         .executableTarget(
-            name: "SwiftTemplateServer",
+            name: "SwiftFrostflake",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "Logging", package: "swift-log"),
@@ -31,8 +31,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "SwiftTemplateServerTests",
-            dependencies: ["SwiftTemplateServer"]
+            name: "SwiftFrostflakeTests",
+            dependencies: ["SwiftFrostflake"]
         ),
     ]
 )

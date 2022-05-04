@@ -17,7 +17,7 @@ jobs:
     - run: mkdir -p ./docs
     - uses: fwcd/swift-docc-action@v1
       with:
-        target: SwiftTemplateServer
+        target: Frostflake
         output: ./docs
         hosting-base-path: ${{ github.event.repository.name }}
         disable-indexing: 'true'
