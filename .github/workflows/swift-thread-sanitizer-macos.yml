@@ -1,0 +1,30 @@
+name: Swift thread sanitizer macOS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  
+jobs:
+  build:
+
+    runs-on: [self-hosted, macOS-latest]
+
+    steps:
+#    - uses: fwal/setup-swift@v1
+    - uses: actions/checkout@v3
+          
+    - name: Clean before debug build thread sanitizier
+      run: swift package clean
+
+    - name: Run thread sanitizer
+      run: swift test --sanitize=thread
+
+    - name: Clean before release build thread sanitizier
+      run: swift package clean
+      
+    - name: Run thread sanitizer on release build
+      run: swift test --sanitize=thread -c release -Xswiftc -enable-testing | swift demangle
+      

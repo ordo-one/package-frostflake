@@ -1,0 +1,25 @@
+name: Swift code coverage
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-test-and-upload-test-coverage:
+
+    runs-on: [self-hosted, ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run tests
+      run: swift test --parallel --enable-code-coverage
+    - name: Export code coverage
+      run: llvm-cov export -format="lcov" .build/debug/${{ github.event.repository.name }}PackageTests.xctest -instr-profile .build/debug/codecov/default.profdata > info.lcov
+    - name: Upload codecov
+      uses: codecov/codecov-action@v2
+      with: 
+        token: ${{ secrets.CODECOV_REPO_TOKEN }} 
+        files: info.lcov

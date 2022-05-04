@@ -1,0 +1,29 @@
+name: Swift build documentation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-documentation:
+
+    runs-on: [self-hosted, ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v3
+    - run: mkdir -p ./docs
+    - uses: fwcd/swift-docc-action@v1
+      with:
+        target: SwiftTemplateServer
+        output: ./docs
+        hosting-base-path: ${{ github.event.repository.name }}
+        disable-indexing: 'true'
+        transform-for-static-hosting: 'true'
+    - run: tar czpf Documentation.tar.gz ./docs
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Documentation
+        path: Documentation.tar.gz

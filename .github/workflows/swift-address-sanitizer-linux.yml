@@ -1,0 +1,29 @@
+name: Swift address sanitizer Linux
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: [self-hosted, ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    # Required to clean build directory before thread sanitizer if running address sanitizer first!
+    - name: Clean before debug build address sanitizier
+      run: swift package clean
+
+    - name: Run address sanitizer
+      run: swift test --sanitize=address | swift demangle
+      
+    - name: Clean before release build address sanitizier
+      run: swift package clean
+      
+    - name: Run address sanitizer on release build
+      run: swift test --sanitize=address -c release -Xswiftc -enable-testing | swift demangle

@@ -1,0 +1,28 @@
+name: Swift macOS build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  
+jobs:
+  build:
+
+    runs-on: [self-hosted, macOS-latest]
+
+    steps:
+#    - uses: fwal/setup-swift@v1
+    - uses: actions/checkout@v3
+    
+#    - name: Cache SPM dependencies
+#      uses: actions/cache@v3
+#      with:
+#        path: .build
+#        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+#        restore-keys: |
+#          ${{ runner.os }}-spm-
+
+    - name: Run tests
+      run: swift test --parallel

@@ -1,0 +1,30 @@
+name: Swift address sanitizer macOS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  
+jobs:
+  build:
+
+    runs-on: [self-hosted, macOS-latest]
+
+    steps:
+    - uses: fwal/setup-swift@v1
+    - uses: actions/checkout@v3
+          
+    - name: Clean before debug build address sanitizier
+      run: swift package clean
+
+    - name: Run address sanitizer
+      run: swift test --sanitize=address
+
+    - name: Clean before release build address sanitizier
+      run: swift package clean
+      
+    - name: Run address sanitizer on release build
+      run: swift test --sanitize=address -c release -Xswiftc -enable-testing | swift demangle
+      

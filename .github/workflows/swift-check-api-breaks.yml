@@ -1,0 +1,21 @@
+name: Swift check API breaks
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  analyze-api-breakage:
+
+    runs-on: [self-hosted, ubuntu-latest]
+ 
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Build
+      run: swift build
+    - name: Analyze API breakage
+      run: swift package diagnose-api-breaking-changes origin/main
+#      run: swift package diagnose-api-breaking-changes ${{ github.event.pull_request.base.sha }} --targets DataModel
