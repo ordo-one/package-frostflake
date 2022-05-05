@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "swift-concurrency-helpers",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ordo-one/swift-concurrency-helpers",
+      "state" : {
+        "revision" : "390d7f5949eb5bb6df63f205166754ce6006aee2",
+        "version" : "0.0.1"
+      }
+    },
+    {
       "identity" : "swift-docc-plugin",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-docc-plugin",

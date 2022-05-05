@@ -6,6 +6,8 @@
     #error("Unsupported Platform")
 #endif
 
+import ConcurrencyHelpers
+
 public final class FrostflakeClass {
     internal var seconds: UInt32 // Enough for ~136 years since Unix epoch
     internal var sequenceNumber: UInt32
