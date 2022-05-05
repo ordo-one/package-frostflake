@@ -2,10 +2,10 @@ internal let sequenceNumberBits = 20 // Default 20 bits, 1.048.576 id:s max per 
 internal let generatorIdentifierBits = 12 // Default 12 bits, 4096 unique concurrent generators in the system
 
 public extension UInt64 {
-    func description(_ frostflake: UInt64) -> String {
-        let seconds = frostflake >> 32
-        let sequenceNumber = (frostflake & 0xFFFF_FFFF) >> generatorIdentifierBits
-        let generatorIdentifier = (frostflake & 0xFFFF_FFFF) & (0xFFFF_FFFF >> sequenceNumberBits)
+    func frostflakeDescription() -> String {
+        let seconds = self >> 32
+        let sequenceNumber = (self & 0xFFFF_FFFF) >> generatorIdentifierBits
+        let generatorIdentifier = (self & 0xFFFF_FFFF) & (0xFFFF_FFFF >> sequenceNumberBits)
         return "(\(seconds), \(sequenceNumber), \(generatorIdentifier))"
     }
 }

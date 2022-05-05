@@ -15,6 +15,18 @@ final class SwiftFrostflakeTests: XCTestCase {
         super.tearDown()
     }
 
+    func testFrostflakeClassOutput() async {
+        let frostflakeGenerator = Frostflake(generatorIdentifier: 1000)
+
+        for _ in 0 ..< 10 {
+            let frostflake =  await frostflakeGenerator.generatorFrostflakeIdentifier()
+            let decription = frostflake.frostflakeDescription()
+            print(decription)
+        }
+    }
+
+
+
     func testFrostflakeActor() async {
         for generatorId in 0 ..< actorGeneratorCount {
             let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId))
