@@ -1,9 +1,9 @@
 import ArgumentParser
 import Frostflake
 
-let classGeneratorCount = 125
+let classGeneratorCount = 129
 let classIterationCount = 1_000_000
-let actorGeneratorCount = 18
+let actorGeneratorCount = 17
 let actorIterationCount = 1_000_000
 let classTotalCount = classGeneratorCount * classIterationCount
 let actorTotalCount = actorGeneratorCount * actorIterationCount

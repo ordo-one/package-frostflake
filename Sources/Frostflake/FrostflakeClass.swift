@@ -57,6 +57,8 @@ public final class FrostflakeClass {
 
             seconds = currentSecond
             sequenceNumber = 1
+        } else if (sequenceNumber % forcedSecondRegenerationInterval) == 0 {
+            seconds = currentSecondsSinceEpoch()
         }
 
         var returnValue = UInt64(seconds) << 32
