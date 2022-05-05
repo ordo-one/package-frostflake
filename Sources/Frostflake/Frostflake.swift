@@ -1,10 +1,10 @@
 /// Frostflake generator
-public actor Frostflake {
+public actor FrostflakeActor {
     private var seconds: UInt32
     private var sequenceNumber: UInt32
     private let generatorIdentifier: UInt16
 
-    /// Initialize the ``Frostflake`` actor
+    /// Initialize the ``FrostflakeActor`` actor
     /// Creates an instance of the generator for a given unique generator id.
     ///
     /// - Parameters:
@@ -29,7 +29,7 @@ public actor Frostflake {
     ///
     ///  Sample usage:
     ///  ```swift
-    /// let frostflakeGenerator = Frostflake(generatorIdentifier: 1)
+    /// let frostflakeGenerator = FrostflakeActor(generatorIdentifier: 1)
     /// let frostflake1 = await frostflakeGenerator.generatorFrostflakeIdentifier()
     /// let frostflake2 = await frostflakeGenerator.generatorFrostflakeIdentifier()
     ///  ```

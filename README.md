@@ -50,8 +50,8 @@ that needs flake generators at runtime such that the same identifier is not used
 ```
 import Frostflake
 
-func testFlake() async {
-  let frostflakeGenerator = Frostflake(generatorIdentifier: 1)
+func testFlakeActor() async {
+  let frostflakeGenerator = FrostflakeActor(generatorIdentifier: 1)
   let frostflake =  await frostflakeGenerator.generatorFrostflakeIdentifier()
   let decription = frostflake.frostflakeDescription()
   print(decription)
@@ -60,7 +60,7 @@ func testFlake() async {
 or
 
 func testFlakeClass() {
-  let frostflakeGenerator = FrostflakeClass(generatorIdentifier: 1)
+  let frostflakeGenerator = Frostflake(generatorIdentifier: 1)
   let frostflake = frostflakeGenerator.generatorFrostflakeIdentifier()
   let decription = frostflake.frostflakeDescription()
   print(decription)

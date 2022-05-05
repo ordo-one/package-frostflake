@@ -16,7 +16,7 @@ final class SwiftFrostflakeTests: XCTestCase {
     }
 
     func testFrostflakeClassOutput() async {
-        let frostflakeGenerator = Frostflake(generatorIdentifier: 1_000)
+        let frostflakeGenerator = FrostflakeActor(generatorIdentifier: 1_000)
 
         for _ in 0 ..< 10 {
             let frostflake = await frostflakeGenerator.generatorFrostflakeIdentifier()
@@ -27,7 +27,7 @@ final class SwiftFrostflakeTests: XCTestCase {
 
     func testFrostflakeActor() async {
         for generatorId in 0 ..< actorGeneratorCount {
-            let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId))
+            let frostflakeGenerator = FrostflakeActor(generatorIdentifier: UInt16(generatorId))
 
             for _ in 0 ..< actorIterationCount {
                 blackHole(await frostflakeGenerator.generatorFrostflakeIdentifier())
@@ -35,9 +35,9 @@ final class SwiftFrostflakeTests: XCTestCase {
         }
     }
 
-    func testFrostflakeClass() async {
+    func testFrostflake() async {
         for generatorId in 0 ..< classGeneratorCount {
-            let frostflakeGenerator = FrostflakeClass(generatorIdentifier: UInt16(generatorId))
+            let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId))
 
             for _ in 0 ..< classIterationCount {
                 blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())
@@ -47,7 +47,7 @@ final class SwiftFrostflakeTests: XCTestCase {
 
     func testFrostflakeClassWithoutLocks() async {
         for generatorId in 0 ..< classGeneratorCount {
-            let frostflakeGenerator = FrostflakeClass(generatorIdentifier: UInt16(generatorId),
+            let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId),
                                                       concurrentAccess: false)
 
             for _ in 0 ..< classIterationCount {
@@ -57,7 +57,7 @@ final class SwiftFrostflakeTests: XCTestCase {
     }
 
     func testFrostflakeClassOverflowNextSecond() {
-        let frostflakeGenerator = FrostflakeClass(generatorIdentifier: 0)
+        let frostflakeGenerator = Frostflake(generatorIdentifier: 0)
 
         for _ in 1 ..< 1 << sequenceNumberBits {
             blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())
@@ -71,7 +71,7 @@ final class SwiftFrostflakeTests: XCTestCase {
     }
 
     func testFrostflakeActorOverflowNextSecond() async {
-        let frostflakeGenerator = Frostflake(generatorIdentifier: 0)
+        let frostflakeGenerator = FrostflakeActor(generatorIdentifier: 0)
 
         for _ in 1 ..< 1 << sequenceNumberBits {
             blackHole(await frostflakeGenerator.generatorFrostflakeIdentifier())

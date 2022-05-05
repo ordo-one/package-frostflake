@@ -1,7 +1,7 @@
 import ConcurrencyHelpers
 
 /// Frostflake generator
-public final class FrostflakeClass {
+public final class Frostflake {
     private var seconds: UInt32
     private var sequenceNumber: UInt32
     private let generatorIdentifier: UInt16
@@ -40,7 +40,7 @@ public final class FrostflakeClass {
     ///
     ///  Sample usage:
     ///  ```swift
-    /// let frostflakeGenerator = FrostflakeClass(generatorIdentifier: 1)
+    /// let frostflakeGenerator = Frostflake(generatorIdentifier: 1)
     /// let frostflake1 =  frostflakeGenerator.generatorFrostflakeIdentifier()
     /// let frostflake2 =  frostflakeGenerator.generatorFrostflakeIdentifier()
     ///  ```

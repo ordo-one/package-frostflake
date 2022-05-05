@@ -18,7 +18,7 @@ struct SwiftFrostflake: AsyncParsableCommand {
 
     static func frostflakeActorBenchmark() async {
         for generatorId in 0 ..< actorGeneratorCount {
-            let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId))
+            let frostflakeGenerator = FrostflakeActor(generatorIdentifier: UInt16(generatorId))
 
             for _ in 0 ..< actorIterationCount {
                 blackHole(await frostflakeGenerator.generatorFrostflakeIdentifier())
@@ -28,7 +28,7 @@ struct SwiftFrostflake: AsyncParsableCommand {
 
     static func frostflakeClassBenchmark(noLocks: Bool) async {
         for generatorId in 0 ..< classGeneratorCount {
-            let frostflakeGenerator = FrostflakeClass(generatorIdentifier: UInt16(generatorId),
+            let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId),
                                                       concurrentAccess: !noLocks)
 
             for _ in 0 ..< classIterationCount {
