@@ -41,3 +41,25 @@ and then add the dependency to your target, e.g.:
   .product(name: "Frostflake", package: "swift-frostflake")
 ]),
 ```
+# Usage
+
+```
+import Frostflake
+
+func testFlake() async {
+  let frostflakeGenerator = Frostflake(generatorIdentifier: 1)
+  let frostflake =  await frostflakeGenerator.generatorFrostflakeIdentifier()
+  let decription = frostflake.frostflakeDescription()
+  print(decription)
+}
+
+or
+
+func testFlakeClass() {
+  let frostflakeGenerator = FrostflakeClass(generatorIdentifier: 1)
+  let frostflake = frostflakeGenerator.generatorFrostflakeIdentifier()
+  let decription = frostflake.frostflakeDescription()
+  print(decription)
+}
+
+```
