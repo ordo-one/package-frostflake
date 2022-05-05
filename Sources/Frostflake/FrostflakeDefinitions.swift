@@ -13,7 +13,7 @@ internal let generatorIdentifierBits = 12
 
 /// We will try to generate a new second timestamp every N generations (for low-flow components this will reset the
 /// timestamp a few times per day, for high-flow users it will cause a call to `gettimeofday()` needlessly instead.)
-internal let forcedSecondRegenerationInterval: UInt32 = 1000
+internal let forcedSecondRegenerationInterval: UInt32 = 1_000
 
 /// Get current seconds since UNIX epoch
 /// 32 bit number of seconds gives us ~136 years
