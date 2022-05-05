@@ -24,3 +24,20 @@ of the sequence number - such that the identifier will be suitable as e.g. a dat
 Worth noting is that when using a frozen point in time, the time sorting characteristic will
 be temporally local per producer only.
 
+# Adding dependencies
+To add to your project:
+```
+dependencies: [
+    .package(url: "https://github.com/ordo-one/swift-frostflake", .upToNextMajor(from: "0.0.1")),
+]
+```
+
+and then add the dependency to your target, e.g.:
+
+```
+.executableTarget(
+  name: "MyExecutableTarget",
+  dependencies: [
+  .product(name: "Frostflake", package: "swift-frostflake")
+]),
+```
