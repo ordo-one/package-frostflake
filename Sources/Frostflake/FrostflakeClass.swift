@@ -5,7 +5,7 @@ public final class FrostflakeClass {
     private var seconds: UInt32
     private var sequenceNumber: UInt32
     private let generatorIdentifier: UInt16
-    internal let lock = Lock()
+    private let lock: Lock?
 
     /// Initialize the ``Frostflake`` actor
     /// Creates an instance of the generator for a given unique generator id.
@@ -14,7 +14,10 @@ public final class FrostflakeClass {
     ///   - generatorIdentifier: The unique generator identifier for this instances, must be unique at every
     ///   point in time in the whole system, so either should be persisted and reused across runs, or it should be
     ///   coordinated with a global service that assigns them during startup of the component.
-    public init(generatorIdentifier: UInt16) {
+    ///   - concurrentAccess: Specifies whether the generator can be accessed from multiple
+    ///   tasks/threads concurrently - if the generator is **only** used from a synchronized state
+    ///   like .eg. an Actor context, you can specify false here to avoid the internal locking overhead
+    public init(generatorIdentifier: UInt16, concurrentAccess: Bool = true) {
         let allowedGeneratorIdentifierRange = 0 ..< (1 << generatorIdentifierBits)
         assert(allowedGeneratorIdentifierRange.contains(Int(generatorIdentifier)),
                "Frostflake generatorIdentifier \(generatorIdentifier) used more than \(generatorIdentifierBits) bits")
@@ -24,6 +27,11 @@ public final class FrostflakeClass {
         seconds = currentSecondsSinceEpoch()
         sequenceNumber = 0
         self.generatorIdentifier = generatorIdentifier
+        if concurrentAccess {
+            lock = Lock()
+        } else {
+            lock = nil
+        }
     }
 
     /// Generates a new Frostflake identifier for the generator
@@ -39,7 +47,7 @@ public final class FrostflakeClass {
     public func generatorFrostflakeIdentifier() -> UInt64 {
         let allowedSequenceNumberRange = 0 ..< (1 << sequenceNumberBits)
 
-        lock.lock()
+        lock?.lock()
 
         assert(allowedSequenceNumberRange.contains(Int(sequenceNumber)), "sequenceNumber ouf of allowed range")
 
@@ -65,7 +73,7 @@ public final class FrostflakeClass {
         returnValue += UInt64(sequenceNumber) << generatorIdentifierBits
         returnValue += UInt64(generatorIdentifier)
 
-        lock.unlock()
+        lock?.unlock()
 
         return returnValue
     }

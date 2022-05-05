@@ -13,6 +13,9 @@ struct SwiftFrostflake: AsyncParsableCommand {
     @Flag(help: "Run with actor implementation")
     var actorImplementation = false
 
+    @Flag(help: "Run with unprotected class implementation without locks")
+    var skipLocks = false
+
     static func frostflakeActorBenchmark() async {
         for generatorId in 0 ..< actorGeneratorCount {
             let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId))
@@ -23,9 +26,10 @@ struct SwiftFrostflake: AsyncParsableCommand {
         }
     }
 
-    static func frostflakeClassBenchmark() async {
+    static func frostflakeClassBenchmark(noLocks: Bool) async {
         for generatorId in 0 ..< classGeneratorCount {
-            let frostflakeGenerator = FrostflakeClass(generatorIdentifier: UInt16(generatorId))
+            let frostflakeGenerator = FrostflakeClass(generatorIdentifier: UInt16(generatorId),
+                                                      concurrentAccess: !noLocks)
 
             for _ in 0 ..< classIterationCount {
                 blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())
@@ -34,11 +38,12 @@ struct SwiftFrostflake: AsyncParsableCommand {
     }
 
     mutating func run() async throws {
+        let locks = skipLocks
         await withTaskGroup(of: Void.self) { taskGroup in
             if actorImplementation {
                 taskGroup.addTask { await Self.frostflakeActorBenchmark() }
             } else {
-                taskGroup.addTask { await Self.frostflakeClassBenchmark() }
+                taskGroup.addTask { await Self.frostflakeClassBenchmark(noLocks: locks) }
             }
         }
     }
