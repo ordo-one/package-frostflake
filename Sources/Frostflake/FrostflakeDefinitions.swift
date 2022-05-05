@@ -1,6 +1,25 @@
-internal let sequenceNumberBits = 20 // Default 20 bits, 1.048.576 id:s max per second
-internal let generatorIdentifierBits = 12 // Default 12 bits, 4096 unique concurrent generators in the system
+#if canImport(Darwin)
+    import Darwin
+#elseif canImport(Glibc)
+    import Glibc
+#else
+    #error("Unsupported Platform")
+#endif
 
+/// Default number of bits allocated to sequence, default 20 bits, 1.048.576 id:s max per second
+internal let sequenceNumberBits = 20
+/// Default number of bits allocated to generator part, default 12 bits, 4096 unique concurrent generators in the system
+internal let generatorIdentifierBits = 12
+
+/// Get current seconds since UNIX epoch
+/// 32 bit number of seconds gives us ~136 years
+internal func currentSecondsSinceEpoch() -> UInt32 {
+    var currentTime = timeval()
+    gettimeofday(&currentTime, nil)
+    return UInt32(currentTime.tv_sec)
+}
+
+/// Pretty printer for frostflakes for debugging
 public extension UInt64 {
     func frostflakeDescription() -> String {
         let seconds = self >> 32
@@ -10,8 +29,8 @@ public extension UInt64 {
     }
 }
 
-// Just consume the argument.
-// It's important that this function is in another module than the tests
-// which are using it.
+/// Blackhole that will disable the optimizer when defined in a different module,
+/// useful for benchmarks and just consumes the argument.
+/// **It's important that this function is in another module than the tests which are using it.**
 @inline(never)
 public func blackHole<T>(_: T) {}

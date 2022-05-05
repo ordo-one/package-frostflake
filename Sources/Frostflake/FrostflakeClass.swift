@@ -1,19 +1,19 @@
-#if canImport(Darwin)
-    import Darwin
-#elseif canImport(Glibc)
-    import Glibc
-#else
-    #error("Unsupported Platform")
-#endif
-
 import ConcurrencyHelpers
 
+/// Frostflake generator
 public final class FrostflakeClass {
-    internal var seconds: UInt32 // Enough for ~136 years since Unix epoch
-    internal var sequenceNumber: UInt32
-    internal let generatorIdentifier: UInt16
+    private var seconds: UInt32
+    private var sequenceNumber: UInt32
+    private let generatorIdentifier: UInt16
     internal let lock = Lock()
 
+    /// Initialize the ``Frostflake`` actor
+    /// Creates an instance of the generator for a given unique generator id.
+    ///
+    /// - Parameters:
+    ///   - generatorIdentifier: The unique generator identifier for this instances, must be unique at every
+    ///   point in time in the whole system, so either should be persisted and reused across runs, or it should be
+    ///   coordinated with a global service that assigns them during startup of the component.
     public init(generatorIdentifier: UInt16) {
         let allowedGeneratorIdentifierRange = 0 ..< (1 << generatorIdentifierBits)
         assert(allowedGeneratorIdentifierRange.contains(Int(generatorIdentifier)),
@@ -21,17 +21,21 @@ public final class FrostflakeClass {
         assert((sequenceNumberBits + generatorIdentifierBits) == 32,
                "Frostflake sequenceNumberBits (\(sequenceNumberBits)) + " +
                    "generatorIdentifierBits (\(generatorIdentifierBits)) != 32")
-        seconds = Self.currentSecondsSinceEpoch()
+        seconds = currentSecondsSinceEpoch()
         sequenceNumber = 0
         self.generatorIdentifier = generatorIdentifier
     }
 
-    internal static func currentSecondsSinceEpoch() -> UInt32 {
-        var currentTime = timeval()
-        gettimeofday(&currentTime, nil)
-        return UInt32(currentTime.tv_sec)
-    }
-
+    /// Generates a new Frostflake identifier for the generator
+    ///
+    /// - Returns: A unique Frostflake identifier
+    ///
+    ///  Sample usage:
+    ///  ```swift
+    /// let frostflakeGenerator = FrostflakeClass(generatorIdentifier: 1)
+    /// let frostflake1 =  frostflakeGenerator.generatorFrostflakeIdentifier()
+    /// let frostflake2 =  frostflakeGenerator.generatorFrostflakeIdentifier()
+    ///  ```
     public func generatorFrostflakeIdentifier() -> UInt64 {
         let allowedSequenceNumberRange = 0 ..< (1 << sequenceNumberBits)
 
@@ -45,14 +49,14 @@ public final class FrostflakeClass {
         if allowedSequenceNumberRange.contains(Int(sequenceNumber)) == false {
             assert(sequenceNumber == (1 << sequenceNumberBits), "sequenceNumber != 1 << sequenceNumberBits")
 
-            let currentSecond = Self.currentSecondsSinceEpoch()
+            let currentSecond = currentSecondsSinceEpoch()
 
             // The maximum rate is 1 << sequenceNumberBits per second (defaults to over 1M per second)
-            // Currently we'll bail here - one could have
+            // Currently we'll bail here - one could consider sleeping / retrying, but really synthetic problem.
             precondition(currentSecond > seconds, "too many FrostflakeIdentifiers generated in one second, aborting")
 
             seconds = currentSecond
-            sequenceNumber = 0
+            sequenceNumber = 1
         }
 
         var returnValue = UInt64(seconds) << 32
