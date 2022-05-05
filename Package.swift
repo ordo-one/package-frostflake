@@ -28,11 +28,14 @@ let package = Package(
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "SystemPackage", package: "swift-system"),
-                .product(name: "ConcurrencyHelpers", package: "swift-concurrency-helpers"),
                 "Frostflake",
             ]
         ),
-        .target(name: "Frostflake", path: "Sources/Frostflake"),
+        .target(name: "Frostflake",
+                dependencies: [
+                    .product(name: "ConcurrencyHelpers", package: "swift-concurrency-helpers")
+                ],
+                path: "Sources/Frostflake"),
         .testTarget(
             name: "SwiftFrostflakeTests",
             dependencies: ["SwiftFrostflake",
