@@ -19,7 +19,7 @@ public final class FrostflakeClass {
         assert((sequenceNumberBits + generatorIdentifierBits) == 32,
                "Frostflake sequenceNumberBits (\(sequenceNumberBits)) + " +
                    "generatorIdentifierBits (\(generatorIdentifierBits)) != 32")
-        seconds = Frostflake.currentSecondsSinceEpoch()
+        seconds = Self.currentSecondsSinceEpoch()
         sequenceNumber = 0
         self.generatorIdentifier = generatorIdentifier
     }
@@ -27,7 +27,6 @@ public final class FrostflakeClass {
     internal static func currentSecondsSinceEpoch() -> UInt32 {
         var currentTime = timeval()
         gettimeofday(&currentTime, nil)
-        //    print("currentSecondsSinceEpoch: \(UInt32(currentTime.tv_sec))")
         return UInt32(currentTime.tv_sec)
     }
 
@@ -44,7 +43,7 @@ public final class FrostflakeClass {
         if allowedSequenceNumberRange.contains(Int(sequenceNumber)) == false {
             assert(sequenceNumber == (1 << sequenceNumberBits), "sequenceNumber != 1 << sequenceNumberBits")
 
-            let currentSecond = Frostflake.currentSecondsSinceEpoch()
+            let currentSecond = Self.currentSecondsSinceEpoch()
 
             // The maximum rate is 1 << sequenceNumberBits per second (defaults to over 1M per second)
             // Currently we'll bail here - one could have

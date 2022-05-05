@@ -34,4 +34,32 @@ final class SwiftFrostflakeTests: XCTestCase {
             }
         }
     }
+
+    func testFrostflakeClassOverflowNextSecond() {
+        let frostflakeGenerator = FrostflakeClass(generatorIdentifier: 0)
+
+        for _ in 0 ..< 1 << sequenceNumberBits {
+            blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())
+        }
+
+        sleep(1) // Needed so that we don't overflow the sequenceNumberBits in the same second
+
+        for _ in 0 ..< 1 << sequenceNumberBits {
+            blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())
+        }
+    }
+
+    func testFrostflakeActorOverflowNextSecond() async {
+        let frostflakeGenerator = Frostflake(generatorIdentifier: 0)
+
+        for _ in 0 ..< 1 << sequenceNumberBits {
+            blackHole(await frostflakeGenerator.generatorFrostflakeIdentifier())
+        }
+
+        sleep(1) // Needed so that we don't overflow the sequenceNumberBits in the same second
+
+        for _ in 0 ..< 1 << sequenceNumberBits {
+            blackHole(await frostflakeGenerator.generatorFrostflakeIdentifier())
+        }
+    }
 }
