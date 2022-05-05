@@ -7,7 +7,7 @@ public final class FrostflakeClass {
     private let generatorIdentifier: UInt16
     private let lock: Lock?
 
-    /// Initialize the ``Frostflake`` actor
+    /// Initialize the ``Frostflake`` class
     /// Creates an instance of the generator for a given unique generator id.
     ///
     /// - Parameters:
