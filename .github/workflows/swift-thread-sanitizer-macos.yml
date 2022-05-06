@@ -9,8 +9,7 @@ on:
   
 jobs:
   build:
-
-    runs-on: [self-hosted, macOS-latest]
+    runs-on: [self-hosted, macos-12]
 
     steps:
     - name: Wipe gitconfig
