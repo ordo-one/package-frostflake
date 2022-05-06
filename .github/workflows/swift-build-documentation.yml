@@ -10,17 +10,18 @@ on:
 jobs:
   build-documentation:
 
+# https://github.com/actions/runner/issues/520
     runs-on: [self-hosted, ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v3
-    - id: spm_target
+    - name: Extract default SPM library target
+      id: spm_target
       run: |
         SPM_DEFAULT_TARGET=$(swift package dump-package | jq -r '.products | .[] | select(.type | has("library")) | .name' | head -1)
         echo "::set-output name=spmlibrarytarget::$SPM_DEFAULT_TARGET"
-        echo $SPM_DEFAULT_TARGET
     - run: mkdir -p ./docs
-      if: ${{ steps.spm_target.outputs.spmlibrarytarget }} != '' 
+      if: ${{ steps.spm_target.outputs.spmlibrarytarget }} != ''
     - uses: fwcd/swift-docc-action@v1
       with:
           target: ${{ steps.spm_target.outputs.spmlibrarytarget }}
@@ -29,7 +30,7 @@ jobs:
           disable-indexing: 'true'
           transform-for-static-hosting: 'true'
     - run: tar czpf Documentation.tar.gz ./docs
-      if: ${{ steps.spm_target.outputs.spmlibrarytarget }} != '' 
+      if: ${{ steps.spm_target.outputs.spmlibrarytarget }} != ''
     - uses: actions/upload-artifact@v3
       with:
         name: Documentation

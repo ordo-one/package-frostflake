@@ -14,7 +14,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
+
+    - name: Git URL token override
+      run: git config --global url."https://ordo-ci:${{ secrets.CI_MACHINE_PAT }}@github.com".insteadOf "https://github.com"
+
     # Required to clean build directory before thread sanitizer if running address sanitizer first!
     - name: Clean before debug build address sanitizier
       run: swift package clean
