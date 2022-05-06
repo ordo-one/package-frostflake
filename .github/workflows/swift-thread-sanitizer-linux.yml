@@ -9,9 +9,8 @@ on:
 
 jobs:
   build:
-
     runs-on: [self-hosted, ubuntu-latest]
-
+    timeout-minutes: 60
     steps:
     - uses: actions/checkout@v3
 

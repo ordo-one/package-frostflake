@@ -10,6 +10,7 @@ on:
 
 jobs:
   SwiftLint:
+    timeout-minutes: 60
     runs-on: [self-hosted, swift-docker]
     steps:
       - uses: actions/checkout@v3

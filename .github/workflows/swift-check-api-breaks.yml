@@ -9,6 +9,7 @@ jobs:
   analyze-api-breakage:
 
     runs-on: [self-hosted, ubuntu-latest]
+    timeout-minutes: 30
  
     steps:
     - uses: actions/checkout@v3
@@ -20,8 +21,8 @@ jobs:
         SPM_DEFAULT_TARGET=$(swift package dump-package | jq -r '.products | .[] | select(.type | has("library")) | .name' | head -1)
         echo "::set-output name=spmlibrarytarget::$SPM_DEFAULT_TARGET"
     - name: Build
-      if: ${{ steps.spm_target.outputs.spmlibrarytarget }} != ''
+      if: ${{ steps.spm_target.outputs.spmlibrarytarget }}
       run: swift build
     - name: Analyze API breakage
-      if: ${{ steps.spm_target.outputs.spmlibrarytarget }} != ''
+      if: ${{ steps.spm_target.outputs.spmlibrarytarget }}
       run: swift package diagnose-api-breaking-changes origin/main --targets ${{ steps.spm_target.outputs.spmlibrarytarget }}
