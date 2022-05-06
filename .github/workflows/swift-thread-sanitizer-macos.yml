@@ -13,9 +13,14 @@ jobs:
     runs-on: [self-hosted, macOS-latest]
 
     steps:
-#    - uses: fwal/setup-swift@v1
+    - name: Wipe gitconfig
+      run: echo "" > ~/.gitconfig
+
     - uses: actions/checkout@v3
-          
+
+    - name: Git URL token override
+      run: git config --global url."https://ordo-ci:${{ secrets.CI_MACHINE_PAT }}@github.com".insteadOf "https://github.com"
+
     - name: Clean before debug build thread sanitizier
       run: swift package clean
 
@@ -27,4 +32,6 @@ jobs:
       
     - name: Run thread sanitizer on release build
       run: swift test --sanitize=thread -c release -Xswiftc -enable-testing | swift demangle
-      
+
+     - name: Wipe gitconfig
+      run: echo "" > ~/.gitconfig
