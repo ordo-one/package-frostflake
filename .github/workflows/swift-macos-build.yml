@@ -15,7 +15,10 @@ jobs:
     steps:
     - name: Wipe gitconfig
       run: echo "" > ~/.gitconfig
-
     - uses: actions/checkout@v3
+    - name: Git URL token override
+      run: git config --global url."https://ordo-ci:${{ secrets.CI_MACHINE_PAT }}@github.com".insteadOf "https://github.com"
     - name: Run tests
       run: swift test --parallel
+    - name: Wipe gitconfig
+      run: echo "" > ~/.gitconfig
