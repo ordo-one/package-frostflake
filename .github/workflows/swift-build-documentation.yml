@@ -18,6 +18,7 @@ jobs:
       run: |
         SPM_DEFAULT_TARGET=$(swift package dump-package | jq -r '.products | .[] | select(.type | has("library")) | .name' | head -1)
         echo "::set-output name=spmlibrarytarget::$SPM_DEFAULT_TARGET"
+        echo $SPM_DEFAULT_TARGET
     - run: mkdir -p ./docs
       if: ${{ steps.spm_target.outputs.spmlibrarytarget }} != '' 
     - uses: fwcd/swift-docc-action@v1
