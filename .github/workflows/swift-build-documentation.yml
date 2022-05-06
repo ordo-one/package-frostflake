@@ -14,14 +14,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: |
+    - id: spm_target
+      run: |
         SPM_DEFAULT_TARGET=swift package dump-package | jq -r '.products | .[] | select(.type | has("library")) | .name' | head -1
         echo "::set-output name=spmlibrarytarget::$SPM_DEFAULT_TARGET"
     - run: mkdir -p ./docs
       if: ${{ spmlibrarytarget != '' }}
     - uses: fwcd/swift-docc-action@v1
       with:
-          target: Frostflake
+          target: ${{ steps.spm_target.outputs.spmlibrarytarget }}
           output: ./docs
           hosting-base-path: ${{ github.event.repository.name }}
           disable-indexing: 'true'
