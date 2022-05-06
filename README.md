@@ -2,7 +2,7 @@
 [![Swift lint](https://github.com/ordo-one/swift-frostflake/actions/workflows/swift-lint.yml/badge.svg)](https://github.com/ordo-one/swift-frostflake/actions/workflows/swift-lint.yml) [![Swift outdated dependencies](https://github.com/ordo-one/swift-frostflake/actions/workflows/swift-outdated-dependencies.yml/badge.svg)](https://github.com/ordo-one/swift-frostflake/actions/workflows/swift-outdated-dependencies.yml)
 [![Swift address sanitizer Linux](https://github.com/ordo-one/swift-frostflake/actions/workflows/swift-address-sanitizer-linux.yml/badge.svg)](https://github.com/ordo-one/swift-frostflake/actions/workflows/swift-address-sanitizer-linux.yml) [![Swift address sanitizer macOS](https://github.com/ordo-one/swift-frostflake/actions/workflows/swift-address-sanitizer-macos.yml/badge.svg)](https://github.com/ordo-one/swift-frostflake/actions/workflows/swift-address-sanitizer-macos.yml) [![Swift thread sanitizer Linux](https://github.com/ordo-one/swift-frostflake/actions/workflows/swift-thread-sanitizer-linux.yml/badge.svg)](https://github.com/ordo-one/swift-frostflake/actions/workflows/swift-thread-sanitizer-linux.yml) [![Swift thread sanitizer macOS](https://github.com/ordo-one/swift-frostflake/actions/workflows/swift-thread-sanitizer-macos.yml/badge.svg)](https://github.com/ordo-one/swift-frostflake/actions/workflows/swift-thread-sanitizer-macos.yml)
 
-# swift-frostflake
+# Frostflake
 
 High performance unique ID generator for Swift inspired by [Snowflake](https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake)
 with a few small tweaks aimed for a distributed system setup with a medium level of active entities (hundreds) that independently
