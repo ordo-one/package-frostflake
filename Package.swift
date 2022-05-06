@@ -33,7 +33,7 @@ let package = Package(
         ),
         .target(name: "Frostflake",
                 dependencies: [
-                    .product(name: "ConcurrencyHelpers", package: "swift-concurrency-helpers")
+                    .product(name: "ConcurrencyHelpers", package: "swift-concurrency-helpers"),
                 ],
                 path: "Sources/Frostflake"),
         .testTarget(

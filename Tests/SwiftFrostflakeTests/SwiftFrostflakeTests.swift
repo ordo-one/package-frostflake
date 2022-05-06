@@ -48,7 +48,7 @@ final class SwiftFrostflakeTests: XCTestCase {
     func testFrostflakeClassWithoutLocks() async {
         for generatorId in 0 ..< classGeneratorCount {
             let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId),
-                                                      concurrentAccess: false)
+                                                 concurrentAccess: false)
 
             for _ in 0 ..< classIterationCount {
                 blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())

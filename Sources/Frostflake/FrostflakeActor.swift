@@ -1,23 +1,17 @@
-import ConcurrencyHelpers
-
 /// Frostflake generator
-public final class Frostflake {
+public actor FrostflakeActor {
     private var seconds: UInt32
     private var sequenceNumber: UInt32
     private let generatorIdentifier: UInt16
-    private let lock: Lock?
 
-    /// Initialize the ``Frostflake`` class
+    /// Initialize the ``FrostflakeActor`` actor
     /// Creates an instance of the generator for a given unique generator id.
     ///
     /// - Parameters:
     ///   - generatorIdentifier: The unique generator identifier for this instances, must be unique at every
     ///   point in time in the whole system, so either should be persisted and reused across runs, or it should be
     ///   coordinated with a global service that assigns them during startup of the component.
-    ///   - concurrentAccess: Specifies whether the generator can be accessed from multiple
-    ///   tasks/threads concurrently - if the generator is **only** used from a synchronized state
-    ///   like .eg. an Actor context, you can specify false here to avoid the internal locking overhead
-    public init(generatorIdentifier: UInt16, concurrentAccess: Bool = true) {
+    public init(generatorIdentifier: UInt16) {
         let allowedGeneratorIdentifierRange = 0 ..< (1 << generatorIdentifierBits)
         assert(allowedGeneratorIdentifierRange.contains(Int(generatorIdentifier)),
                "Frostflake generatorIdentifier \(generatorIdentifier) used more than \(generatorIdentifierBits) bits")
@@ -27,11 +21,6 @@ public final class Frostflake {
         seconds = currentSecondsSinceEpoch()
         sequenceNumber = 0
         self.generatorIdentifier = generatorIdentifier
-        if concurrentAccess {
-            lock = Lock()
-        } else {
-            lock = nil
-        }
     }
 
     /// Generates a new Frostflake identifier for the generator
@@ -40,14 +29,12 @@ public final class Frostflake {
     ///
     ///  Sample usage:
     ///  ```swift
-    /// let frostflakeGenerator = Frostflake(generatorIdentifier: 1)
-    /// let frostflake1 =  frostflakeGenerator.generatorFrostflakeIdentifier()
-    /// let frostflake2 =  frostflakeGenerator.generatorFrostflakeIdentifier()
+    /// let frostflakeGenerator = FrostflakeActor(generatorIdentifier: 1)
+    /// let frostflake1 = await frostflakeGenerator.generatorFrostflakeIdentifier()
+    /// let frostflake2 = await frostflakeGenerator.generatorFrostflakeIdentifier()
     ///  ```
     public func generatorFrostflakeIdentifier() -> UInt64 {
         let allowedSequenceNumberRange = 0 ..< (1 << sequenceNumberBits)
-
-        lock?.lock()
 
         assert(allowedSequenceNumberRange.contains(Int(sequenceNumber)), "sequenceNumber ouf of allowed range")
 
@@ -72,8 +59,6 @@ public final class Frostflake {
         var returnValue = UInt64(seconds) << 32
         returnValue += UInt64(sequenceNumber) << generatorIdentifierBits
         returnValue += UInt64(generatorIdentifier)
-
-        lock?.unlock()
 
         return returnValue
     }
