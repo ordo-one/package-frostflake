@@ -5,24 +5,17 @@
 # swift-frostflake
 
 High performance unique ID generator for Swift inspired by [Snowflake](https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake)
-which is aimed for a distributed system setup with a medium level of active entities (hundreds) that independently
+with a few small tweaks aimed for a distributed system setup with a medium level of active entities (hundreds) that independently
 should be able to generate unique identifiers.
 
-It takes a slightly different approach to minimize generation overhead while still keeping the trait 
-of being _roughly sorted_ and allowing for distributed generation.
+It takes a slightly different approach to minimize generation overhead.
 
-One key difference compared to Snowflake is that Frostflake can use a frozen point in time repeatedly
-until running out of keyspace for it, which avoid getting the current time for every id generated.
-
-Optionally Frostflake can get the point in time from the client generating the ID, for use cases
-when a timestamp was generated external to Frostflake anyway, see the API documentation for details.
-
-The main point with those two optional approaches is to not have to generate a timestamp for each 
-id, while still keeping things time sorted within the span of each new point in time by help
-of the sequence number - such that the identifier will be suitable as e.g. a database key.
-
-Worth noting is that when using a frozen point in time, the time sorting characteristic will
-be temporally local per producer only.
+One key difference compared to Snowflake is that Frostflake uses a frozen point in time repeatedly
+until running out of generation identifier for it, which avoids getting the current time for every 
+id generated - it will update that frozen time point for every 1K generated identifiers, so for 
+medium-flow generation the timestamp will periodically be updated to keep somewhat of a temporal
+sorting across services most of the time - with the aim that the unique identifier should be 
+suitable as e.g. a database key.
 
 # Adding dependencies
 To add to your project:
