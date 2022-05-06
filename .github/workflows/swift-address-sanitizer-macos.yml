@@ -6,7 +6,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  
+
 jobs:
   build:
 
@@ -16,7 +16,6 @@ jobs:
     - name: Wipe gitconfig
       run: echo "" > ~/.gitconfig
 
-    - uses: fwal/setup-swift@v1
     - uses: actions/checkout@v3
 
     - name: Git URL token override

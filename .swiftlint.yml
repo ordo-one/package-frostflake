@@ -81,5 +81,3 @@ opt_in_rules:
   - vertical_whitespace_opening_braces
   - xct_specific_matcher
   - yoda_condition
-
-child_config: .swiftlint_refinement.yml
