@@ -15,15 +15,6 @@ final class SwiftFrostflakeTests: XCTestCase {
         super.tearDown()
     }
 
-    func testFrostflakeClassGeneratorPerformance() {
-        self.measure(metrics: [XCTMemoryMetric(), XCTClockMetric(), XCTCPUMetric()]) {
-            let frostflakeGenerator = Frostflake(generatorIdentifier: 0)
-            for _ in 0 ..< 1_000_000 {
-                blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())
-            }
-        }
-    }
-
     func testFrostflakeClassOutput() async {
         let frostflakeGenerator = FrostflakeActor(generatorIdentifier: 1_000)
 
