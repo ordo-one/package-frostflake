@@ -16,6 +16,11 @@ jobs:
     - uses: actions/checkout@v3
     - name: Run tests
       run: swift test --parallel --enable-code-coverage
+#    - name: Extract default SPM library testtarget
+#      id: spm_test_target
+#      run: |
+#        SPM_DEFAULT_TEST_TARGET=$(swift package dump-package | jq -r '.targets | .[] | select(.type == "test") | .name' | tail -1)
+#        echo "::set-output name=spmlibrarytesttarget::$SPM_DEFAULT_TEST_ARGET"
     - name: Export code coverage
       run: llvm-cov export -format="lcov" .build/debug/${{ github.event.repository.name }}PackageTests.xctest -instr-profile .build/debug/codecov/default.profdata > info.lcov
     - name: Upload codecov
