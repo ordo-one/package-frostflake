@@ -5,8 +5,9 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+    
 jobs:
-  build:
+  address-sanitizer-macos:
     timeout-minutes: 30
     runs-on: [self-hosted, macos-12]
     steps:
