@@ -8,7 +8,7 @@ on:
     branches: [ main ]
   
 jobs:
-  build:
+  build-macos:
     timeout-minutes: 60
     runs-on: [self-hosted, macos-12]
 

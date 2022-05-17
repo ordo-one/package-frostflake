@@ -8,7 +8,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  thread-sanitizer-macos:
     runs-on: [self-hosted, macos-12]
     steps:
       - name: Wipe gitconfig

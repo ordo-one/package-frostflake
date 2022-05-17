@@ -8,7 +8,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  address-sanitizer-linux:
 
     runs-on: [self-hosted, ubuntu-latest]
     timeout-minutes: 30
