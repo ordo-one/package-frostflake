@@ -1,5 +1,10 @@
 @testable import Frostflake
+
 import XCTest
+
+#if canImport(Darwin)
+import Darwin
+#endif
 
 final class SwiftFrostflakeTests: XCTestCase {
     private let classGeneratorCount = 1_000
@@ -7,12 +12,10 @@ final class SwiftFrostflakeTests: XCTestCase {
     private let actorGeneratorCount = 1_000
     private let actorIterationCount = 1_000
 
-    override func setUp() {
-        super.setUp()
-    }
-
-    override func tearDown() {
-        super.tearDown()
+    override class func setUp() {
+        #if canImport(Darwin)
+        atexit(leaksExit)
+        #endif
     }
 
     func testFrostflakeClassOutput() async {
