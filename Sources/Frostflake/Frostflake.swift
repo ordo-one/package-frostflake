@@ -2,10 +2,10 @@ import ConcurrencyHelpers
 
 /// Frostflake generator
 public final class Frostflake {
-    private var seconds: UInt32
-    private var sequenceNumber: UInt32
-    private let generatorIdentifier: UInt16
-    private let lock: Lock?
+    public var seconds: UInt32
+    public var sequenceNumber: UInt32
+    public let generatorIdentifier: UInt16
+    public let lock: Lock?
 
     /// Initialize the ``Frostflake`` class
     /// Creates an instance of the generator for a given unique generator id.
@@ -17,6 +17,7 @@ public final class Frostflake {
     ///   - concurrentAccess: Specifies whether the generator can be accessed from multiple
     ///   tasks/threads concurrently - if the generator is **only** used from a synchronized state
     ///   like .eg. an Actor context, you can specify false here to avoid the internal locking overhead
+    @inlinable
     public init(generatorIdentifier: UInt16, concurrentAccess: Bool = true) {
         let allowedGeneratorIdentifierRange = 0 ..< (1 << generatorIdentifierBits)
         assert(allowedGeneratorIdentifierRange.contains(Int(generatorIdentifier)),
@@ -24,14 +25,14 @@ public final class Frostflake {
         assert((sequenceNumberBits + generatorIdentifierBits) == 32,
                "Frostflake sequenceNumberBits (\(sequenceNumberBits)) + " +
                    "generatorIdentifierBits (\(generatorIdentifierBits)) != 32")
-        seconds = currentSecondsSinceEpoch()
-        sequenceNumber = 0
-        self.generatorIdentifier = generatorIdentifier
         if concurrentAccess {
             lock = Lock()
         } else {
             lock = nil
         }
+        sequenceNumber = 0
+        self.generatorIdentifier = generatorIdentifier
+        seconds = currentSecondsSinceEpoch()
     }
 
     /// Generates a new Frostflake identifier for the generator
@@ -44,6 +45,8 @@ public final class Frostflake {
     /// let frostflake1 =  frostflakeGenerator.generatorFrostflakeIdentifier()
     /// let frostflake2 =  frostflakeGenerator.generatorFrostflakeIdentifier()
     ///  ```
+    @inlinable
+    @inline(__always)
     public func generatorFrostflakeIdentifier() -> UInt64 {
         let allowedSequenceNumberRange = 0 ..< (1 << sequenceNumberBits)
 

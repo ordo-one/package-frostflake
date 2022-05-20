@@ -37,9 +37,14 @@ let package = Package(
                 ],
                 path: "Sources/Frostflake"),
         .testTarget(
-            name: "SwiftFrostflakeTests",
+            name: "FrostflakeTests",
             dependencies: ["SwiftFrostflake",
                            "Frostflake"]
+        ),
+        .testTarget(
+            name: "FrostflakePerformanceTests",
+            dependencies: ["Frostflake"],
+            swiftSettings: [.unsafeFlags(["-O"])]
         ),
     ]
 )
