@@ -8,23 +8,25 @@
         func leaksTo(_ file: String) -> Process {
             let out = FileHandle(forWritingAtPath: file)!
             defer {
-                try! out.close()
+                do {
+                    try out.close()
+                } catch {}
             }
-            let p = Process()
-            p.launchPath = "/usr/bin/leaks"
-            p.arguments = ["\(getpid())"]
-            p.standardOutput = out
-            p.standardError = out
-            p.launch()
-            p.waitUntilExit()
-            return p
+            let process = Process()
+            process.launchPath = "/usr/bin/leaks"
+            process.arguments = ["\(getpid())"]
+            process.standardOutput = out
+            process.standardError = out
+            process.launch()
+            process.waitUntilExit()
+            return process
         }
-        let p = leaksTo("/dev/null")
-        guard p.terminationReason == .exit, [0, 1].contains(p.terminationStatus) else {
-            print("Weird, \(p.terminationReason): \(p.terminationStatus)")
+        let process = leaksTo("/dev/null")
+        guard process.terminationReason == .exit, [0, 1].contains(process.terminationStatus) else {
+            print("Weird, \(process.terminationReason): \(process.terminationStatus)")
             exit(255)
         }
-        if p.terminationStatus == 1 {
+        if process.terminationStatus == 1 {
             print("================")
             print("Oh no, we leaked")
             print("================")
@@ -32,6 +34,6 @@
         } else {
             print("No leaks detected with 'leaks'")
         }
-        exit(p.terminationStatus)
+        exit(process.terminationStatus)
     }
 #endif
