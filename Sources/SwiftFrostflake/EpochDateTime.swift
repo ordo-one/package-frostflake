@@ -2,6 +2,7 @@
 // unixEpoch.convert(timestamp: 1653047882)
 // print("\(unixEpoch)")
 
+// Adopted from C implementation at https://www.quora.com/How-do-I-convert-epoch-time-to-a-date-manually
 struct EpochDateTime {
     var year: Int
     var month: Int
