@@ -17,6 +17,7 @@ final class SwiftFrostflakeTests: XCTestCase {
         #endif
     }
 
+    // Verified using https://www.epochconverter.com as well manually
     func testUnixEpochConversion() {
         var unixEpoch = EpochDateTime.unixEpoch()
         unixEpoch.convert(timestamp: 1653051594)
