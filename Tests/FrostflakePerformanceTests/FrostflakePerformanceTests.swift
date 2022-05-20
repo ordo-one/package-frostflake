@@ -5,10 +5,9 @@ final class FrostflakePerformanceTests: XCTestCase {
     private let sequenceNumberBits = 20
 
     #if canImport(Darwin)
+    // Generate approximately 100M Frostflakes
     func testFrostflakePerformance() throws {
-        let metrics: [XCTMetric] = [XCTCPUMetric(), XCTClockMetric(), XCTMemoryMetric()]
-        // Generate approximately 100M Frostflakes
-        measure(metrics: metrics) {
+        measure(metrics: [XCTCPUMetric(), XCTClockMetric(), XCTMemoryMetric()]) {
             for generatorId in 0 ..< 100 {
                 let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId))
 
