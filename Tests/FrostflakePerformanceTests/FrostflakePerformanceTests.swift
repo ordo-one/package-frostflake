@@ -4,6 +4,7 @@ import XCTest
 final class FrostflakePerformanceTests: XCTestCase {
     private let sequenceNumberBits = 20
 
+    #if canImport(Darwin)
     func testFrostflakePerformance() throws {
         let metrics: [XCTMetric] = [XCTCPUMetric(), XCTClockMetric(), XCTMemoryMetric()]
         // Generate approximately 100M Frostflakes
@@ -17,4 +18,5 @@ final class FrostflakePerformanceTests: XCTestCase {
             }
         }
     }
+    #endif
 }
