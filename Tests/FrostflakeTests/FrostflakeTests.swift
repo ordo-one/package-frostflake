@@ -1,4 +1,5 @@
 @testable import Frostflake
+@testable import SwiftFrostflake
 
 import XCTest
 
@@ -14,6 +15,18 @@ final class SwiftFrostflakeTests: XCTestCase {
         #if canImport(Darwin)
             atexit(leaksExit)
         #endif
+    }
+
+    func testUnixEpochConversion() {
+        var unixEpoch = EpochDateTime.unixEpoch()
+        unixEpoch.convert(timestamp: 1653051594)
+        // EpochDateTime(year: 2022, month: 5, day: 20, hour: 12, minute: 59, second: 54)
+        XCTAssert(unixEpoch.year == 2022 &&
+                  unixEpoch.month == 5 &&
+                  unixEpoch.day == 20 &&
+                  unixEpoch.hour == 12 &&
+                  unixEpoch.minute == 59 &&
+                  unixEpoch.second == 54, "Unix epoch conversion did not produce expected result")
     }
 
     func testFrostflakeClassOutput() async {
