@@ -20,8 +20,14 @@ public let forcedSecondRegenerationInterval: UInt32 = 1_000
 @inlinable
 @inline(__always)
 public func currentSecondsSinceEpoch() -> UInt32 {
-    var currentTime = timeval()
-    gettimeofday(&currentTime, nil)
+    var currentTime = timespec()
+
+    let result = clock_gettime(CLOCK_REALTIME, &currentTime)
+
+    guard result == 0 else {
+        fatalError("Failed to get current time in clock_gettime(), errno = \(errno)")
+    }
+
     return UInt32(currentTime.tv_sec)
 }
 
