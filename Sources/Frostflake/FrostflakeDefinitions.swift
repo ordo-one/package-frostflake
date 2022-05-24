@@ -42,9 +42,9 @@ public extension UInt64 {
         time.convert(timestamp: Int(seconds))
 
         return """
-               (\(time.year)-\(time.month)-\(time.day) \(time.hour):\(time.minute):\(time.second) UTC\
-               , sequenceNumber:\(sequenceNumber), generatorIdentifier:\(generatorIdentifier))
-               """
+        (\(time.year)-\(time.month)-\(time.day) \(time.hour):\(time.minute):\(time.second) UTC\
+        , sequenceNumber:\(sequenceNumber), generatorIdentifier:\(generatorIdentifier))
+        """
     }
 }
 
