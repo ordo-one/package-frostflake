@@ -31,16 +31,6 @@ public func currentSecondsSinceEpoch() -> UInt32 {
     return UInt32(currentTime.tv_sec)
 }
 
-/// Pretty printer for frostflakes for debugging
-public extension UInt64 {
-    func frostflakeDescription() -> String {
-        let seconds = self >> 32
-        let sequenceNumber = (self & 0xFFFF_FFFF) >> generatorIdentifierBits
-        let generatorIdentifier = (self & 0xFFFF_FFFF) & (0xFFFF_FFFF >> sequenceNumberBits)
-        return "(\(seconds), \(sequenceNumber), \(generatorIdentifier))"
-    }
-}
-
 /// Blackhole that will disable the optimizer when defined in a different module,
 /// useful for benchmarks and just consumes the argument.
 /// **It's important that this function is in another module than the tests which are using it.**
