@@ -5,23 +5,6 @@ let classGeneratorCount = 1
 let classIterationCount = 999_999
 let classTotalCount = classGeneratorCount * classIterationCount
 
-/// Pretty printer for frostflakes for debugging
-public extension UInt64 {
-    func frostflakeDescription() -> String {
-        let seconds = self >> 32
-        let sequenceNumber = (self & 0xFFFF_FFFF) >> generatorIdentifierBits
-        let generatorIdentifier = (self & 0xFFFF_FFFF) & (0xFFFF_FFFF >> sequenceNumberBits)
-
-        var time = EpochDateTime.unixEpoch()
-        time.convert(timestamp: Int(seconds))
-
-        return """
-               (\(time.year)-\(time.month)-\(time.day) \(time.hour):\(time.minute):\(time.second) UTC\
-               , sequenceNumber:\(sequenceNumber), generatorIdentifier:\(generatorIdentifier))
-               """
-    }
-}
-
 @main
 struct SwiftFrostflake: AsyncParsableCommand {
     @Flag(help: "Run with unprotected class implementation without locks")
