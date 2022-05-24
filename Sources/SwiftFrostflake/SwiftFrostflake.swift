@@ -1,8 +1,8 @@
 import ArgumentParser
 import Frostflake
 
-let classGeneratorCount = 129
-let classIterationCount = 1_000_000
+let classGeneratorCount = 1
+let classIterationCount = 999_999
 let classTotalCount = classGeneratorCount * classIterationCount
 
 /// Pretty printer for frostflakes for debugging
@@ -49,6 +49,7 @@ struct SwiftFrostflake: AsyncParsableCommand {
             let locks = skipLocks
             await withTaskGroup(of: Void.self) { taskGroup in
                 taskGroup.addTask { await Self.frostflakeBenchmark(noLocks: locks) }
+                print("Generated \(classTotalCount) Frostflakes")
             }
         } else {
             if let identifier = UInt64(identifierOrCommand) {
