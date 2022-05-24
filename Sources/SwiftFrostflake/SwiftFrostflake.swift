@@ -15,7 +15,10 @@ public extension UInt64 {
         var time = EpochDateTime.unixEpoch()
         time.convert(timestamp: Int(seconds))
 
-        return "(\(time.year)-\(time.month)-\(time.day) \(time.hour):\(time.minute):\(time.second) UTC, sequenceNumber:\(sequenceNumber), generatorIdentifier:\(generatorIdentifier))"
+        return """
+               (\(time.year)-\(time.month)-\(time.day) \(time.hour):\(time.minute):\(time.second) UTC\
+               , sequenceNumber:\(sequenceNumber), generatorIdentifier:\(generatorIdentifier))
+               """
     }
 }
 
