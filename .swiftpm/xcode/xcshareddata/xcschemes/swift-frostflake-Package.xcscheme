@@ -118,6 +118,34 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "frostflake"
+               BuildableName = "frostflake"
+               BlueprintName = "frostflake"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "frostflakeBenchmark"
+               BuildableName = "frostflakeBenchmark"
+               BlueprintName = "frostflakeBenchmark"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -162,9 +190,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ooid_benchmark"
-            BuildableName = "ooid_benchmark"
-            BlueprintName = "ooid_benchmark"
+            BlueprintIdentifier = "frostflakeBenchmark"
+            BuildableName = "frostflakeBenchmark"
+            BlueprintName = "frostflakeBenchmark"
             ReferencedContainer = "container:">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -188,9 +216,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ooid_benchmark"
-            BuildableName = "ooid_benchmark"
-            BlueprintName = "ooid_benchmark"
+            BlueprintIdentifier = "frostflakeBenchmark"
+            BuildableName = "frostflakeBenchmark"
+            BlueprintName = "frostflakeBenchmark"
             ReferencedContainer = "container:">
          </BuildableReference>
       </BuildableProductRunnable>

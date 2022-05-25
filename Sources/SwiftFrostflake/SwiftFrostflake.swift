@@ -13,7 +13,7 @@ struct SwiftFrostflake: AsyncParsableCommand {
         if identifier > 0 {
             if generatorIdentifier {
                 guard 0 ..< (1 << generatorIdentifierBits) ~= identifier else {
-                    print("generatorIdentifier should be in range from 0 to \((1 << generatorIdentifierBits)-1)")
+                    print("generatorIdentifier should be in range from 0 to \((1 << generatorIdentifierBits) - 1)")
                     return
                 }
                 let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(identifier),
