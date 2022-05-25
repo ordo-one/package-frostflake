@@ -1,32 +1,29 @@
 import ArgumentParser
 import Frostflake
 
-let classGeneratorCount = 129
-let classIterationCount = 1_000_000
-let classTotalCount = classGeneratorCount * classIterationCount
-
-// We should modify this command line tool to be able to parse out timestamp and identifier
-// from a Frostflake and to be able to generate an identifier for a given generator id.
 @main
 struct SwiftFrostflake: AsyncParsableCommand {
-    @Flag(help: "Run with unprotected class implementation without locks")
-    var skipLocks = false
+    @Flag(help: "Use generatorIdentifier to create Frostlake based on it")
+    var generatorIdentifier = false
 
-    static func frostflakeBenchmark(noLocks: Bool) async {
-        for generatorId in 0 ..< classGeneratorCount {
-            let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId),
-                                                 concurrentAccess: !noLocks)
-
-            for _ in 0 ..< classIterationCount {
-                blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())
-            }
-        }
-    }
+    @Argument(help: "Provide Frostflake ID(default) or Generator ID")
+    var identifier: UInt64
 
     mutating func run() async throws {
-        let locks = skipLocks
-        await withTaskGroup(of: Void.self) { taskGroup in
-            taskGroup.addTask { await Self.frostflakeBenchmark(noLocks: locks) }
+        if identifier > 0 {
+            if generatorIdentifier {
+                guard 0 ..< (1 << generatorIdentifierBits) ~= identifier else {
+                    print("generatorIdentifier should be in range from 0 to \((1 << generatorIdentifierBits) - 1)")
+                    return
+                }
+                let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(identifier),
+                                                     concurrentAccess: false)
+                print("Frostflake ID: \(frostflakeGenerator.generatorFrostflakeIdentifier())")
+            } else {
+                print("Frostflake description: \(identifier.frostflakeDescription())")
+            }
+        } else {
+            print("Unknown argument, it should be Int identifier and greater than 0")
         }
     }
 }

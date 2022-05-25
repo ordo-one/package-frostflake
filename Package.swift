@@ -12,8 +12,12 @@ let package = Package(
             targets: ["Frostflake"]
         ),
         .executable(
-            name: "SwiftFrostflake",
+            name: "frostflake",
             targets: ["SwiftFrostflake"]
+        ),
+        .executable(
+            name: "frostflakeBenchmark",
+            targets: ["Benchmark"]
         ),
     ],
     dependencies: [
@@ -25,6 +29,14 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "SwiftFrostflake",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "SystemPackage", package: "swift-system"),
+                "Frostflake",
+            ]
+        ),
+        .executableTarget(
+            name: "Benchmark",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "SystemPackage", package: "swift-system"),
