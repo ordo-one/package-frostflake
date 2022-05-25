@@ -12,13 +12,13 @@ struct SwiftFrostflake: AsyncParsableCommand {
     mutating func run() async throws {
         if identifier > 0 {
             if generatorIdentifier {
-                guard 0 ..< 4_096 ~= identifier else {
-                    print("generatorIdentifier should be in range from 0 to 4095")
+                guard 0 ..< (1 << generatorIdentifierBits) ~= identifier else {
+                    print("generatorIdentifier should be in range from 0 to \((1 << generatorIdentifierBits)-1)")
                     return
                 }
                 let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(identifier),
                                                      concurrentAccess: false)
-                print("Snowflake ID: \(frostflakeGenerator.generatorFrostflakeIdentifier())")
+                print("Frostflake ID: \(frostflakeGenerator.generatorFrostflakeIdentifier())")
             } else {
                 print("Frostflake description: \(identifier.frostflakeDescription())")
             }

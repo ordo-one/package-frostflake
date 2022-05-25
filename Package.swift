@@ -12,11 +12,11 @@ let package = Package(
             targets: ["Frostflake"]
         ),
         .executable(
-            name: "ooid",
+            name: "frostflake",
             targets: ["SwiftFrostflake"]
         ),
         .executable(
-            name: "ooid_benchmark",
+            name: "frostflakeBenchmark",
             targets: ["Benchmark"]
         ),
     ],
