@@ -1,5 +1,4 @@
 @testable import Frostflake
-@testable import SwiftFrostflake
 
 import XCTest
 

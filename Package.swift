@@ -4,8 +4,8 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-frostflake",
-    platforms: [.macOS(.v10_15)],
+    name: "package-frostflake",
+    platforms: [.macOS(.v12)],
     products: [
         .library(
             name: "Frostflake",
@@ -24,7 +24,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser.git", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/apple/swift-system", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
-        .package(url: "https://github.com/ordo-one/swift-concurrency-helpers", .upToNextMajor(from: "0.0.1")),
+        .package(url: "https://github.com/ordo-one/package-concurrency-helpers", .upToNextMajor(from: "0.0.1")),
     ],
     targets: [
         .executableTarget(
@@ -45,7 +45,7 @@ let package = Package(
         ),
         .target(name: "Frostflake",
                 dependencies: [
-                    .product(name: "ConcurrencyHelpers", package: "swift-concurrency-helpers"),
+                    .product(name: "ConcurrencyHelpers", package: "package-concurrency-helpers"),
                 ],
                 path: "Sources/Frostflake"),
         .testTarget(
