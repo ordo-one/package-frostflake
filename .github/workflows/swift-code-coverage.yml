@@ -6,10 +6,8 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
 jobs:
   test-code-coverage:
-
     runs-on: [self-hosted, ubuntu-latest]
     timeout-minutes: 60
     steps:

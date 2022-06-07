@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+      - id: check-added-large-files
+  - repo: https://github.com/realm/SwiftLint
+    rev: 0.47.1
+    hooks:
+      - id: swiftlint
+        args: [--lenient] # [--strict]
+  - repo: https://github.com/nicklockwood/SwiftFormat
+    rev: 0.49.9
+    hooks:
+      - id: swiftformat
+        args: [--dryrun]
+  - repo: https://github.com/milin/giticket
+    rev: v1.3
+    hooks:
+      - id: giticket
+        args: ['--mode=regex_match', '--regex=sc-[0-9]', '--format={commit_msg} [{ticket}]']
+        stages: [commit-msg]
