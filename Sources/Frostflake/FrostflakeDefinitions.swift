@@ -6,6 +6,9 @@
     #error("Unsupported Platform")
 #endif
 
+/// Alias for Frostflake identifier type
+public typealias Identifier = UInt64
+
 /// Default number of bits allocated to sequence, default 20 bits, 1.048.576 id:s max per second
 public let sequenceNumberBits = 20
 /// Default number of bits allocated to generator part, default 12 bits, 4096 unique concurrent generators in the system
