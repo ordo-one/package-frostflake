@@ -7,7 +7,7 @@
 #endif
 
 /// Alias for Frostflake identifier type
-public typealias Identifier = UInt64
+public typealias FrostflakeIdentifier = UInt64
 
 /// Default number of bits allocated to sequence, default 20 bits, 1.048.576 id:s max per second
 public let sequenceNumberBits = 20

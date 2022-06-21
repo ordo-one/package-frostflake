@@ -47,7 +47,7 @@ public final class Frostflake {
     ///  ```
     @inlinable
     @inline(__always)
-    public func generatorFrostflakeIdentifier() -> Identifier {
+    public func generatorFrostflakeIdentifier() -> FrostflakeIdentifier {
         let allowedSequenceNumberRange = 0 ..< (1 << sequenceNumberBits)
 
         lock?.lock()
