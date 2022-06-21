@@ -4,3 +4,4 @@
 #
 
 --decimalgrouping 3,4
+--disable wrapMultilineStatementBraces
