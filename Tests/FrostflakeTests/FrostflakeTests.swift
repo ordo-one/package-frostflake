@@ -55,10 +55,10 @@ final class FrostflakeTests: XCTestCase {
     }
 
     func testFrostflakeClassOutput() async {
-        let frostflakeGenerator = Frostflake(generatorIdentifier: 1_000)
+        let frostflakeFactory = Frostflake(generatorIdentifier: 1_000)
 
         for _ in 0 ..< 10 {
-            let frostflake = frostflakeGenerator.generatorFrostflakeIdentifier()
+            let frostflake = frostflakeFactory.generate()
             let decription = frostflake.frostflakeDescription()
             print(decription)
         }
@@ -66,36 +66,44 @@ final class FrostflakeTests: XCTestCase {
 
     func testFrostflake() async {
         for generatorId in 0 ..< classGeneratorCount {
-            let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId))
+            let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId))
 
             for _ in 0 ..< classIterationCount {
-                blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())
+                blackHole(frostflakeFactory.generate())
             }
         }
     }
 
     func testFrostflakeClassWithoutLocks() async {
         for generatorId in 0 ..< classGeneratorCount {
-            let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId),
-                                                 concurrentAccess: false)
+            let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId),
+                                               concurrentAccess: false)
 
             for _ in 0 ..< classIterationCount {
-                blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())
+                blackHole(frostflakeFactory.generate())
             }
         }
     }
 
     func testFrostflakeClassOverflowNextSecond() {
-        let frostflakeGenerator = Frostflake(generatorIdentifier: 0)
+        let frostflakeFactory = Frostflake(generatorIdentifier: 0)
 
         for _ in 1 ..< 1 << sequenceNumberBits {
-            blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())
+            blackHole(frostflakeFactory.generate())
         }
 
         sleep(1) // Needed so that we don't overflow the sequenceNumberBits in the same second
 
         for _ in 1 ..< 1 << sequenceNumberBits {
-            blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())
+            blackHole(frostflakeFactory.generate())
+        }
+    }
+
+    func testFrostflakeSharedGenerator() {
+        Frostflake.setup(generatorIdentifier: 47)
+
+        for _ in 0 ..< classIterationCount {
+            blackHole(Frostflake.generate())
         }
     }
 }

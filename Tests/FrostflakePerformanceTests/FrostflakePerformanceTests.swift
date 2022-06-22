@@ -9,10 +9,10 @@ final class FrostflakePerformanceTests: XCTestCase {
         func testFrostflakePerformance() throws {
             measure(metrics: [XCTCPUMetric(), XCTClockMetric(), XCTMemoryMetric()]) {
                 for generatorId in 0 ..< 100 {
-                    let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(generatorId))
+                    let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId))
 
                     for _ in 1 ..< 1 << sequenceNumberBits {
-                        blackHole(frostflakeGenerator.generatorFrostflakeIdentifier())
+                        blackHole(frostflakeFactory.generate())
                     }
                 }
             }

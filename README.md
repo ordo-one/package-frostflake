@@ -44,8 +44,8 @@ that needs flake generators at runtime such that the same identifier is not used
 import Frostflake
 
 func testFrostflake() {
-  let frostflakeGenerator = Frostflake(generatorIdentifier: 1)
-  let frostflake = frostflakeGenerator.generatorFrostflakeIdentifier()
+  let frostflakeFactory = Frostflake(generatorIdentifier: 1)
+  let frostflake = frostflakeFactory.generate()
   let decription = frostflake.frostflakeDescription()
   print(decription)
 }

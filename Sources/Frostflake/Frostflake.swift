@@ -7,6 +7,45 @@ public final class Frostflake {
     public let generatorIdentifier: UInt16
     public let lock: Lock?
 
+    // Class variables and functions
+    private static var sharedGeneratorIdentifier: UInt16?
+
+    /// Convenience static variable when using the same generator in many places
+    /// The global generator identifier must be set using `setup(generatorIdentifier:)` before accessing
+    /// this shared generator or we'll fatalError().
+    public static let sharedGenerator: Frostflake = {
+        guard let identifier = sharedGeneratorIdentifier else {
+            preconditionFailure("accessed sharedGenerator before calling setup")
+        }
+        return Frostflake(generatorIdentifier: identifier)
+    }()
+
+    /// Setup may only be called a single time for a global shared generator identifier
+    public static func setup(generatorIdentifier identifier: UInt16) {
+        if sharedGeneratorIdentifier != nil {
+            preconditionFailure("called setup multiple times")
+        }
+        sharedGeneratorIdentifier = identifier
+    }
+
+    /// Convenience static variable when using the same generator in many places
+    /// The global generator identifier **must** be set using `setup(generatorIdentifier:)` before accessing
+    /// this shared generator of we'll fatalError().
+    ///
+    ///  Sample usage:
+    ///  ```swift
+    /// Frostflake.setup(generatorIdentifier: 1)
+    /// let frostflake1 =  Frostflake.generate()
+    /// let frostflake2 =  Frostflake.generate()
+    ///  ```
+    @inlinable
+    @inline(__always)
+    public static func generate() -> FrostflakeIdentifier {
+        sharedGenerator.generate()
+    }
+
+    // instance functions
+
     /// Initialize the ``Frostflake`` class
     /// Creates an instance of the generator for a given unique generator id.
     ///
@@ -41,13 +80,13 @@ public final class Frostflake {
     ///
     ///  Sample usage:
     ///  ```swift
-    /// let frostflakeGenerator = Frostflake(generatorIdentifier: 1)
-    /// let frostflake1 =  frostflakeGenerator.generatorFrostflakeIdentifier()
-    /// let frostflake2 =  frostflakeGenerator.generatorFrostflakeIdentifier()
+    /// let frostflakeFactory = Frostflake(generatorIdentifier: 1)
+    /// let frostflake1 =  frostflakeFactory.generate()
+    /// let frostflake2 =  frostflakeFactory.generate()
     ///  ```
     @inlinable
     @inline(__always)
-    public func generatorFrostflakeIdentifier() -> FrostflakeIdentifier {
+    public func generate() -> FrostflakeIdentifier {
         let allowedSequenceNumberRange = 0 ..< (1 << sequenceNumberBits)
 
         lock?.lock()
