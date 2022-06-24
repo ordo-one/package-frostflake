@@ -12,7 +12,7 @@ let package = Package(
             targets: ["Frostflake"]
         ),
         .executable(
-            name: "frostflake",
+            name: "flake",
             targets: ["SwiftFrostflake"]
         ),
         .executable(
@@ -57,6 +57,6 @@ let package = Package(
             name: "FrostflakePerformanceTests",
             dependencies: ["Frostflake"],
             swiftSettings: [.unsafeFlags(["-O"])]
-        ),
+        )
     ]
 )

@@ -14,12 +14,10 @@ struct FrostflakeBenchmark: AsyncParsableCommand {
 
     static func frostflakeBenchmark(noLocks: Bool) async {
         if sharedGenerator {
-            for generatorId in 0 ..< classGeneratorCount {
-                Frostflake.setup(generatorIdentifier: UInt16(generatorId))
+            Frostflake.setup(generatorIdentifier: 0)
 
-                for _ in 0 ..< classIterationCount {
-                    blackHole(Frostflake.generate())
-                }
+            for _ in 0 ..< classIterationCount {
+                blackHole(Frostflake.generate())
             }
         } else {
             for generatorId in 0 ..< classGeneratorCount {
