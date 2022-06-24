@@ -16,9 +16,9 @@ struct SwiftFrostflake: AsyncParsableCommand {
                     print("generatorIdentifier should be in range from 0 to \((1 << generatorIdentifierBits) - 1)")
                     return
                 }
-                let frostflakeGenerator = Frostflake(generatorIdentifier: UInt16(identifier),
-                                                     concurrentAccess: false)
-                print("Frostflake ID: \(frostflakeGenerator.generatorFrostflakeIdentifier())")
+                let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(identifier),
+                                                   concurrentAccess: false)
+                print("Frostflake ID: \(frostflakeFactory.generate())")
             } else {
                 print("Frostflake description: \(identifier.frostflakeDescription())")
             }
