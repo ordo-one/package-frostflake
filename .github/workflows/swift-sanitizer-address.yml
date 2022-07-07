@@ -1,0 +1,47 @@
+name: Swift address sanitizer
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  address-sanitizer:
+    strategy:
+      matrix:
+        os: [[swift-latest, ubuntu-latest, self-hosted], [swift-nightly, ubuntu-latest, self-hosted], [macos-12, self-hosted]]
+
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+    # Needed otherwise xcode git hangs on checkout
+    - name: Wipe gitconfig Mac
+      if: ${{ runner.os == 'Macos' }}
+      run: echo "" > ~/.gitconfig
+
+    - uses: actions/checkout@v3
+
+    - name: Git URL token override
+      run: git config --global url."https://ordo-ci:${{ secrets.CI_MACHINE_PAT }}@github.com".insteadOf "https://github.com"
+
+    - name: Swift version
+      run: swift --version
+
+    # Required to clean build directory before sanitizer!
+    - name: Clean before debug build sanitizier
+      run: swift package clean
+
+    - name: Run address sanitizer
+      run: swift test --sanitize=address | swift demangle
+      
+    - name: Clean before release build sanitizier
+      run: swift package clean
+      
+    - name: Run address sanitizer on release build
+      run: swift test --sanitize=address -c release -Xswiftc -enable-testing | swift demangle
+
+    - name: Wipe gitconfig Mac
+      if: ${{ runner.os == 'Macos' }}
+      run: echo "" > ~/.gitconfig
