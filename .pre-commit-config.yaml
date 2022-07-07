@@ -17,5 +17,5 @@ repos:
     rev: v1.3
     hooks:
       - id: giticket
-        args: ['--mode=regex_match', '--regex=sc-[0-9]', '--format={commit_msg} [{ticket}]']
+        args: ['--mode=regex_match', '--regex=sc-[0-9]+', '--format={commit_msg} [{ticket}]']
         stages: [commit-msg]
