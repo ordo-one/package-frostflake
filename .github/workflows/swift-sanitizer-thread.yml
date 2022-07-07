@@ -1,4 +1,4 @@
-name: Swift thread sanitizer Linux
+name: Swift thread sanitizer
 
 on:
   workflow_dispatch:
@@ -8,24 +8,40 @@ on:
     branches: [ main ]
 
 jobs:
-  thread-sanitizer-linux:
-    runs-on: [self-hosted, ubuntu-latest]
+  thread-sanitizer:
+    strategy:
+      matrix:
+        os: [[swift-latest, ubuntu-latest, self-hosted], [swift-nightly, ubuntu-latest, self-hosted], [macos-12, self-hosted]]
+
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     steps:
+    # Needed otherwise xcode git hangs on checkout
+    - name: Wipe gitconfig Mac
+      if: ${{ runner.os == 'Macos' }}
+      run: echo "" > ~/.gitconfig
+
     - uses: actions/checkout@v3
 
     - name: Git URL token override
       run: git config --global url."https://ordo-ci:${{ secrets.CI_MACHINE_PAT }}@github.com".insteadOf "https://github.com"
 
-    # Required to clean build directory before thread sanitizer if running address sanitizer first!
+    - name: Swift version
+      run: swift --version
+
+    # Required to clean build directory before sanitizer!
     - name: Clean before debug build thread sanitizier
       run: swift package clean
 
     - name: Run thread sanitizer
       run: swift test --sanitize=thread | swift demangle
       
-    - name: Clean before release build thread sanitizier
+    - name: Clean before release build sanitizier
       run: swift package clean
       
     - name: Run thread sanitizer on release build
       run: swift test --sanitize=thread -c release -Xswiftc -enable-testing | swift demangle
+
+    - name: Wipe gitconfig Mac
+      if: ${{ runner.os == 'Macos' }}
+      run: echo "" > ~/.gitconfig

@@ -18,6 +18,8 @@ jobs:
     - uses: actions/checkout@v3
     - name: Git URL token override
       run: git config --global url."https://ordo-ci:${{ secrets.CI_MACHINE_PAT }}@github.com".insteadOf "https://github.com"
+    - name: Swift version
+      run: swift --version
     - name: Run tests
       run: swift test --parallel
     - name: Wipe gitconfig
