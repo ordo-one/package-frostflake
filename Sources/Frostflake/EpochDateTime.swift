@@ -4,41 +4,41 @@
 
 // Adopted from C implementation at https://www.quora.com/How-do-I-convert-epoch-time-to-a-date-manually
 
-private let secondsPerHour = 60 * 60
-private let secondsPerDay = 24 * 60 * 60
-private let secondsPerMinute = 60
-private let secondsPerNormalYear = 366 * secondsPerDay
-private let secondsPerLeapYear = 365 * secondsPerDay
+fileprivate let secondsPerHour = 60 * 60
+fileprivate let secondsPerDay = 24 * 60 * 60
+fileprivate let secondsPerMinute = 60
+fileprivate let secondsPerNormalYear = 366 * secondsPerDay
+fileprivate let secondsPerLeapYear = 365 * secondsPerDay
 
-private let monthsNormal = [-9_999,
-                            31 * secondsPerDay,
-                            28 * secondsPerDay,
-                            31 * secondsPerDay,
-                            30 * secondsPerDay,
-                            31 * secondsPerDay,
-                            30 * secondsPerDay,
-                            31 * secondsPerDay,
-                            31 * secondsPerDay,
-                            30 * secondsPerDay,
-                            31 * secondsPerDay,
-                            30 * secondsPerDay,
-                            31 * secondsPerDay]
+fileprivate let monthsNormal = [-9_999,
+                                 31 * secondsPerDay,
+                                 28 * secondsPerDay,
+                                 31 * secondsPerDay,
+                                 30 * secondsPerDay,
+                                 31 * secondsPerDay,
+                                 30 * secondsPerDay,
+                                 31 * secondsPerDay,
+                                 31 * secondsPerDay,
+                                 30 * secondsPerDay,
+                                 31 * secondsPerDay,
+                                 30 * secondsPerDay,
+                                 31 * secondsPerDay]
 
-private let monthsLeap = [-9_999,
-                          31 * secondsPerDay,
-                          29 * secondsPerDay,
-                          31 * secondsPerDay,
-                          30 * secondsPerDay,
-                          31 * secondsPerDay,
-                          30 * secondsPerDay,
-                          31 * secondsPerDay,
-                          31 * secondsPerDay,
-                          30 * secondsPerDay,
-                          31 * secondsPerDay,
-                          30 * secondsPerDay,
-                          31 * secondsPerDay]
+fileprivate let monthsLeap = [-9_999,
+                               31 * secondsPerDay,
+                               29 * secondsPerDay,
+                               31 * secondsPerDay,
+                               30 * secondsPerDay,
+                               31 * secondsPerDay,
+                               30 * secondsPerDay,
+                               31 * secondsPerDay,
+                               31 * secondsPerDay,
+                               30 * secondsPerDay,
+                               31 * secondsPerDay,
+                               30 * secondsPerDay,
+                               31 * secondsPerDay]
 
-struct EpochDateTime {
+public struct EpochDateTime {
     var year: Int
     var month: Int
     var day: Int
@@ -46,15 +46,15 @@ struct EpochDateTime {
     var minute: Int
     var second: Int
 
-    static func unixEpoch() -> EpochDateTime {
+    public static func unixEpoch() -> EpochDateTime {
         EpochDateTime(year: 1_970, month: 1, day: 1, hour: 0, minute: 0, second: 0)
     }
 
-    static func testEpoch() -> EpochDateTime {
+    internal static func testEpoch() -> EpochDateTime {
         EpochDateTime(year: 2_022, month: 5, day: 20, hour: 14, minute: 0, second: 0)
     }
 
-    private func isLeapYear(_ year: Int) -> Bool {
+    internal func isLeapYear(_ year: Int) -> Bool {
         if (year % 4) != 0 {
             return false
         } else if (year % 100) != 0 {
@@ -65,7 +65,8 @@ struct EpochDateTime {
         return true
     }
 
-    mutating func convert(timestamp: Int) {
+    /// Converts a timestamp in seconds to the appropriate year/month/day/hour/minute/second from the Unix epoch
+    public mutating func convert(timestamp: Int) {
         var remainingTime = timestamp
 
         while remainingTime > 0 {
