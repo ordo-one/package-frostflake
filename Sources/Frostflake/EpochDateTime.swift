@@ -4,39 +4,39 @@
 
 // Adopted from C implementation at https://www.quora.com/How-do-I-convert-epoch-time-to-a-date-manually
 
-private let secondsPerHour = 60 * 60
-private let secondsPerDay = 24 * 60 * 60
-private let secondsPerMinute = 60
-private let secondsPerNormalYear = 366 * secondsPerDay
-private let secondsPerLeapYear = 365 * secondsPerDay
+fileprivate let secondsPerHour = 60 * 60
+fileprivate let secondsPerDay = 24 * 60 * 60
+fileprivate let secondsPerMinute = 60
+fileprivate let secondsPerNormalYear = 366 * secondsPerDay
+fileprivate let secondsPerLeapYear = 365 * secondsPerDay
 
-private let monthsNormal = [-9_999,
-                            31 * secondsPerDay,
-                            28 * secondsPerDay,
-                            31 * secondsPerDay,
-                            30 * secondsPerDay,
-                            31 * secondsPerDay,
-                            30 * secondsPerDay,
-                            31 * secondsPerDay,
-                            31 * secondsPerDay,
-                            30 * secondsPerDay,
-                            31 * secondsPerDay,
-                            30 * secondsPerDay,
-                            31 * secondsPerDay]
+fileprivate let monthsNormal = [-9_999,
+                                 31 * secondsPerDay,
+                                 28 * secondsPerDay,
+                                 31 * secondsPerDay,
+                                 30 * secondsPerDay,
+                                 31 * secondsPerDay,
+                                 30 * secondsPerDay,
+                                 31 * secondsPerDay,
+                                 31 * secondsPerDay,
+                                 30 * secondsPerDay,
+                                 31 * secondsPerDay,
+                                 30 * secondsPerDay,
+                                 31 * secondsPerDay]
 
-private let monthsLeap = [-9_999,
-                          31 * secondsPerDay,
-                          29 * secondsPerDay,
-                          31 * secondsPerDay,
-                          30 * secondsPerDay,
-                          31 * secondsPerDay,
-                          30 * secondsPerDay,
-                          31 * secondsPerDay,
-                          31 * secondsPerDay,
-                          30 * secondsPerDay,
-                          31 * secondsPerDay,
-                          30 * secondsPerDay,
-                          31 * secondsPerDay]
+fileprivate let monthsLeap = [-9_999,
+                               31 * secondsPerDay,
+                               29 * secondsPerDay,
+                               31 * secondsPerDay,
+                               30 * secondsPerDay,
+                               31 * secondsPerDay,
+                               30 * secondsPerDay,
+                               31 * secondsPerDay,
+                               31 * secondsPerDay,
+                               30 * secondsPerDay,
+                               31 * secondsPerDay,
+                               30 * secondsPerDay,
+                               31 * secondsPerDay]
 
 public struct EpochDateTime {
     var year: Int
