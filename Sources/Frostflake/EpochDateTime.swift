@@ -38,7 +38,7 @@ private let monthsLeap = [-9_999,
                           30 * secondsPerDay,
                           31 * secondsPerDay]
 
-struct EpochDateTime {
+public struct EpochDateTime {
     var year: Int
     var month: Int
     var day: Int
@@ -46,15 +46,15 @@ struct EpochDateTime {
     var minute: Int
     var second: Int
 
-    static func unixEpoch() -> EpochDateTime {
+    public static func unixEpoch() -> EpochDateTime {
         EpochDateTime(year: 1_970, month: 1, day: 1, hour: 0, minute: 0, second: 0)
     }
 
-    static func testEpoch() -> EpochDateTime {
+    internal static func testEpoch() -> EpochDateTime {
         EpochDateTime(year: 2_022, month: 5, day: 20, hour: 14, minute: 0, second: 0)
     }
 
-    private func isLeapYear(_ year: Int) -> Bool {
+    internal func isLeapYear(_ year: Int) -> Bool {
         if (year % 4) != 0 {
             return false
         } else if (year % 100) != 0 {
@@ -65,7 +65,8 @@ struct EpochDateTime {
         return true
     }
 
-    mutating func convert(timestamp: Int) {
+    /// Converts a timestamp in seconds to the appropriate year/month/day/hour/minute/second from the Unix epoch
+    public mutating func convert(timestamp: Int) {
         var remainingTime = timestamp
 
         while remainingTime > 0 {
