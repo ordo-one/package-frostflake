@@ -39,12 +39,12 @@ private let monthsLeap = [-9_999,
                           31 * secondsPerDay]
 
 public struct EpochDateTime {
-    var year: Int
-    var month: Int
-    var day: Int
-    var hour: Int
-    var minute: Int
-    var second: Int
+    public var year: Int
+    public var month: Int
+    public var day: Int
+    public var hour: Int
+    public var minute: Int
+    public var second: Int
 
     public static func unixEpoch() -> EpochDateTime {
         EpochDateTime(year: 1_970, month: 1, day: 1, hour: 0, minute: 0, second: 0)
