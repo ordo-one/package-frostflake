@@ -14,7 +14,8 @@ struct FrostflakeBenchmark: AsyncParsableCommand {
 
     static func frostflakeBenchmark(noLocks: Bool) async {
         if sharedGenerator {
-            Frostflake.setup(generatorIdentifier: 0)
+            let frostflake = Frostflake(generatorIdentifier: 0)
+            Frostflake.setup(sharedGenerator: frostflake)
 
             for _ in 0 ..< classIterationCount {
                 blackHole(Frostflake.generate())

@@ -8,24 +8,24 @@ public final class Frostflake {
     public let lock: Lock?
 
     // Class variables and functions
-    private static var sharedGeneratorIdentifier: UInt16?
+    private static var privateSharedGenerator: Frostflake?
 
     /// Convenience static variable when using the same generator in many places
     /// The global generator identifier must be set using `setup(generatorIdentifier:)` before accessing
     /// this shared generator or we'll fatalError().
-    public static let sharedGenerator: Frostflake = {
-        guard let identifier = sharedGeneratorIdentifier else {
+    public static var sharedGenerator: Frostflake {
+        guard let generator = privateSharedGenerator else {
             preconditionFailure("accessed sharedGenerator before calling setup")
         }
-        return Frostflake(generatorIdentifier: identifier)
-    }()
+        return generator
+    }
 
     /// Setup may only be called a single time for a global shared generator identifier
-    public static func setup(generatorIdentifier identifier: UInt16) {
-        if sharedGeneratorIdentifier != nil {
+    public static func setup(sharedGenerator: Frostflake) {
+        if privateSharedGenerator != nil {
             preconditionFailure("called setup multiple times")
         }
-        sharedGeneratorIdentifier = identifier
+        privateSharedGenerator = sharedGenerator
     }
 
     /// Convenience static variable when using the same generator in many places

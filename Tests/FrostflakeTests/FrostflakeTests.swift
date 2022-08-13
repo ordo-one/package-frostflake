@@ -100,7 +100,9 @@ final class FrostflakeTests: XCTestCase {
     }
 
     func testFrostflakeSharedGenerator() {
-        Frostflake.setup(generatorIdentifier: 47)
+        let frostflake = Frostflake(generatorIdentifier: 47)
+
+        Frostflake.setup(sharedGenerator: frostflake)
 
         for _ in 0 ..< classIterationCount {
             blackHole(Frostflake.generate())
