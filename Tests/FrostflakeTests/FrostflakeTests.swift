@@ -104,9 +104,6 @@ final class FrostflakeTests: XCTestCase {
 
         Frostflake.setup(sharedGenerator: frostflake)
 
-        let frostflakeRef = frostflake
-        Frostflake.setup(sharedGenerator: frostflakeRef)
-
         for _ in 0 ..< classIterationCount {
             blackHole(Frostflake.generate())
         }

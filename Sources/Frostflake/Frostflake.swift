@@ -23,10 +23,7 @@ public final class Frostflake {
     /// Setup may only be called a single time for a global shared generator identifier
     public static func setup(sharedGenerator: Frostflake) {
         if privateSharedGenerator != nil {
-            // It's okay to initialize shared generator twice by the same instance
-            if sharedGenerator !== privateSharedGenerator {
-                preconditionFailure("called setup multiple times")
-            }
+            preconditionFailure("called setup multiple times")
         }
         privateSharedGenerator = sharedGenerator
     }
