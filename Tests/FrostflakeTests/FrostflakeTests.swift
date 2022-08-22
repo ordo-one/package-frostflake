@@ -111,7 +111,8 @@ final class FrostflakeTests: XCTestCase {
                     blackHole(frostflakeFactory.generate())
                 }
             }
-            XCTAssert(exceptionBadInstruction != nil, "precondition on too many FrostFlake IDs per second was not triggered")
+            XCTAssert(exceptionBadInstruction != nil,
+                      "precondition on too many FrostFlake IDs per second was not triggered")
         }
     #endif
 
