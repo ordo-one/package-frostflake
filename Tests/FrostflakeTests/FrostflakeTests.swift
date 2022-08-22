@@ -103,13 +103,21 @@ final class FrostflakeTests: XCTestCase {
     }
 
     #if os(OSX)
-        func testFrostflakeClassTooManyIdentifiersPerSecond() { // This is negative test that should fail on precodition
+        func testFrostflakeClassTooManyIdentifiersPerSecond() throws { // This is negative test that should fail on precodition
             let frostflakeFactory = Frostflake(generatorIdentifier: 0)
-
+            let testStarted = currentSecondsSinceEpoch()
+            var idGenerated=0
+            
             let exceptionBadInstruction: BadInstructionException? = catchBadInstruction {
-                for _ in 1 ..< 2 * (1 << sequenceNumberBits) {
-                    blackHole(frostflakeFactory.generate())
-                }
+                repeat {
+                    for _ in 1 ... 10_000 {
+                        blackHole(frostflakeFactory.generate())
+                    }
+                    idGenerated += 10_000
+                } while (currentSecondsSinceEpoch() - testStarted <= 1)
+            }
+            if (idGenerated < 1_000_000 ) {
+                throw XCTSkip("This host is pretty slow, only \(idGenerated) generated for 1 second")
             }
             XCTAssert(exceptionBadInstruction != nil,
                       "precondition on too many FrostFlake IDs per second was not triggered")
