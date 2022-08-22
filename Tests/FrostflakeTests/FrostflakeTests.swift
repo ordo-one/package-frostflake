@@ -1,7 +1,11 @@
 @testable import Frostflake
 
 import XCTest
+#if os(Linux)
+import CwlPosixPreconditionTesting
+#else
 import CwlPreconditionTesting
+#endif
 
 #if canImport(Darwin)
     import Darwin
@@ -108,7 +112,7 @@ final class FrostflakeTests: XCTestCase {
                 blackHole(frostflakeFactory.generate())
             }
         }
-        XCTAssert(exceptionBadInstruction != nil, "precondtion on too many forstflake IDs per second was not triggered")
+        XCTAssert(exceptionBadInstruction != nil, "precondition on too many FrostFlake IDs per second was not triggered")
     }
 
     func testFrostflakeSharedGenerator() {
