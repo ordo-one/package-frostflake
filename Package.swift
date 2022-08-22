@@ -53,7 +53,9 @@ let package = Package(
             name: "FrostflakeTests",
             dependencies: ["SwiftFrostflake",
                            "Frostflake",
-                           .product(name: "CwlPreconditionTesting", package: "CwlPreconditionTesting")
+                           .product(name: "CwlPreconditionTesting", package: "CwlPreconditionTesting",
+                                    .when(platforms: [.macOS])
+                                   )
                           ]
         ),
         .testTarget(
