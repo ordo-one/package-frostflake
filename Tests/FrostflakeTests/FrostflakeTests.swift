@@ -2,9 +2,8 @@
 
 import XCTest
 #if os(OSX)
-import CwlPreconditionTesting
+    import CwlPreconditionTesting
 #endif
-
 
 #if canImport(Darwin)
     import Darwin
@@ -103,18 +102,18 @@ final class FrostflakeTests: XCTestCase {
         }
     }
 
-#if os(OSX)
-    func testFrostflakeClassTooManyIdentifiersPerSecond() { // This is negative test that should fail on precodition
-        let frostflakeFactory = Frostflake(generatorIdentifier: 0)
-        
-        let exceptionBadInstruction : BadInstructionException? = catchBadInstruction {
-            for _ in 1 ..< 2*(1 << sequenceNumberBits) {
-                blackHole(frostflakeFactory.generate())
+    #if os(OSX)
+        func testFrostflakeClassTooManyIdentifiersPerSecond() { // This is negative test that should fail on precodition
+            let frostflakeFactory = Frostflake(generatorIdentifier: 0)
+
+            let exceptionBadInstruction: BadInstructionException? = catchBadInstruction {
+                for _ in 1 ..< 2 * (1 << sequenceNumberBits) {
+                    blackHole(frostflakeFactory.generate())
+                }
             }
+            XCTAssert(exceptionBadInstruction != nil, "precondition on too many FrostFlake IDs per second was not triggered")
         }
-        XCTAssert(exceptionBadInstruction != nil, "precondition on too many FrostFlake IDs per second was not triggered")
-    }
-#endif
+    #endif
 
     func testFrostflakeSharedGenerator() {
         let frostflake = Frostflake(generatorIdentifier: 47)
