@@ -30,7 +30,7 @@
             print("================")
             print("Oh no, we leaked")
             print("================")
-            leaksTo("/dev/null") // TODO : find out whu it crash if /dev/tty
+            leaksTo("/dev/null") // Have replaced it to /dev/null to avoid crash
         } else {
             print("No leaks detected with 'leaks'")
         }
