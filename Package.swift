@@ -15,16 +15,17 @@ let package = Package(
             name: "flake",
             targets: ["SwiftFrostflake"]
         ),
-        .executable(
+/*        .executable(
             name: "frostflakeBenchmark",
-            targets: ["Benchmark"]
-        ),
+            targets: ["Frostflake-Benchmark"]
+        ), */
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser.git", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/apple/swift-system", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
         .package(url: "https://github.com/ordo-one/package-concurrency-helpers", .upToNextMajor(from: "0.0.1")),
+        .package(path: "../package-benchmark")
     ],
     targets: [
         .executableTarget(
@@ -36,12 +37,24 @@ let package = Package(
             ]
         ),
         .executableTarget(
-            name: "Benchmark",
+            name: "Frostflake-Benchmark",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "SystemPackage", package: "swift-system"),
+                .product(name: "Benchmark", package: "package-benchmark"),
                 "Frostflake",
-            ]
+            ],
+            path: "Benchmarks/Benchmark"
+        ),
+        .executableTarget(
+            name: "Second-Benchmark",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "SystemPackage", package: "swift-system"),
+                .product(name: "Benchmark", package: "package-benchmark"),
+                "Frostflake",
+            ],
+            path: "Benchmarks/SecondBenchmark"
         ),
         .target(name: "Frostflake",
                 dependencies: [
