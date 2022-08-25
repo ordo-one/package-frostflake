@@ -41,7 +41,7 @@ let package = Package(
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "SystemPackage", package: "swift-system"),
-                .product(name: "BenchmarkSupport", package: "package-benchmark"),
+                .product(name: "Benchmark", package: "package-benchmark"),
                 "Frostflake",
             ],
             path: "Benchmarks/Benchmark"
@@ -51,7 +51,7 @@ let package = Package(
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "SystemPackage", package: "swift-system"),
-                .product(name: "BenchmarkSupport", package: "package-benchmark"),
+                .product(name: "Benchmark", package: "package-benchmark"),
                 "Frostflake",
             ],
             path: "Benchmarks/SecondBenchmark"
