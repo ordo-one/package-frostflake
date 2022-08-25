@@ -13,7 +13,7 @@ func benchmarks() {
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
 
         benchmark.measure {
-            for _ in 0 ..< 1000_000 {
+            for _ in 0 ..< 100_000 {
                 let frostflake = frostflakeFactory.generate()
                 let description = frostflake.frostflakeDescription()
                 blackHole(description)
@@ -24,7 +24,7 @@ func benchmarks() {
     Benchmark("Frostflake simple") { benchmark in
         benchmark.measure {
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
-            for _ in 0 ..< 1000_000 {
+            for _ in 0 ..< 100_000 {
                 let frostflake = frostflakeFactory.generate()
                 let description = frostflake.frostflakeDescription()
                 blackHole(description)
