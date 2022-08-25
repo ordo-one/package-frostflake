@@ -1,74 +1,33 @@
-import ArgumentParser
-import Frostflake
-import SystemPackage
 import Benchmark
-import ExtrasJSON
+import Frostflake
 
-let classGeneratorCount = 1
-let classIterationCount = 999_999
-let classTotalCount = classGeneratorCount * classIterationCount
+@_dynamicReplacement(for: benchmarks)
+func registerBenchmarks() {
 
-let sharedGenerator = true
+    Benchmark("Frostflake test",
+              probes: [.cpu, .memory, .syscalls, .threads],
+              isolation: true,
+              minimumRuntime: 5000,
+              disabled: false) {  benchmark in
+        let frostflakeFactory = Frostflake(generatorIdentifier: 1_000)
 
-@main
-struct FrostflakeBenchmark: AsyncParsableCommand {
-    @Flag(help: "Run with unprotected class implementation without locks")
-    var skipLocks = false
+        benchmark.setupDone()
 
-    @Option(name: .shortAndLong, help: "The input pipe filedescriptor used for communication with host process.")
-    var inputFD: Int32
-
-    @Option(name: .shortAndLong, help: "The output pipe filedescriptor used for communication with host process.")
-    var outputFD: Int32
-
-    static func frostflakeBenchmark(noLocks: Bool) async {
-        if sharedGenerator {
-            let frostflake = Frostflake(generatorIdentifier: 0)
-            Frostflake.setup(sharedGenerator: frostflake)
-
-            for _ in 0 ..< classIterationCount {
-                blackHole(Frostflake.generate())
-            }
-        } else {
-            for generatorId in 0 ..< classGeneratorCount {
-                let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId),
-                                                   concurrentAccess: !noLocks)
-
-                for _ in 0 ..< classIterationCount {
-                    blackHole(frostflakeFactory.generate())
-                }
-            }
+        for _ in 0 ..< 1000_000 {
+            let frostflake = frostflakeFactory.generate()
+            let description = frostflake.frostflakeDescription()
+            blackHole(description)
         }
+
+        benchmark.benchmarkDone() // implicit, but needed if we want cleanup after benchmark
     }
 
-    mutating func run() async throws {
-        let locks = skipLocks
-        print("inputFD = \(inputFD)")
-        print("outputFD = \(outputFD)")
-
-        let input = FileDescriptor.init(rawValue: inputFD)
-        let output = FileDescriptor.init(rawValue: outputFD)
-        var bufferLength: Int = 0
-        var count: Int = 0
-
-        try withUnsafeMutableBytes(of: &bufferLength) { (intPtr: UnsafeMutableRawBufferPointer) in
-            count = try input.read(into: intPtr)
+    Benchmark("Frostflake simple", disabled: true) { benchmark in
+        let frostflakeFactory = Frostflake(generatorIdentifier: 1_000)
+        for _ in 0 ..< 1000_000 {
+            let frostflake = frostflakeFactory.generate()
+            let description = frostflake.frostflakeDescription()
+            blackHole(description)
         }
-        print("Read \(count) bytes, \(bufferLength)")
-
-        let readBytes = try Array<UInt8>(unsafeUninitializedCapacity: bufferLength) { buf, count in
-            count = try input.read(into: UnsafeMutableRawBufferPointer(buf))
-        }
-
-        print("Read \(readBytes.count) bytes into \(readBytes.debugDescription)")
-
-        let benchmarkCommand = try XJSONDecoder().decode(BenchmarkCommand.self, from: readBytes)
-
-        print("benchmarkCommand is \(benchmarkCommand)")
-
-        await withTaskGroup(of: Void.self) { taskGroup in
-            taskGroup.addTask { await Self.frostflakeBenchmark(noLocks: locks) }
-        }
-        print("Generated \(classTotalCount) Frostflakes")
     }
 }

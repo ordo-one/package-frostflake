@@ -1,12 +1,13 @@
 import ArgumentParser
 import Frostflake
+import Benchmark
 
 let classGeneratorCount = 1
 let classIterationCount = 999_999
 let classTotalCount = classGeneratorCount * classIterationCount
 
 let sharedGenerator = true
-
+/*
 @main
 struct FrostflakeBenchmark: AsyncParsableCommand {
     @Flag(help: "Run with unprotected class implementation without locks")
@@ -40,3 +41,4 @@ struct FrostflakeBenchmark: AsyncParsableCommand {
         print("Generated \(classTotalCount) Frostflakes")
     }
 }
+*/
