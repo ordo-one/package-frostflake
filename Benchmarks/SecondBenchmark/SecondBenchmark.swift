@@ -5,23 +5,22 @@ import Frostflake
 func benchmarks() {
 
     Benchmark("Frostflake test",
-              probes: [.cpu, .memory, .syscalls, .threads],
+              metrics: [.cpu, .memory, .syscalls, .threads],
               isolation: true,
-              minimumRuntime: 5000,
+              minimumRuntime: 100,
               disabled: false) {  benchmark in
 
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
 
         benchmark.measure {
-            for _ in 0 ..< 100_000 {
-                let frostflake = frostflakeFactory.generate()
-                let description = frostflake.frostflakeDescription()
-                blackHole(description)
+            for _ in 1 ..< 1 << sequenceNumberBits {
+                blackHole(frostflakeFactory.generate())
             }
         }
     }
 
-    Benchmark("Frostflake simple") { benchmark in
+    Benchmark("Frostflake simple", timeUnits: .milliseconds) { benchmark in
+
         benchmark.measure {
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
             for _ in 0 ..< 100_000 {
