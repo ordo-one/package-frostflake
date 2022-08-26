@@ -8,7 +8,7 @@ let classIterationCount = 1000
 func benchmarks() {
     //    print("Hello")
     // Once during runtime setup can be done before registering benchmarks
-    let frostflake = Frostflake(generatorIdentifier: UInt16.random(in: 0...1000))
+    let frostflake = Frostflake(generatorIdentifier: 0)
     Frostflake.setup(sharedGenerator: frostflake)
 
     Benchmark("Frostflake shared generator",
@@ -18,7 +18,7 @@ func benchmarks() {
               disabled: false) {  benchmark in
         benchmark.measure {
             for _ in 0 ..< 10 {
-      //                  blackHole(Frostflake.generate())
+                        blackHole(Frostflake.generate())
             }
         }
         /*
