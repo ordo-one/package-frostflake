@@ -2,14 +2,27 @@
 import Benchmark
 import Frostflake
 
+#if canImport(Darwin)
+import Darwin
+#elseif canImport(Glibc)
+import Glibc
+#else
+#error("Unsupported Platform")
+#endif
+
 let classIterationCount = 1000
 
 @_dynamicReplacement(for: registerBenchmarks)
 func benchmarks() {
-    //    print("Hello")
+    print("Hello 1")
+  fflush(nil)
     // Once during runtime setup can be done before registering benchmarks
     let frostflake = Frostflake(generatorIdentifier: 0)
+    print("Hello 2")
+    fflush(nil)
     Frostflake.setup(sharedGenerator: frostflake)
+    print("Hello 3")
+    fflush(nil)
 
     Benchmark("Frostflake shared generator",
               metrics: [.cpu, .memory, .syscalls, .threads],
@@ -18,7 +31,11 @@ func benchmarks() {
               disabled: false) {  benchmark in
         benchmark.measure {
             for _ in 0 ..< 10 {
+                print("Hello 4")
+                fflush(nil)
                         blackHole(Frostflake.generate())
+                print("Hello 5")
+                fflush(nil)
             }
         }
         /*
