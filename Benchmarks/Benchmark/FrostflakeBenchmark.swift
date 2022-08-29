@@ -1,16 +1,5 @@
-// import ArgumentParser
 import Benchmark
 import Frostflake
-
-#if canImport(Darwin)
-import Darwin
-#elseif canImport(Glibc)
-import Glibc
-#else
-#error("Unsupported Platform")
-#endif
-
-let classIterationCount = 1000
 
 @_dynamicReplacement(for: registerBenchmarks)
 func benchmarks() {
@@ -38,7 +27,7 @@ func benchmarks() {
                                            concurrentAccess: true)
 
         benchmark.measure {
-            for _ in 0 ..< classIterationCount {
+            for _ in 0 ..< 1_000 {
                 blackHole(frostflakeFactory.generate())
             }
         }
@@ -49,16 +38,15 @@ func benchmarks() {
                                            concurrentAccess: false)
 
         benchmark.measure {
-            for _ in 0 ..< classIterationCount {
+            for _ in 0 ..< 1_000 {
                 blackHole(frostflakeFactory.generate())
             }
         }
     }
 
     Benchmark("Frostflake generate factories") { benchmark in
-
         benchmark.measure {
-            for _ in 0 ..< classIterationCount {
+            for _ in 0 ..< 1_000 {
                 let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
                                                    concurrentAccess: true)
                 blackHole(frostflakeFactory)
