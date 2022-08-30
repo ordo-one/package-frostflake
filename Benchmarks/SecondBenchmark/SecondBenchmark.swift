@@ -9,17 +9,21 @@ func benchmarks() {
               timeUnits: .automatic,
               isolation: true,
               warmup: false,
+              minimumIterations: 3,
               disabled: false) {  benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
 
         benchmark.measure {
-            for _ in 1 ..< 1 << sequenceNumberBits {
-                blackHole(frostflakeFactory.generate())
+            for _ in 1 ..< 25 {
+                let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
+                for _ in 1 ..< 1 << sequenceNumberBits {
+                    blackHole(frostflakeFactory.generate())
+                }
             }
         }
     }
 
-    Benchmark("Frostflake descriptions", timeUnits: .microseconds) { benchmark in
+    Benchmark("Frostflake descriptions", timeUnits: .automatic) { benchmark in
         benchmark.measure {
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
             for _ in 0 ..< 1_000 {
