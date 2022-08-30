@@ -9,9 +9,9 @@ func benchmarks() {
               timeUnits: .automatic,
               isolation: true,
               warmup: false,
+              minimumRuntime: 1500,
               minimumIterations: 3,
               disabled: false) {  benchmark in
-        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
 
         benchmark.measure {
             for _ in 1 ..< 25 {

@@ -25,7 +25,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-system", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
         .package(url: "https://github.com/ordo-one/package-concurrency-helpers", .upToNextMajor(from: "0.0.1")),
-        .package(path: "../package-benchmark")
+        .package(url: "https://github.com/ordo-one/package-benchmark", branch: "main"),
+//        .package(path: "../package-benchmark")
     ],
     targets: [
         .executableTarget(
