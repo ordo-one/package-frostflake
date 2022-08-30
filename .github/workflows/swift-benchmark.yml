@@ -21,7 +21,7 @@ jobs:
     - name: Swift version
       run: swift --version
     - name: Build
-      run: swift build
+      run: swift build -c release
     - name: Run benchmarks
       run: swift package --allow-writing-to-directory .benchmarkBaselines/ benchmark update-baseline pull_request
 #    - name: Switch to main
