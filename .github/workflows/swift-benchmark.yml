@@ -30,7 +30,7 @@ jobs:
       run: swift package --allow-writing-to-directory .benchmarkBaselines/ benchmark update-baseline main
     - name: Compare benchmarks
       id: benchmark
-      run: echo ::set-output name=benchmark_comparison::swift package benchmark compare main pull_request
+      run: echo ::set-output name=benchmark_comparison::$(swift package benchmark compare main pull_request)
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@v1
       with:
