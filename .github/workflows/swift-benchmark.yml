@@ -24,9 +24,9 @@ jobs:
       run: swift build
     - name: Run benchmarks
       run: swift package --allow-writing-to-directory .benchmarkBaselines/ benchmark update-baseline pull_request
-    - name: Switch to main
-      run: git checkout main
-    - name: Run benchmarks
+#    - name: Switch to main
+#      run: git checkout main
+    - name: Run benchmarks again
       run: swift package --allow-writing-to-directory .benchmarkBaselines/ benchmark update-baseline main
     - name: Compare benchmarks
       run: swift package benchmark compare main pull_request
