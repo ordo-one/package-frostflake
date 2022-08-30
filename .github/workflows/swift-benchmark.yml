@@ -29,12 +29,13 @@ jobs:
     - name: Run benchmarks again
       run: swift package --allow-writing-to-directory .benchmarkBaselines/ benchmark update-baseline main
     - name: Compare benchmarks
+      id: benchmark
       run: echo ::set-output name=benchmark_comparison::swift package benchmark compare main pull_request
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@v1
       with:
         GITHUB_TOKEN: ${{ secrets.CI_MACHINE_PAT }}
-        message: ${{ steps.vars.outputs.benchmark_comparison }}
+        message: ${{ steps.benchmark.outputs.benchmark_comparison }}
         comment_includes: 'Benchmark comparison'
     - name: Wipe gitconfig
       run: echo "" > ~/.gitconfig
