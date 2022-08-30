@@ -6,7 +6,9 @@ func benchmarks() {
 
     Benchmark("Frostflake test",
               metrics: [.cpu, .memory, .syscalls, .threads],
+              timeUnits: .automatic,
               isolation: true,
+              warmup: false,
               disabled: false) {  benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
 
@@ -17,7 +19,7 @@ func benchmarks() {
         }
     }
 
-    Benchmark("Frostflake descriptions", timeUnits: .milliseconds) { benchmark in
+    Benchmark("Frostflake descriptions", timeUnits: .microseconds) { benchmark in
         benchmark.measure {
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
             for _ in 0 ..< 1_000 {

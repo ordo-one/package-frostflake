@@ -33,7 +33,7 @@ func benchmarks() {
         }
     }
 
-    Benchmark("Frostflake without locks") { benchmark in
+    Benchmark("Frostflake without locks", warmup: true) { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
                                            concurrentAccess: false)
 
