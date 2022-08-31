@@ -33,4 +33,16 @@ func benchmarks() {
             }
         }
     }
+
+    Benchmark("Frostflake One Million+", metrics: [.wallClock], minimumIterations: 5) { benchmark in
+        benchmark.measure {
+            for _ in 0 ..< 100 {
+                let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
+
+                for _ in 1 ..< 1 << sequenceNumberBits {
+                    blackHole(frostflakeFactory.generate())
+                }
+            }
+        }
+    }
 }
