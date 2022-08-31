@@ -6,7 +6,7 @@
       "location" : "https://github.com/ordo-one/package-benchmark",
       "state" : {
         "branch" : "main",
-        "revision" : "16eb04298e069aa47790db96665f1b5f2992eb52"
+        "revision" : "769059ff410640c5097b8cb038824a57a7728487"
       }
     },
     {
@@ -61,6 +61,15 @@
       "state" : {
         "revision" : "025bcb1165deab2e20d4eaba79967ce73013f496",
         "version" : "1.2.1"
+      }
+    },
+    {
+      "identity" : "texttable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/cfilipov/TextTable",
+      "state" : {
+        "branch" : "master",
+        "revision" : "e03289289155b4e7aa565e32862f9cb42140596a"
       }
     }
   ],
