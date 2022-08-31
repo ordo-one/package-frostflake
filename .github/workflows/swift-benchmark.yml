@@ -37,6 +37,6 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.CI_MACHINE_PAT }}
         message: ${{ env.BENCHMARK }}
-        comment_includes: 'Benchmark comparison'
+        comment_includes: 'Comparing results'
     - name: Wipe gitconfig
       run: echo "" > ~/.gitconfig
