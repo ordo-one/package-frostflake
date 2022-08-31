@@ -1,4 +1,4 @@
-name: Swift macOS benchmark
+name: Swift macOS benchmark delta
 
 on:
   workflow_dispatch:
