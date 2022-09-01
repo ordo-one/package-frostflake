@@ -1,5 +1,12 @@
 import Benchmark
 import Frostflake
+#if canImport(Darwin)
+import Darwin
+#elseif canImport(Glibc)
+import Glibc
+#else
+#error("Unsupported Platform")
+#endif
 
 @_dynamicReplacement(for: registerBenchmarks)
 func benchmarks() {
@@ -21,7 +28,18 @@ func benchmarks() {
             }
         }
     }
+
 */
+
+    Benchmark("Empty benchmark") { benchmark in
+        benchmark.measure {
+            let z = malloc(1024*1024*1024)
+            blackHole(z)
+            free(z)
+
+        }
+    }
+
     Benchmark("Frostflake with locks") { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
                                            concurrentAccess: true)
