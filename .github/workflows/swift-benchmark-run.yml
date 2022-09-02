@@ -10,7 +10,7 @@ on:
 jobs:
   benchmark-macos:
     timeout-minutes: 60
-    runs-on: [[self-hosted, swift-latest], [self-hosted, macos-12, ARM64]]
+    runs-on: [self-hosted, macos-12, ARM64]
 # [self-hosted, macos-12]
 
     steps:
