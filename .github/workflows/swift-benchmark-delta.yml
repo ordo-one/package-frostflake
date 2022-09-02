@@ -10,7 +10,8 @@ on:
 jobs:
   benchmark-macos:
     timeout-minutes: 60
-    runs-on: [self-hosted, macos-12]
+    runs-on: [self-hosted, macos-12, ARM64]
+    # [self-hosted, macos-12]
 
     steps:
     - name: Wipe gitconfig
