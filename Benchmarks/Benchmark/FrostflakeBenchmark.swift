@@ -1,5 +1,7 @@
 import Benchmark
 import Frostflake
+
+// Pull in system for malloc testing
 #if canImport(Darwin)
 import Darwin
 #elseif canImport(Glibc)
@@ -12,24 +14,6 @@ import Glibc
 func benchmarks() {
 
     // Once during runtime setup can be done before registering benchmarks
-/* Can't run this benchmark due to max number of frostflakes per second!
-    let frostflake = Frostflake(generatorIdentifier: 0)
-    Frostflake.setup(sharedGenerator: frostflake)
-
-
-    Benchmark("Frostflake shared generator",
-              metrics: [.cpu, .memory, .syscalls, .threads],
-              isolation: true,
-              minimumRuntime: 100,
-              disabled: false) {  benchmark in
-        benchmark.measure {
-            for _ in 0 ..< 1_000_000 {
-                blackHole(Frostflake.generate())
-            }
-        }
-    }
-
-*/
 
     Benchmark("Empty benchmark") { benchmark in
         benchmark.measure {
@@ -75,4 +59,22 @@ func benchmarks() {
         }
     }
 
+    /* Can't run this benchmark due to max number of frostflakes per second!
+     let frostflake = Frostflake(generatorIdentifier: 0)
+     Frostflake.setup(sharedGenerator: frostflake)
+
+
+     Benchmark("Frostflake shared generator",
+     metrics: [.cpu, .memory, .syscalls, .threads],
+     isolation: true,
+     minimumRuntime: 100,
+     disabled: false) {  benchmark in
+     benchmark.measure {
+     for _ in 0 ..< 1_000_000 {
+     blackHole(Frostflake.generate())
+     }
+     }
+     }
+
+     */
 }
