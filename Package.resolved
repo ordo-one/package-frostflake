@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "package-benchmark",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ordo-one/package-benchmark",
+      "state" : {
+        "branch" : "main",
+        "revision" : "5656ed8f121da10e78facffa5c6450635086a7af"
+      }
+    },
+    {
       "identity" : "package-concurrency-helpers",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-concurrency-helpers",
