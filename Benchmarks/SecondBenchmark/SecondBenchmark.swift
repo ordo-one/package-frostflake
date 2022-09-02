@@ -16,8 +16,8 @@ func benchmarks() {
               timeUnits: .automatic,
               isolation: true,
               warmup: false,
-              minimumRuntime: 1500,
-              minimumIterations: 3,
+              desiredRuntime: 1500,
+              desiredIterations: 3,
               disabled: false) {  benchmark in
 
         benchmark.measure {
@@ -67,7 +67,7 @@ func benchmarks() {
         }
     }
 
-    Benchmark("Frostflake One Million+", metrics: [.wallClock], warmup: false, minimumIterations: 10) { benchmark in
+    Benchmark("Frostflake One Million+", metrics: [.wallClock], warmup: false, desiredIterations: 10) { benchmark in
         benchmark.measure {
             let z = malloc(2*1024*1024)
             blackHole(z)
@@ -75,7 +75,7 @@ func benchmarks() {
          //   free(z)
             let i = malloc(1*1024*1024)
             blackHole(i)
-            free(i) 
+            free(i)
             for _ in 0 ..< 10 {
 /*                let x = malloc(1024)
                 blackHole(x)

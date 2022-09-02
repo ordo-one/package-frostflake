@@ -33,10 +33,13 @@ func benchmarks() {
 
     Benchmark("Empty benchmark") { benchmark in
         benchmark.measure {
+            for _ in 0..<5 {
+                let z = malloc(1024*1024*1024)
+                blackHole(z)
+                free(z)
+            }
             let z = malloc(1024*1024*1024)
             blackHole(z)
-            free(z)
-
         }
     }
 
@@ -51,7 +54,7 @@ func benchmarks() {
         }
     }
 
-    Benchmark("Frostflake without locks") { benchmark in
+    Benchmark("Frostflake without locks", desiredIterations: 1_000_000) { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
                                            concurrentAccess: false)
 
