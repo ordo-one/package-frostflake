@@ -21,6 +21,7 @@ jobs:
       run: git config --global url."https://ordo-ci:${{ secrets.CI_MACHINE_PAT }}@github.com".insteadOf "https://github.com"
     - name: Swift version
       run: swift --version
+    - run: echo "/opt/homebrew/bin:/usr/local/bin" >> $GITHUB_PATH
     - name: Run benchmarks
       run: swift package --allow-writing-to-directory .benchmarkBaselines/ benchmark update-baseline pull_request
 #    - name: Switch to main
