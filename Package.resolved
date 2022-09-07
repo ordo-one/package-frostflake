@@ -1,21 +1,21 @@
 {
   "pins" : [
     {
-      "identity" : "package-benchmark",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ordo-one/package-benchmark",
-      "state" : {
-        "branch" : "main",
-        "revision" : "ba94daa40edbe7fb9eea5e01eedfd5bc456e4991"
-      }
-    },
-    {
       "identity" : "package-concurrency-helpers",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-concurrency-helpers",
       "state" : {
         "revision" : "39ce7957d50c1b68dddbd5813bc3f91257e42a43",
         "version" : "0.0.2"
+      }
+    },
+    {
+      "identity" : "package-jemalloc",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ordo-one/package-jemalloc",
+      "state" : {
+        "revision" : "e8a5db026963f5bfeac842d9d3f2cc8cde323b49",
+        "version" : "1.0.0"
       }
     },
     {
