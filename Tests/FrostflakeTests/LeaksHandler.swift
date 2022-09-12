@@ -6,17 +6,17 @@
     func leaksExit() {
         @discardableResult
         func leaksTo(_ file: String) -> Process {
-            let out = FileHandle(forWritingAtPath: file)!
+/*            let out = FileHandle(forWritingAtPath: file)!
             defer {
                 do {
                     try out.close()
                 } catch {}
-            }
+            }*/
             let process = Process()
             process.launchPath = "/usr/bin/leaks"
             process.arguments = ["\(getpid())"]
-            process.standardOutput = out
-            process.standardError = out
+            process.standardOutput = FileHandle.standardOutput
+            process.standardError = FileHandle.nullDevice
             process.launch()
             process.waitUntilExit()
             return process
@@ -30,7 +30,7 @@
             print("================")
             print("Oh no, we leaked")
             print("================")
-            leaksTo("/dev/null") // Have replaced it to /dev/null to avoid crash
+            leaksTo("/Users/daa/leak.out") // Have replaced it to /dev/null to avoid crash
         } else {
             print("No leaks detected with 'leaks'")
         }
