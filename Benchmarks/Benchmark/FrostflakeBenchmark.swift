@@ -25,18 +25,17 @@ func benchmarks() {
 
     // Once during runtime setup can be done before registering benchmarks
 
-    Benchmark("Minimal benchmark") { benchmark in
+    Benchmark("Minimal benchmark", metrics: [.wallClock]) { benchmark in
     }
 
-    Benchmark("Scaling factor benchmark", scalingFactor: 1_000) { benchmark in
+    Benchmark("Scaling factor benchmark", scalingFactor: .mega) { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
                                            concurrentAccess: true)
 
         benchmark.startMeasurement()
-        for _ in 0 ..< benchmark.scalingFactor {
+        for _ in 0 ..< benchmark.scalingFactor.rawValue {
             blackHole(frostflakeFactory.generate())
         }
-
     }
 
 
@@ -60,8 +59,8 @@ func benchmarks() {
         }
     }
 
-    Benchmark("Frostflake generate factories") { benchmark in
-        for _ in 0 ..< 1_000 {
+    Benchmark("Frostflake generate factories", scalingFactor: .kilo) { benchmark in
+        for _ in 0 ..< benchmark.scalingFactor.rawValue {
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
                                                concurrentAccess: true)
             blackHole(frostflakeFactory)

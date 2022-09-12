@@ -17,18 +17,17 @@ func benchmarks() {
               isolation: true,
               warmup: false,
               desiredDuration: .milliseconds(150),
-              desiredIterations: 3,
+              desiredIterations: 30,
               disabled: false) {  benchmark in
-
-        for _ in 1 ..< 25 {
+        for _ in 1 ..< 15 {
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
             for _ in 1 ..< 1 << sequenceNumberBits {
                 blackHole(frostflakeFactory.generate())
             }
         }
-    }
+ }
 
-    Benchmark("Frostflake descriptions", timeUnits: .automatic) { benchmark in
+    Benchmark("Frostflake descriptions") { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
         for _ in 0 ..< 100 {
             let frostflake = frostflakeFactory.generate()
@@ -36,11 +35,11 @@ func benchmarks() {
             blackHole(description)
 
             // Generate some mallocs for testing
-            for _ in 0..<100 {
+  /*          for _ in 0..<100 {
                 let x = malloc(100)
                 blackHole(x)
               //  free(x)
-            }
+            } */
             /*
              var a = Array(repeating: "d", count: 1000_000)
              var b = Array(repeating: "d", count: 1000_000)
@@ -63,30 +62,11 @@ func benchmarks() {
         }
     }
 
-    Benchmark("Frostflake One Million+", metrics: [.wallClock], warmup: false, desiredIterations: 10) { benchmark in
-        let z = malloc(2*1024*1024)
-        blackHole(z)
-        free(z)
-     //   free(z)
-        let i = malloc(1*1024*1024)
-        blackHole(i)
-        free(i)
-        for _ in 0 ..< 10 {
-/*                let x = malloc(1024)
-            blackHole(x)
-            free(x)
-            let y = malloc(1024)
-            blackHole(y)
-            free(y) */
-            let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
+    Benchmark("Frostflake One Million+", metrics: [.wallClock, .throughput], scalingFactor: .mega, desiredIterations: 10) { benchmark in
+        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 1...4000))
 
-            for _ in 1 ..< 1 << sequenceNumberBits {
-                blackHole(frostflakeFactory.generate())
-            }
+        for _ in 0 ..< benchmark.scalingFactor.rawValue {
+            blackHole(frostflakeFactory.generate())
         }
-        let x = malloc(1*1024*1024)
-        blackHole(x)
-        free(x)
-        benchmark.stopMeasurement()
     }
 }
