@@ -9,8 +9,11 @@
  */
 
 import Benchmark
-import BenchmarkSupport
 import Frostflake
+
+import BenchmarkSupport
+@main
+extension BenchmarkRunner {}
 
 // Pull in system for malloc testing
 #if canImport(Darwin)

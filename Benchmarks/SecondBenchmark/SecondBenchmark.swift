@@ -1,5 +1,4 @@
 import Benchmark
-import BenchmarkSupport
 import Frostflake
 #if canImport(Darwin)
 import Darwin
@@ -8,6 +7,9 @@ import Glibc
 #else
 #error("Unsupported Platform")
 #endif
+
+import BenchmarkSupport
+@main extension BenchmarkRunner {}
 
 @_dynamicReplacement(for: registerBenchmarks)
 func benchmarks() {
