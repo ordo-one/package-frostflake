@@ -20,6 +20,8 @@ jobs:
       run: git config --global url."https://ordo-ci:${{ secrets.CI_MACHINE_PAT }}@github.com".insteadOf "https://github.com"
     - name: Swift version
       run: swift --version
+    - name: Brew environment
+      run: echo "/opt/homebrew/bin:/usr/local/bin" >> $GITHUB_PATH
     - name: Run tests
       run: swift test --parallel
     - name: Wipe gitconfig
