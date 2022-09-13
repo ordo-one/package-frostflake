@@ -28,6 +28,18 @@ func benchmarks() {
     Benchmark("Minimal benchmark", metrics: [.wallClock]) { benchmark in
     }
 
+
+    Benchmark("Custom benchmark", metrics: [.custom("testMetric")]) { benchmark in
+        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
+                                           concurrentAccess: true)
+
+        benchmark.measurement(.custom("testMetric"), 987347711)
+            for _ in 0 ..< benchmark.scalingFactor.rawValue {
+            blackHole(frostflakeFactory.generate())
+        }
+
+    }
+
     Benchmark("Scaling factor benchmark", scalingFactor: .mega) { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
                                            concurrentAccess: true)

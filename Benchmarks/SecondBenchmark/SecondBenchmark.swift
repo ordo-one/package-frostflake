@@ -12,7 +12,7 @@ import Glibc
 func benchmarks() {
 
     Benchmark("Frostflake test",
-              metrics: BenchmarkMetrics.extended,
+              metrics: BenchmarkMetric.extended,
               timeUnits: .automatic,
               isolation: true,
               warmup: false,
