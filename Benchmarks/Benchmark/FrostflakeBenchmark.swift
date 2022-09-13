@@ -9,6 +9,7 @@
  */
 
 import Benchmark
+import BenchmarkSupport
 import Frostflake
 
 // Pull in system for malloc testing
@@ -24,6 +25,7 @@ import Glibc
 func benchmarks() {
 
     // Once during runtime setup can be done before registering benchmarks
+
 
     Benchmark("Minimal benchmark", metrics: [.wallClock]) { benchmark in
     }
