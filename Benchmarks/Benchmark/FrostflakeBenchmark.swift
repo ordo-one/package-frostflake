@@ -1,19 +1,6 @@
-/*
- import Benchmark
-
- @_dynamicReplacement(for: registerBenchmarks)
- func benchmarks() {
-    Benchmark("Minimal benchmark") { benchmark in
-    }
-  }
- */
-
-import Benchmark
 import Frostflake
-
 import BenchmarkSupport
-@main
-extension BenchmarkRunner {}
+@main extension BenchmarkRunner {}
 
 // Pull in system for malloc testing
 #if canImport(Darwin)

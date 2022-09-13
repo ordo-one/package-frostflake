@@ -1,4 +1,3 @@
-import Benchmark
 import Frostflake
 #if canImport(Darwin)
 import Darwin
