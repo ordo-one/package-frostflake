@@ -15,18 +15,14 @@ let package = Package(
             name: "flake",
             targets: ["SwiftFrostflake"]
         ),
-/*        .executable(
-            name: "frostflakeBenchmark",
-            targets: ["Frostflake-Benchmark"]
-        ), */
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/apple/swift-system", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
         .package(url: "https://github.com/ordo-one/package-concurrency-helpers", .upToNextMajor(from: "0.0.1")),
-      //   .package(url: "https://github.com/ordo-one/package-benchmark", branch: "main"),
-          .package(path: "../package-benchmark")
+         .package(url: "https://github.com/ordo-one/package-benchmark", branch: "main"),
+      //    .package(path: "../package-benchmark")
     ],
     targets: [
         // Command line Frostflake generator
