@@ -10,6 +10,7 @@ on:
 jobs:
   thread-sanitizer:
     strategy:
+      fail-fast: false
       matrix:
         os: [[swift-latest, ubuntu-latest, self-hosted], [swift-nightly, ubuntu-latest, self-hosted], [macos-12, self-hosted]]
 

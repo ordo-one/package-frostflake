@@ -10,6 +10,7 @@ on:
 jobs:
   build-linux:
     strategy:
+      fail-fast: false
       matrix:
         os: [[swift-latest, ubuntu-latest, self-hosted], [swift-nightly, ubuntu-latest, self-hosted]]
 
