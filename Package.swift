@@ -72,11 +72,6 @@ let package = Package(
                            "Frostflake",
                            .product(name: "CwlPreconditionTesting", package: "CwlPreconditionTesting",
                                     condition: .when(platforms: [.macOS]))]
-        ),
-        .testTarget(
-            name: "FrostflakePerformanceTests",
-            dependencies: ["Frostflake"],
-            swiftSettings: [.unsafeFlags(["-O"])]
         )
     ]
 )
