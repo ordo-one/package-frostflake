@@ -25,6 +25,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-system", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
         .package(url: "https://github.com/ordo-one/package-concurrency-helpers", .upToNextMajor(from: "0.0.1")),
+        .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting", from: Version("2.0.0"))
     ],
     targets: [
         .executableTarget(
@@ -51,7 +52,9 @@ let package = Package(
         .testTarget(
             name: "FrostflakeTests",
             dependencies: ["SwiftFrostflake",
-                           "Frostflake"]
+                           "Frostflake",
+                           .product(name: "CwlPreconditionTesting", package: "CwlPreconditionTesting",
+                                    condition: .when(platforms: [.macOS]))]
         ),
         .testTarget(
             name: "FrostflakePerformanceTests",
