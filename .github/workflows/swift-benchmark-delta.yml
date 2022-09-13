@@ -1,0 +1,44 @@
+name: Swift macOS benchmark delta
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  
+jobs:
+  benchmark-macos:
+    timeout-minutes: 60
+    runs-on: [self-hosted, macos-12, ARM64]
+    # [self-hosted, macos-12]
+
+    steps:
+    - name: Wipe gitconfig
+      run: echo "" > ~/.gitconfig
+    - uses: actions/checkout@v3
+    - name: Git URL token override
+      run: git config --global url."https://ordo-ci:${{ secrets.CI_MACHINE_PAT }}@github.com".insteadOf "https://github.com"
+    - name: Swift version
+      run: swift --version
+    - run: echo "/opt/homebrew/bin:/usr/local/bin" >> $GITHUB_PATH
+    - name: Run benchmarks
+      run: swift package --allow-writing-to-directory .benchmarkBaselines/ benchmark update-baseline pull_request
+#    - name: Switch to main
+#      run: git checkout main
+    - name: Run benchmarks again
+      run: swift package --allow-writing-to-directory .benchmarkBaselines/ benchmark update-baseline main
+    - name: Compare benchmarks
+      id: benchmark
+      run: |
+        echo 'BENCHMARK<<EOF' >> $GITHUB_ENV
+        swift package benchmark compare main pull_request --format markdown >> $GITHUB_ENV
+        echo 'EOF' >> $GITHUB_ENV
+    - name: Comment PR
+      uses: thollander/actions-comment-pull-request@v1
+      with:
+        GITHUB_TOKEN: ${{ secrets.CI_MACHINE_PAT }}
+        message: ${{ env.BENCHMARK }}
+        comment_includes: 'Comparing results'
+    - name: Wipe gitconfig
+      run: echo "" > ~/.gitconfig
