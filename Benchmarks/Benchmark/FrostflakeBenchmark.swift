@@ -7,23 +7,23 @@ func benchmarks() {
 
     // Once during runtime setup can be done before registering benchmarks
 
-    Benchmark("Frostflake with locks", scalingFactor: .kilo, desiredDuration: .seconds(1)) { benchmark in
+    Benchmark("Frostflake with locks", throughputScalingFactor: .kilo, desiredDuration: .seconds(1)) { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
                                            concurrentAccess: true)
 
         benchmark.startMeasurement()
-        for _ in 0 ..< benchmark.scalingFactor.rawValue {
-            blackHole(frostflakeFactory.generate())
+        for _ in 0 ..< benchmark.throughputScalingFactor.rawValue {
+            BenchmarkSupport.blackHole(frostflakeFactory.generate())
         }
     }
 
-    Benchmark("Frostflake without locks", scalingFactor: .kilo, desiredDuration: .seconds(1)) { benchmark in
+    Benchmark("Frostflake without locks", throughputScalingFactor: .kilo, desiredDuration: .seconds(1)) { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
                                            concurrentAccess: false)
 
         benchmark.startMeasurement()
-        for _ in 0 ..< benchmark.scalingFactor.rawValue {
-            blackHole(frostflakeFactory.generate())
+        for _ in 0 ..< benchmark.throughputScalingFactor.rawValue {
+            BenchmarkSupport.blackHole(frostflakeFactory.generate())
         }
     }
 

@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-benchmark",
       "state" : {
-        "revision" : "f39626a15f1f9bd28408013fb38b747062c925ba",
-        "version" : "0.0.2"
+        "revision" : "438adfbe6c8f5681f3104885beacb7ae61daea5a",
+        "version" : "0.3.2"
       }
     },
     {
@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-concurrency-helpers",
       "state" : {
-        "revision" : "39ce7957d50c1b68dddbd5813bc3f91257e42a43",
-        "version" : "0.0.2"
+        "revision" : "23c503fc8830db0e784f567497de62be0f8b43df",
+        "version" : "0.0.7"
       }
     },
     {
@@ -43,6 +43,15 @@
       "state" : {
         "revision" : "e8a5db026963f5bfeac842d9d3f2cc8cde323b49",
         "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "package-latency-tools",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ordo-one/package-latency-tools",
+      "state" : {
+        "revision" : "bc451c5a3246c26e0d2feb0987427408349a8fe6",
+        "version" : "0.0.1"
       }
     },
     {
@@ -93,7 +102,7 @@
     {
       "identity" : "texttable",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/hassila/TextTable",
+      "location" : "https://github.com/ordo-one/TextTable",
       "state" : {
         "revision" : "e03289289155b4e7aa565e32862f9cb42140596a",
         "version" : "0.0.1"
