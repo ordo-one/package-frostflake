@@ -20,7 +20,9 @@ jobs:
     # Needed otherwise xcode git hangs on checkout
     - name: Wipe gitconfig Mac
       if: ${{ runner.os == 'Macos' }}
-      run: echo "" > ~/.gitconfig
+      run: |
+        echo "" > ~/.gitconfig
+        echo "/opt/homebrew/bin:/usr/local/bin" >> $GITHUB_PATH
 
     - uses: actions/checkout@v3
 

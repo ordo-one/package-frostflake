@@ -19,10 +19,10 @@ jobs:
       id: spm_target
       run: |
         SPM_DEFAULT_TARGET=$(swift package dump-package | jq -r '.products | .[] | select(.type | has("library")) | .name' | head -1)
-        echo "::set-output name=spmlibrarytarget::$SPM_DEFAULT_TARGET"
+        echo "spmlibrarytarget=${SPM_DEFAULT_TARGET}" >> $GITHUB_ENV
     - name: Build
-      if: ${{ steps.spm_target.outputs.spmlibrarytarget }}
+      if: ${{ env.spmlibrarytarget }}
       run: swift build
     - name: Analyze API breakage
-      if: ${{ steps.spm_target.outputs.spmlibrarytarget }}
-      run: swift package diagnose-api-breaking-changes origin/main --targets ${{ steps.spm_target.outputs.spmlibrarytarget }}
+      if: ${{ env.spmlibrarytarget }}
+      run: swift package diagnose-api-breaking-changes origin/main --targets ${{ env.spmlibrarytarget }}

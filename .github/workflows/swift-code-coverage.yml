@@ -15,14 +15,24 @@ jobs:
     - name: Git URL token override
       run: git config --global url."https://ordo-ci:${{ secrets.CI_MACHINE_PAT }}@github.com".insteadOf "https://github.com"
     - name: Run tests
-      run: swift test --parallel --enable-code-coverage
+      run: |
+        [ -d Tests ] && swift test --parallel --enable-code-coverage
 #    - name: Extract default SPM library testtarget
 #      id: spm_test_target
 #      run: |
 #        SPM_DEFAULT_TEST_TARGET=$(swift package dump-package | jq -r '.targets | .[] | select(.type == "test") | .name' | tail -1)
-#        echo "::set-output name=spmlibrarytesttarget::$SPM_DEFAULT_TEST_ARGET"
+#        echo "spmlibrarytesttarget=${SPM_DEFAULT_TEST_TARGET}" >> $GITHUB_ENV
     - name: Export code coverage
-      run: llvm-cov export -format="lcov" .build/debug/${{ github.event.repository.name }}PackageTests.xctest -instr-profile .build/debug/codecov/default.profdata > info.lcov
+      run: |
+         xctest_binary=".build/debug/${{ github.event.repository.name }}PackageTests.xctest"
+         if [ ! -f ${xctest_binary} ]; then
+             xctest_binary=$(find .build/debug/ -type f -name "*.xctest" | tail -1)
+             echo "Will llvm-cov '${xctest_binary}'"
+         fi
+
+         if [ -f ${xctest_binary} ]; then
+             llvm-cov export -format="lcov" ${xctest_binary} -instr-profile .build/debug/codecov/default.profdata > info.lcov
+         fi
     - name: Upload codecov
       uses: codecov/codecov-action@v2
       with: 
