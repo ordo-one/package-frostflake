@@ -17,21 +17,26 @@ jobs:
     - uses: actions/checkout@v3
     - name: Extract default SPM library target
       id: spm_target
+      continue-on-error: true
       run: |
+        mkdir -p ./docs
         SPM_DEFAULT_TARGET=$(swift package dump-package | jq -r '.products | .[] | select(.type | has("library")) | .name' | head -1)
-        echo "::set-output name=spmlibrarytarget::$SPM_DEFAULT_TARGET"
-    - run: mkdir -p ./docs
-      if: ${{ steps.spm_target.outputs.spmlibrarytarget }}
+        grep -q swift-docc-plugin Package.swift
+        if [ $? -eq 0 ]; then
+            echo "spmlibrarytarget=${SPM_DEFAULT_TARGET}" >> $GITHUB_ENV
+        fi
     - uses: fwcd/swift-docc-action@v1
+      if: ${{ env.spmlibrarytarget }}
       with:
-          target: ${{ steps.spm_target.outputs.spmlibrarytarget }}
+          target: ${{ env.spmlibrarytarget }}
           output: ./docs
           hosting-base-path: ${{ github.event.repository.name }}
           disable-indexing: 'true'
           transform-for-static-hosting: 'true'
-    - run: tar czpf Documentation.tar.gz ./docs
-      if: ${{ steps.spm_target.outputs.spmlibrarytarget }}
+    - if: ${{ env.spmlibrarytarget }}
+      run: tar czpf Documentation.tar.gz ./docs
     - uses: actions/upload-artifact@v3
+      if: ${{ env.spmlibrarytarget }}
       with:
         name: Documentation
         path: Documentation.tar.gz

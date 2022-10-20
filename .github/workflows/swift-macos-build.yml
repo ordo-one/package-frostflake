@@ -14,15 +14,18 @@ jobs:
 
     steps:
     - name: Wipe gitconfig
-      run: echo "" > ~/.gitconfig
+      run: |
+        echo "" > ~/.gitconfig
+        echo "/opt/homebrew/bin:/usr/local/bin" >> $GITHUB_PATH
     - uses: actions/checkout@v3
     - name: Git URL token override
       run: git config --global url."https://ordo-ci:${{ secrets.CI_MACHINE_PAT }}@github.com".insteadOf "https://github.com"
     - name: Swift version
       run: swift --version
-    - name: Brew environment
-      run: echo "/opt/homebrew/bin:/usr/local/bin" >> $GITHUB_PATH
+    - name: Build
+      run: swift build
     - name: Run tests
-      run: swift test --parallel
+      run: |
+        [ -d Tests ] && swift test --parallel
     - name: Wipe gitconfig
       run: echo "" > ~/.gitconfig
