@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [[benchmark, swift-latest, self-hosted]]
+        os: [[Linux, benchmark-swift-latest, self-hosted]]
 
     steps:
       - uses: actions/checkout@v3
