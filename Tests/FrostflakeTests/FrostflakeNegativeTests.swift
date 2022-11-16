@@ -14,14 +14,15 @@
 
             let exceptionBadInstruction: BadInstructionException? = catchBadInstruction {
                 repeat {
-                    for _ in 1 ... 10_000 {
+                    for _ in Frostflake.allowedSequenceNumberRange {
                         blackHole(frostflakeFactory.generate())
+                        blackHole(frostflakeFactory.generate())
+                        idGenerated += 2
                     }
-                    idGenerated += 10_000
                 } while currentSecondsSinceEpoch() - testStarted <= 1
             }
-            if idGenerated < 1_000_000 {
-                throw XCTSkip("This host is pretty slow, only \(idGenerated) generated for 1 second")
+            if idGenerated < Frostflake.allowedSequenceNumberRange.count {
+                throw XCTSkip("This host is pretty slow, only \(idGenerated) generated")
             }
             XCTAssert(exceptionBadInstruction != nil,
                       "precondition on too many FrostFlake IDs per second was not triggered")
