@@ -36,8 +36,8 @@ and then add the dependency to your target, e.g.:
 ```
 # Usage
 
-The `generatorIdentifier` must be uniquely in use at a given point in time, either it needs to be
-set with a configuration file / persisted, or a global broker needs to assign it to components 
+The `generatorIdentifier` must be uniquely in use at a given point in time, either it needs to 
+be set with a configuration file / persisted, or a global broker needs to assign it to components 
 that needs flake generators at runtime such that the same identifier is not used concurrently.
 
 ```swift
