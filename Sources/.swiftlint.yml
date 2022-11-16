@@ -2,4 +2,5 @@ opt_in_rules:
   - file_name
 file_name:
   excluded:
-    "FrostflakeDefinitions.swift"
+    - "FrostflakeDefinitions.swift"
+    - "FrostflakeHelpers.swift"
