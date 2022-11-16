@@ -7,8 +7,13 @@ func benchmarks() {
 
     // Once during runtime setup can be done before registering benchmarks
 
-    Benchmark("Frostflake with locks", throughputScalingFactor: .kilo, desiredDuration: .seconds(1)) { benchmark in
-        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
+    Benchmark.defaultThroughputScalingFactor = .mega
+    Benchmark.defaultDesiredDuration = .seconds(2)
+    Benchmark.defaultWarmupIterations = 5
+    Benchmark.defaultDesiredIterations = Int(UInt16.max) - Benchmark.defaultWarmupIterations - 1
+
+    Benchmark("Frostflake with locks") { benchmark in
+        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(benchmark.currentIteration),
                                            concurrentAccess: true)
 
         benchmark.startMeasurement()
@@ -17,8 +22,8 @@ func benchmarks() {
         }
     }
 
-    Benchmark("Frostflake without locks", throughputScalingFactor: .kilo, desiredDuration: .seconds(1)) { benchmark in
-        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
+    Benchmark("Frostflake without locks") { benchmark in
+        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(benchmark.currentIteration),
                                            concurrentAccess: false)
 
         benchmark.startMeasurement()
@@ -27,22 +32,25 @@ func benchmarks() {
         }
     }
 
-    /* Can't run this benchmark due to max number of frostflakes per second!
-     let frostflake = Frostflake(generatorIdentifier: 0)
-     Frostflake.setup(sharedGenerator: frostflake)
+    Benchmark("Frostflake descriptions", throughputScalingFactor: .kilo ) { benchmark in
+        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(benchmark.currentIteration))
+        for _ in 0 ..< benchmark.throughputScalingFactor.rawValue {
+            let frostflake = frostflakeFactory.generate()
+            let description = frostflake.frostflakeDescription()
+            BenchmarkSupport.blackHole(description)
+        }
+    }
 
+    let frostflake = Frostflake(generatorIdentifier: 0)
+    Frostflake.setup(sharedGenerator: frostflake)
 
-     Benchmark("Frostflake shared generator",
-     metrics: [.cpu, .memory, .syscalls, .threads],
-     isolation: true,
-     minimumRuntime: 100,
-     disabled: false) {  benchmark in
-     benchmark.measure {
-     for _ in 0 ..< 1_000_000 {
-     blackHole(Frostflake.generate())
-     }
-     }
-     }
-
-     */
+    // Limited to max 1M or we'll hit the max threshold here...
+    Benchmark("Frostflake shared generator",
+              warmupIterations: 0,
+              throughputScalingFactor: .kilo,
+              desiredIterations: .kilo(1)) {  benchmark in
+        for _ in 0 ..< benchmark.throughputScalingFactor.rawValue {
+            BenchmarkSupport.blackHole(Frostflake.generate())
+        }
+    }
 }

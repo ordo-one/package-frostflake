@@ -1,4 +1,5 @@
 @testable import Frostflake
+@testable import DateTime
 
 import XCTest
 
@@ -88,13 +89,13 @@ final class FrostflakeTests: XCTestCase {
     func testFrostflakeClassOverflowNextSecond() {
         let frostflakeFactory = Frostflake(generatorIdentifier: 0)
 
-        for _ in 1 ..< 1 << sequenceNumberBits {
+        for _ in 1 ..< 1 << Frostflake.sequenceNumberBits {
             blackHole(frostflakeFactory.generate())
         }
 
         sleep(1) // Needed so that we don't overflow the sequenceNumberBits in the same second
 
-        for _ in 1 ..< 1 << sequenceNumberBits {
+        for _ in 1 ..< 1 << Frostflake.sequenceNumberBits {
             blackHole(frostflakeFactory.generate())
         }
     }
