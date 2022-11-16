@@ -8,8 +8,8 @@ import XCTest
 #endif
 
 final class FrostflakeTests: XCTestCase {
-    private let classGeneratorCount = 1_000
-    private let classIterationCount = 1_000
+
+    let generatorIdentifierMax = 2
 
     override class func setUp() {
         #if canImport(Darwin)
@@ -66,21 +66,23 @@ final class FrostflakeTests: XCTestCase {
     }
 
     func testFrostflake() async {
-        for generatorId in 0 ..< classGeneratorCount {
+        XCTAssert(Frostflake.validGeneratorIdentifierRange.contains(generatorIdentifierMax))
+        for generatorId in 0 ..< generatorIdentifierMax {
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId))
 
-            for _ in 0 ..< classIterationCount {
+            for _ in Frostflake.allowedSequenceNumberRange {
                 blackHole(frostflakeFactory.generate())
             }
         }
     }
 
     func testFrostflakeClassWithoutLocks() async {
-        for generatorId in 0 ..< classGeneratorCount {
+        XCTAssert(Frostflake.validGeneratorIdentifierRange.contains(generatorIdentifierMax))
+        for generatorId in 0 ..< generatorIdentifierMax {
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId),
                                                concurrentAccess: false)
 
-            for _ in 0 ..< classIterationCount {
+            for _ in Frostflake.allowedSequenceNumberRange {
                 blackHole(frostflakeFactory.generate())
             }
         }
@@ -89,13 +91,13 @@ final class FrostflakeTests: XCTestCase {
     func testFrostflakeClassOverflowNextSecond() {
         let frostflakeFactory = Frostflake(generatorIdentifier: 0)
 
-        for _ in 1 ..< 1 << Frostflake.sequenceNumberBits {
+        for _ in Frostflake.allowedSequenceNumberRange {
             blackHole(frostflakeFactory.generate())
         }
 
         sleep(1) // Needed so that we don't overflow the sequenceNumberBits in the same second
 
-        for _ in 1 ..< 1 << Frostflake.sequenceNumberBits {
+        for _ in Frostflake.allowedSequenceNumberRange {
             blackHole(frostflakeFactory.generate())
         }
     }
@@ -105,7 +107,7 @@ final class FrostflakeTests: XCTestCase {
 
         Frostflake.setup(sharedGenerator: frostflake)
 
-        for _ in 0 ..< classIterationCount {
+        for _ in Frostflake.allowedSequenceNumberRange {
             blackHole(Frostflake.generate())
         }
     }
