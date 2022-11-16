@@ -6,7 +6,7 @@ public extension Frostflake {
     /// Default number of bits allocated to seconds, default 32 bits, gives us ~136 years
     static let secondsBits = 32
 
-    /// Default number of bits allocated to sequence, default 20 bits, 2.097.152 id:s max per second 
+    /// Default number of bits allocated to sequence, default 21 bits, 2.097.152 id:s max per second 
     static let sequenceNumberBits = 21
 
     /// Default number of bits allocated to generator part, default 11 bits, 2.048 unique concurrent generators in the system
