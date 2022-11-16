@@ -54,20 +54,21 @@ public final class Frostflake {
     ///   - generatorIdentifier: The unique generator identifier for this instances, must be unique at every
     ///   point in time in the whole system, so either should be persisted and reused across runs, or it should be
     ///   coordinated with a global service that assigns them during startup of the component.
-    ///   - forcedTimeRegenerationInterval: Regenerate timestamp forcibly after this many events. 0 -> never force, 1-> always force, n -> after n events
+    ///   - forcedTimeRegenerationInterval: Regenerate timestamp forcibly after this many events.
+    ///   0 -> never force, 1-> always force, n -> after n events
     ///   - concurrentAccess: Specifies whether the generator can be accessed from multiple
     ///   tasks/threads concurrently - if the generator is **only** used from a synchronized state
     ///   like .eg. an Actor context, you can specify false here to avoid the internal locking overhead
+    // swiftlint:disable line_length
     @inlinable
     public init(generatorIdentifier: UInt16,
                 forcedTimeRegenerationInterval: UInt32 = defaultForcedTimeRegenerationInterval,
                 concurrentAccess: Bool = true) {
-        assert(Frostflake.validGeneratorIdentifierRange.contains(Int(generatorIdentifier)),
-               "Frostflake generatorIdentifier \(generatorIdentifier) used more than \(Frostflake.generatorIdentifierBits) bits")
-        assert((Frostflake.sequenceNumberBits + Frostflake.generatorIdentifierBits) == 32,
-               "Frostflake sequenceNumberBits (\(Frostflake.sequenceNumberBits)) + " +
-               "generatorIdentifierBits (\(Frostflake.generatorIdentifierBits)) != 32")
-
+        assert(Self.validGeneratorIdentifierRange.contains(Int(generatorIdentifier)),
+               "Frostflake generatorIdentifier \(generatorIdentifier) used more than \(Self.generatorIdentifierBits) bits")
+        assert((Self.sequenceNumberBits + Self.generatorIdentifierBits) == 32,
+               "Frostflake sequenceNumberBits (\(Self.sequenceNumberBits)) + " +
+                   "generatorIdentifierBits (\(Self.generatorIdentifierBits)) != 32")
 
         if concurrentAccess {
             lock = Lock()
@@ -96,13 +97,13 @@ public final class Frostflake {
     public func generate() -> FrostflakeIdentifier {
         lock?.lock()
 
-        assert(Frostflake.allowedSequenceNumberRange.contains(Int(sequenceNumber)), "sequenceNumber ouf of allowed range")
+        assert(Self.allowedSequenceNumberRange.contains(Int(sequenceNumber)), "sequenceNumber ouf of allowed range")
 
         sequenceNumber += 1
 
         // Have we used all the sequence number bits, we need get a new base timestamp
-        if Frostflake.allowedSequenceNumberRange.contains(Int(sequenceNumber)) == false {
-            assert(sequenceNumber == (1 << Frostflake.sequenceNumberBits), "sequenceNumber != 1 << sequenceNumberBits")
+        if Self.allowedSequenceNumberRange.contains(Int(sequenceNumber)) == false {
+            assert(sequenceNumber == (1 << Self.sequenceNumberBits), "sequenceNumber != 1 << sequenceNumberBits")
 
             let newCurrentSeconds = currentSecondsSinceEpoch()
 
@@ -122,8 +123,8 @@ public final class Frostflake {
             }
         }
 
-        var returnValue = UInt64(currentSeconds) << Frostflake.secondsBits
-        returnValue += UInt64(sequenceNumber) << Frostflake.generatorIdentifierBits
+        var returnValue = UInt64(currentSeconds) << Self.secondsBits
+        returnValue += UInt64(sequenceNumber) << Self.generatorIdentifierBits
         returnValue += UInt64(generatorIdentifier)
 
         lock?.unlock()
@@ -131,4 +132,3 @@ public final class Frostflake {
         return returnValue
     }
 }
-

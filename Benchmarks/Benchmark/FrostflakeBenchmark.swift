@@ -1,10 +1,9 @@
-import Frostflake
 import BenchmarkSupport
+import Frostflake
 @main extension BenchmarkRunner {}
 
 @_dynamicReplacement(for: registerBenchmarks)
 func benchmarks() {
-
     // Once during runtime setup can be done before registering benchmarks
 
     Benchmark.defaultThroughputScalingFactor = .mega
@@ -32,7 +31,7 @@ func benchmarks() {
         }
     }
 
-    Benchmark("Frostflake descriptions", throughputScalingFactor: .kilo ) { benchmark in
+    Benchmark("Frostflake descriptions", throughputScalingFactor: .kilo) { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(benchmark.currentIteration))
         for _ in 0 ..< benchmark.throughputScalingFactor.rawValue {
             let frostflake = frostflakeFactory.generate()
@@ -48,7 +47,7 @@ func benchmarks() {
     Benchmark("Frostflake shared generator",
               warmupIterations: 0,
               throughputScalingFactor: .kilo,
-              desiredIterations: .kilo(1)) {  benchmark in
+              desiredIterations: .kilo(1)) { benchmark in
         for _ in 0 ..< benchmark.throughputScalingFactor.rawValue {
             BenchmarkSupport.blackHole(Frostflake.generate())
         }

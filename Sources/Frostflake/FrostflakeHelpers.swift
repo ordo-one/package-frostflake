@@ -28,4 +28,4 @@ public extension UInt64 {
 
 // For tests
 @inline(never)
-public func blackHole<T>(_: T) {}
+public func blackHole(_: some Any) {}
