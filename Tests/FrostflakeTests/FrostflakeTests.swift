@@ -8,8 +8,7 @@ import XCTest
 #endif
 
 final class FrostflakeTests: XCTestCase {
-
-    let generatorIdentifierMax = 2
+    private let generatorIdentifierMax = 2
 
     override class func setUp() {
         #if canImport(Darwin)
