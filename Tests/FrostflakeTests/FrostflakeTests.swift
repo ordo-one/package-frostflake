@@ -113,11 +113,11 @@ final class FrostflakeTests: XCTestCase {
     // Regression test for sc-493
     func testIncorrectForcingSecondRegenerationInterval() {
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(100))
-        for _ in 1 ..< 1_000_000 {
+        for _ in Frostflake.allowedSequenceNumberRange {
             blackHole(frostflakeFactory.generate())
         }
         sleep(1)
-        for _ in 1 ..< 1_000_000 {
+        for _ in Frostflake.allowedSequenceNumberRange {
             blackHole(frostflakeFactory.generate())
         }
     }
