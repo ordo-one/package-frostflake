@@ -117,7 +117,7 @@ final class FrostflakeTests: XCTestCase {
         for _ in Frostflake.allowedSequenceNumberRange {
             blackHole(frostflakeFactory.generate())
         }
-        sleep(1)
+        sleep(2)
         for _ in Frostflake.allowedSequenceNumberRange {
             blackHole(frostflakeFactory.generate())
         }
