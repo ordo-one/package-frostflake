@@ -8,7 +8,6 @@ import XCTest
 #endif
 
 final class FrostflakeTests: XCTestCase {
-    private let generatorIdentifierMax = 2
     private let smallRangeTest = 1 ..< 1_000
 
     override class func setUp() {
@@ -66,8 +65,7 @@ final class FrostflakeTests: XCTestCase {
     }
 
     func testFrostflake() async {
-        XCTAssert(Frostflake.validGeneratorIdentifierRange.contains(generatorIdentifierMax))
-        for generatorId in 0 ..< generatorIdentifierMax {
+        for generatorId in smallRangeTest {
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId))
 
             for _ in smallRangeTest {
@@ -77,8 +75,7 @@ final class FrostflakeTests: XCTestCase {
     }
 
     func testFrostflakeClassWithoutLocks() async {
-        XCTAssert(Frostflake.validGeneratorIdentifierRange.contains(generatorIdentifierMax))
-        for generatorId in 0 ..< generatorIdentifierMax {
+        for generatorId in smallRangeTest {
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId),
                                                concurrentAccess: false)
 
@@ -91,13 +88,13 @@ final class FrostflakeTests: XCTestCase {
     func testFrostflakeClassOverflowNextSecond() {
         let frostflakeFactory = Frostflake(generatorIdentifier: 0)
 
-        for _ in smallRangeTest {
+        for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
             blackHole(frostflakeFactory.generate())
         }
 
         sleep(1) // Needed so that we don't overflow the sequenceNumberBits in the same second
 
-        for _ in smallRangeTest {
+        for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
             blackHole(frostflakeFactory.generate())
         }
     }
@@ -115,11 +112,11 @@ final class FrostflakeTests: XCTestCase {
     // Regression test for sc-493
     func testIncorrectForcingSecondRegenerationInterval() {
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(100))
-        for _ in 0 ..< Frostflake.allowedSequenceNumberRange.upperBound {
+        for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
             blackHole(frostflakeFactory.generate())
         }
-        sleep(2)
-        for _ in 0 ..< Frostflake.allowedSequenceNumberRange.upperBound {
+        sleep(1)
+        for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
             blackHole(frostflakeFactory.generate())
         }
     }
