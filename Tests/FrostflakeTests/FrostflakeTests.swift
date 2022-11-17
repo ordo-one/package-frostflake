@@ -3,18 +3,8 @@
 
 import XCTest
 
-#if canImport(Darwin)
-    import Darwin
-#endif
-
 final class FrostflakeTests: XCTestCase {
     private let smallRangeTest = 1 ..< 1_000
-
-    override class func setUp() {
-        #if canImport(Darwin)
-            atexit(leaksExit)
-        #endif
-    }
 
     // Verified using https://www.epochconverter.com as well manually
     func testUnixEpochConversion() {

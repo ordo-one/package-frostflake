@@ -29,6 +29,10 @@ public final class Frostflake {
         privateSharedGenerator = sharedGenerator
     }
 
+    public static func teardown() {
+        privateSharedGenerator = nil
+    }
+
     /// Convenience static variable when using the same generator in many places
     /// The global generator identifier **must** be set using `setup(generatorIdentifier:)` before accessing
     /// this shared generator of we'll fatalError().
@@ -78,7 +82,7 @@ public final class Frostflake {
 
         sequenceNumber = 0
         self.generatorIdentifier = generatorIdentifier
-        self.forcedTimeRegenerationInterval = forcedTimeRegenerationInterval > 0 ? forcedTimeRegenerationInterval : 1
+        self.forcedTimeRegenerationInterval = forcedTimeRegenerationInterval
         currentSeconds = currentSecondsSinceEpoch()
     }
 
@@ -115,7 +119,7 @@ public final class Frostflake {
 
             currentSeconds = newCurrentSeconds
             sequenceNumber = 1
-        } else if (sequenceNumber % forcedTimeRegenerationInterval) == 0 {
+        } else if forcedTimeRegenerationInterval > 0 && (sequenceNumber % forcedTimeRegenerationInterval) == 0 {
             let newCurrentSeconds = currentSecondsSinceEpoch()
             if newCurrentSeconds > currentSeconds {
                 currentSeconds = newCurrentSeconds
