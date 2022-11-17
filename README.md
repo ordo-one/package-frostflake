@@ -5,7 +5,9 @@
 
 High performance unique ID generator for Swift inspired by [Snowflake](https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake)
 with a few small tweaks aimed for a distributed system setup with a medium level of active entities (hundreds) that independently
-should be able to generate unique identifiers. It can produce ~125M unique identifiers per second on an M1 base machine.
+should be able to generate unique identifiers. 
+
+It can produce ~125M unique identifiers per second on an M1 base machine and is half the size of an UUID.
 
 It takes a slightly different approach to minimize generation overhead.
 
