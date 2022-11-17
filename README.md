@@ -58,12 +58,19 @@ Frostflake.setup(generatorIdentifier: 1)
 let frostflake1 =  Frostflake.generate()
 let frostflake2 =  Frostflake.generate()
 ```
+# Caveats
 
 ## Notes on clock synchronization requirements
 It's expected that a host should have NTP enabled and not reset the clock with jumps during operation
 (typical NTP usage would slowly skew the clock and shouldn't have any problems, but something to be aware of).
 Different machines relative synchronized time is immaterial as the generatorIdentifier uniquely identifies
 various producers of identifiers if set properly.
+
+## Notes on maximum identifier generation rate
+By default there's a maximum of ~2M generated identifiers per second per generatorIdentifier sustained - if this would
+be exceeded we'll abort. That gives ~500ns per identifier - which for the designed purposes is far more than
+ever would be used - but if you have a use case with a really high-volume generation, you can possibly reallocate
+the big assignment by adjusting the split between generatorIdentifier and sequenceNumbers to cate for that too.
 
 # Benchmarks
 
