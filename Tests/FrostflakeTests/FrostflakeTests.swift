@@ -1,20 +1,10 @@
+@testable import DateTime
 @testable import Frostflake
 
 import XCTest
 
-#if canImport(Darwin)
-    import Darwin
-#endif
-
 final class FrostflakeTests: XCTestCase {
-    private let classGeneratorCount = 1_000
-    private let classIterationCount = 1_000
-
-    override class func setUp() {
-        #if canImport(Darwin)
-            atexit(leaksExit)
-        #endif
-    }
+    private let smallRangeTest = 1 ..< 1_000
 
     // Verified using https://www.epochconverter.com as well manually
     func testUnixEpochConversion() {
@@ -65,21 +55,21 @@ final class FrostflakeTests: XCTestCase {
     }
 
     func testFrostflake() async {
-        for generatorId in 0 ..< classGeneratorCount {
+        for generatorId in smallRangeTest {
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId))
 
-            for _ in 0 ..< classIterationCount {
+            for _ in smallRangeTest {
                 blackHole(frostflakeFactory.generate())
             }
         }
     }
 
     func testFrostflakeClassWithoutLocks() async {
-        for generatorId in 0 ..< classGeneratorCount {
+        for generatorId in smallRangeTest {
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId),
                                                concurrentAccess: false)
 
-            for _ in 0 ..< classIterationCount {
+            for _ in smallRangeTest {
                 blackHole(frostflakeFactory.generate())
             }
         }
@@ -88,13 +78,13 @@ final class FrostflakeTests: XCTestCase {
     func testFrostflakeClassOverflowNextSecond() {
         let frostflakeFactory = Frostflake(generatorIdentifier: 0)
 
-        for _ in 1 ..< 1 << sequenceNumberBits {
+        for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
             blackHole(frostflakeFactory.generate())
         }
 
         sleep(1) // Needed so that we don't overflow the sequenceNumberBits in the same second
 
-        for _ in 1 ..< 1 << sequenceNumberBits {
+        for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
             blackHole(frostflakeFactory.generate())
         }
     }
@@ -104,7 +94,7 @@ final class FrostflakeTests: XCTestCase {
 
         Frostflake.setup(sharedGenerator: frostflake)
 
-        for _ in 0 ..< classIterationCount {
+        for _ in smallRangeTest {
             blackHole(Frostflake.generate())
         }
     }
@@ -112,11 +102,11 @@ final class FrostflakeTests: XCTestCase {
     // Regression test for sc-493
     func testIncorrectForcingSecondRegenerationInterval() {
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(100))
-        for _ in 1 ..< 1_000_000 {
+        for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
             blackHole(frostflakeFactory.generate())
         }
         sleep(1)
-        for _ in 1 ..< 1_000_000 {
+        for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
             blackHole(frostflakeFactory.generate())
         }
     }

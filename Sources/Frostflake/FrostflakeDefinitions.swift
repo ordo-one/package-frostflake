@@ -1,58 +1,29 @@
-#if canImport(Darwin)
-    import Darwin
-#elseif canImport(Glibc)
-    import Glibc
-#else
-    #error("Unsupported Platform")
-#endif
-
+// swiftlint:disable line_length
 /// Alias for Frostflake identifier type
 public typealias FrostflakeIdentifier = UInt64
 
-/// Default number of bits allocated to sequence, default 20 bits, 1.048.576 id:s max per second
-public let sequenceNumberBits = 20
-/// Default number of bits allocated to generator part, default 12 bits, 4096 unique concurrent generators in the system
-public let generatorIdentifierBits = 12
+public extension Frostflake {
+    /// Default number of bits allocated to seconds, default 32 bits, gives us ~136 years
+    static let secondsBits = 32
 
-/// We will try to generate a new second timestamp every N generations (for low-flow components this will reset the
-/// timestamp a few times per day, for high-flow users it will cause a call to `gettimeofday()` needlessly instead.)
-public let forcedSecondRegenerationInterval: UInt32 = 1_000
+    /// Default number of bits allocated to sequence, default 21 bits, 2.097.152 id:s max per second
+    static let sequenceNumberBits = 21
 
-/// Get current seconds since UNIX epoch
-/// 32 bit number of seconds gives us ~136 years
-@inlinable
-@inline(__always)
-public func currentSecondsSinceEpoch() -> UInt32 {
-    var currentTime = timespec()
+    /// Default number of bits allocated to generator part, default 11 bits, 2.048 unique concurrent generators in the system
+    static let generatorIdentifierBits = 11
 
-    let result = clock_gettime(CLOCK_REALTIME, &currentTime)
+    /// The range of valid generator identifiers
+    static let validGeneratorIdentifierRange = 0 ..< (1 << generatorIdentifierBits)
 
-    guard result == 0 else {
-        fatalError("Failed to get current time in clock_gettime(), errno = \(errno)")
-    }
+    /// The range of valid sequence numbers
+    static let allowedSequenceNumberRange = 0 ..< (1 << Frostflake.sequenceNumberBits)
 
-    return UInt32(currentTime.tv_sec)
+    /// Convenience default manual generator identifier for the command line utility will pick the highest available identifier
+    static let defaultManualGeneratorIdentifier = (1 << generatorIdentifierBits) - 1
+
+    /// We will try to generate a new second timestamp every N generations (for low-flow components this will reset the
+    /// timestamp a few times per day, for high-flow users it will cause a call to `gettimeofday()` needlessly instead.)
+    /// This should be set to the value of `1` if one can't guarantee that the system clock will not jump due to e.g. NTP
+    /// changes. Then a timestamp will be done for every Frostflake generation.
+    static let defaultForcedTimeRegenerationInterval: UInt32 = 1_000
 }
-
-/// Pretty printer for frostflakes for debugging
-public extension UInt64 {
-    func frostflakeDescription() -> String {
-        let seconds = self >> 32
-        let sequenceNumber = (self & 0xFFFF_FFFF) >> generatorIdentifierBits
-        let generatorIdentifier = (self & 0xFFFF_FFFF) & (0xFFFF_FFFF >> sequenceNumberBits)
-
-        var time = EpochDateTime.unixEpoch()
-        time.convert(timestamp: Int(seconds))
-
-        return """
-        (\(time.year)-\(time.month)-\(time.day) \(time.hour):\(time.minute):\(time.second) UTC\
-        , sequenceNumber:\(sequenceNumber), generatorIdentifier:\(generatorIdentifier))
-        """
-    }
-}
-
-/// Blackhole that will disable the optimizer when defined in a different module,
-/// useful for benchmarks and just consumes the argument.
-/// **It's important that this function is in another module than the tests which are using it.**
-@inline(never)
-public func blackHole<T>(_: T) {}

@@ -1,10 +1,11 @@
 import ConcurrencyHelpers
 
-/// Frostflake generator
+/// Frostflake generator, we tried with an Actor but it was too slow.
 public final class Frostflake {
-    public var seconds: UInt32
+    public var currentSeconds: UInt32
     public var sequenceNumber: UInt32
     public let generatorIdentifier: UInt16
+    public let forcedTimeRegenerationInterval: UInt32
     public let lock: Lock?
 
     // Class variables and functions
@@ -26,6 +27,10 @@ public final class Frostflake {
             preconditionFailure("called setup multiple times")
         }
         privateSharedGenerator = sharedGenerator
+    }
+
+    public static func teardown() {
+        privateSharedGenerator = nil
     }
 
     /// Convenience static variable when using the same generator in many places
@@ -53,25 +58,32 @@ public final class Frostflake {
     ///   - generatorIdentifier: The unique generator identifier for this instances, must be unique at every
     ///   point in time in the whole system, so either should be persisted and reused across runs, or it should be
     ///   coordinated with a global service that assigns them during startup of the component.
+    ///   - forcedTimeRegenerationInterval: Regenerate timestamp forcibly after this many events.
+    ///   0 -> never force, 1-> always force, n -> after n events
     ///   - concurrentAccess: Specifies whether the generator can be accessed from multiple
     ///   tasks/threads concurrently - if the generator is **only** used from a synchronized state
     ///   like .eg. an Actor context, you can specify false here to avoid the internal locking overhead
+    // swiftlint:disable line_length
     @inlinable
-    public init(generatorIdentifier: UInt16, concurrentAccess: Bool = true) {
-        let allowedGeneratorIdentifierRange = 0 ..< (1 << generatorIdentifierBits)
-        assert(allowedGeneratorIdentifierRange.contains(Int(generatorIdentifier)),
-               "Frostflake generatorIdentifier \(generatorIdentifier) used more than \(generatorIdentifierBits) bits")
-        assert((sequenceNumberBits + generatorIdentifierBits) == 32,
-               "Frostflake sequenceNumberBits (\(sequenceNumberBits)) + " +
-                   "generatorIdentifierBits (\(generatorIdentifierBits)) != 32")
+    public init(generatorIdentifier: UInt16,
+                forcedTimeRegenerationInterval: UInt32 = defaultForcedTimeRegenerationInterval,
+                concurrentAccess: Bool = true) {
+        assert(Self.validGeneratorIdentifierRange.contains(Int(generatorIdentifier)),
+               "Frostflake generatorIdentifier \(generatorIdentifier) used more than \(Self.generatorIdentifierBits) bits")
+        assert((Self.sequenceNumberBits + Self.generatorIdentifierBits) == 32,
+               "Frostflake sequenceNumberBits (\(Self.sequenceNumberBits)) + " +
+                   "generatorIdentifierBits (\(Self.generatorIdentifierBits)) != 32")
+
         if concurrentAccess {
             lock = Lock()
         } else {
             lock = nil
         }
+
         sequenceNumber = 0
         self.generatorIdentifier = generatorIdentifier
-        seconds = currentSecondsSinceEpoch()
+        self.forcedTimeRegenerationInterval = forcedTimeRegenerationInterval
+        currentSeconds = currentSecondsSinceEpoch()
     }
 
     /// Generates a new Frostflake identifier for the generator
@@ -87,36 +99,36 @@ public final class Frostflake {
     @inlinable
     @inline(__always)
     public func generate() -> FrostflakeIdentifier {
-        let allowedSequenceNumberRange = 0 ..< (1 << sequenceNumberBits)
-
         lock?.lock()
 
-        assert(allowedSequenceNumberRange.contains(Int(sequenceNumber)), "sequenceNumber ouf of allowed range")
+        assert(Self.allowedSequenceNumberRange.contains(Int(sequenceNumber)), "sequenceNumber ouf of allowed range")
 
         sequenceNumber += 1
 
         // Have we used all the sequence number bits, we need get a new base timestamp
-        if allowedSequenceNumberRange.contains(Int(sequenceNumber)) == false {
-            assert(sequenceNumber == (1 << sequenceNumberBits), "sequenceNumber != 1 << sequenceNumberBits")
+        if Self.allowedSequenceNumberRange.contains(Int(sequenceNumber)) == false {
+            assert(sequenceNumber == (1 << Self.sequenceNumberBits), "sequenceNumber != 1 << sequenceNumberBits")
 
-            let currentSecond = currentSecondsSinceEpoch()
+            let newCurrentSeconds = currentSecondsSinceEpoch()
 
             // The maximum rate is 1 << sequenceNumberBits per second (defaults to over 1M per second)
             // Currently we'll bail here - one could consider sleeping / retrying, but really synthetic problem.
-            precondition(currentSecond > seconds, "too many FrostflakeIdentifiers generated in one second, aborting")
+            // Theoretically this could happen for NTP discrete timejumps back in time too, in which case
+            // we'd rather abort and go down.
+            precondition(newCurrentSeconds > currentSeconds, "too many FrostflakeIdentifiers generated in one second")
 
-            seconds = currentSecond
+            currentSeconds = newCurrentSeconds
             sequenceNumber = 1
-        } else if (sequenceNumber % forcedSecondRegenerationInterval) == 0 {
-            let currentSecond = currentSecondsSinceEpoch()
-            if currentSecond > seconds {
-                seconds = currentSecond
+        } else if forcedTimeRegenerationInterval > 0 && (sequenceNumber % forcedTimeRegenerationInterval) == 0 {
+            let newCurrentSeconds = currentSecondsSinceEpoch()
+            if newCurrentSeconds > currentSeconds {
+                currentSeconds = newCurrentSeconds
                 sequenceNumber = 1
             }
         }
 
-        var returnValue = UInt64(seconds) << 32
-        returnValue += UInt64(sequenceNumber) << generatorIdentifierBits
+        var returnValue = UInt64(currentSeconds) << Self.secondsBits
+        returnValue += UInt64(sequenceNumber) << Self.generatorIdentifierBits
         returnValue += UInt64(generatorIdentifier)
 
         lock?.unlock()

@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-benchmark",
       "state" : {
-        "revision" : "438adfbe6c8f5681f3104885beacb7ae61daea5a",
-        "version" : "0.3.2"
+        "revision" : "13d1a5fc228f5553acb22cdbb7f7c217e4b8c51e",
+        "version" : "0.4.3"
       }
     },
     {
@@ -32,8 +32,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-concurrency-helpers",
       "state" : {
-        "revision" : "23c503fc8830db0e784f567497de62be0f8b43df",
-        "version" : "0.0.7"
+        "revision" : "50be9af823ee976161141f736926ab2f856e0ca6",
+        "version" : "0.0.9"
+      }
+    },
+    {
+      "identity" : "package-datetime",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ordo-one/package-datetime",
+      "state" : {
+        "revision" : "d357e4a73a2a88331eb87919a1a3963737722a7d",
+        "version" : "0.0.1"
       }
     },
     {
@@ -59,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "9f39744e025c7d377987f30b03770805dcb0bcd1",
-        "version" : "1.1.4"
+        "revision" : "fddd1c00396eed152c45a46bea9f47b98e59301d",
+        "version" : "1.2.0"
       }
     },
     {
@@ -104,8 +113,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/TextTable",
       "state" : {
-        "revision" : "e03289289155b4e7aa565e32862f9cb42140596a",
-        "version" : "0.0.1"
+        "revision" : "a27a07300cf4ae322e0079ca0a475c5583dd575f",
+        "version" : "0.0.2"
       }
     }
   ],
