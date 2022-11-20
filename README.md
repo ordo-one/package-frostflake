@@ -22,7 +22,7 @@ suitable as e.g. a database key.
 To add to your project:
 ```
 dependencies: [
-    .package(url: "https://github.com/ordo-one/package-frostflake", .upToNextMajor(from: "0.0.1")),
+    .package(url: "https://github.com/ordo-one/package-frostflake", .upToNextMajor(from: "2.0.1")),
 ]
 ```
 
