@@ -61,7 +61,7 @@ let frostflake2 =  Frostflake.generate()
 # Implementation notes
 The Frostflake is a 64-bit value just like Snowflake, but the bit allocation differs a little bit. 
 
-Frostflake by default allocates 32 bites for the timestamp (~136 years span), 21 bits for the sequence
+Frostflake by default allocates 32 bits for the timestamp (~136 years span), 21 bits for the sequence
 number (allowing for up to 2.097.152 identifiers per second for a given generator) and 11 bits for the 
 generator identifier (allowing for up to 2.048 unique workers/nodes in a system).
 
@@ -81,7 +81,7 @@ various producers of identifiers if set properly.
 
 ## Notes on maximum identifier generation rate
 By default there's a maximum of ~2M generated identifiers per second per generatorIdentifier sustained - if this would
-be exceeded we'll abort. That gives ~500ns per identifier - which for the designed purposes is far more than
+be exceeded we'll abort. That gives ~477ns per identifier - which for the designed purposes is far more than
 ever would be used - but if you have a use case with a really high-volume generation, you can possibly reallocate
 the big assignment by adjusting the split between generatorIdentifier and sequenceNumbers to cate for that too.
 
