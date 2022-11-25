@@ -58,6 +58,19 @@ Frostflake.setup(generatorIdentifier: 1)
 let frostflake1 =  Frostflake.generate()
 let frostflake2 =  Frostflake.generate()
 ```
+# Implementation notes
+The Frostflake is a 64-bit value just like Snowflake, but the bit allocation differs a little bit. 
+
+Frostflake by default allocates 32 bites for the timestamp (~136 years span), 21 bits for the sequence
+number (allowing for up to 2.097.152 identifiers per second for a given generator) and 11 bits for the 
+generator identifier (allowing for up to 2.048 unique workers/nodes in a system).
+
+A possible future direction would be to allow for allocation of the bits between the sequence identifier
+and generator identifier up to the user to more easily allow for different use cases - as long as this
+would be reallocated during a service window (which just needs to be longer than the clock difference
+between the two nodes in the cluster being most out of sync) the timestamp portion will continue to 
+ensure uniqeness.
+
 # Caveats
 
 ## Notes on clock synchronization requirements
