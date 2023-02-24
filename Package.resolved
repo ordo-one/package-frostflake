@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-benchmark",
       "state" : {
-        "revision" : "13d1a5fc228f5553acb22cdbb7f7c217e4b8c51e",
-        "version" : "0.4.3"
+        "revision" : "81bd87b4eca4c1fff0275fa55fd52b1faf3814d9",
+        "version" : "0.8.0"
       }
     },
     {
@@ -41,8 +41,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-datetime",
       "state" : {
-        "revision" : "d357e4a73a2a88331eb87919a1a3963737722a7d",
-        "version" : "0.0.1"
+        "revision" : "9c1e16bfe7683e787161f866ff8b5cbc88089cb4",
+        "version" : "0.0.6"
+      }
+    },
+    {
+      "identity" : "package-histogram",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ordo-one/package-histogram",
+      "state" : {
+        "revision" : "604410b21ded1ebdf06ad98100f448c68e80f5a1",
+        "version" : "0.1.1"
       }
     },
     {
@@ -68,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "fddd1c00396eed152c45a46bea9f47b98e59301d",
-        "version" : "1.2.0"
+        "revision" : "fee6933f37fde9a5e12a1e4aeaa93fe60116ff2a",
+        "version" : "1.2.2"
       }
     },
     {
@@ -77,7 +86,16 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-docc-plugin",
       "state" : {
-        "revision" : "3303b164430d9a7055ba484c8ead67a52f7b74f6",
+        "revision" : "10bc670db657d11bdd561e07de30a9041311b2b1",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "swift-docc-symbolkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-docc-symbolkit",
+      "state" : {
+        "revision" : "b45d1f2ed151d057b54504d653e0da5552844e34",
         "version" : "1.0.0"
       }
     },

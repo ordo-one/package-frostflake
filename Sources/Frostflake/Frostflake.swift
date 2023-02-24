@@ -127,7 +127,7 @@ public final class Frostflake {
 
             currentSeconds = newCurrentSeconds
             sequenceNumber = 1
-        } else if forcedTimeRegenerationInterval > 0 && (sequenceNumber % forcedTimeRegenerationInterval) == 0 {
+        } else if forcedTimeRegenerationInterval > 0, (sequenceNumber % forcedTimeRegenerationInterval) == 0 {
             let newCurrentSeconds = currentSecondsSinceEpoch()
             if newCurrentSeconds > currentSeconds {
                 currentSeconds = newCurrentSeconds
