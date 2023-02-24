@@ -17,8 +17,18 @@ internal func currentSecondsSinceEpoch() -> UInt32 {
     return UInt32(timestamp.secondsSinceEpoch())
 }
 
+private extension String {
+    func pad(_ padding: Int = 2) -> String {
+        let toPad = padding - count
+        if toPad < 1 {
+            return self
+        }
+        return "".padding(toLength: toPad, withPad: "0", startingAt: 0) + self
+    }
+}
+
 /// Pretty printer for frostflakes for debugging
-public extension UInt64 {
+public extension FrostflakeIdentifier {
     func frostflakeDescription() -> String {
         let seconds = self >> Frostflake.secondsBits
         let sequenceNumber = (self & 0xFFFF_FFFF) >> Frostflake.generatorIdentifierBits
@@ -28,7 +38,8 @@ public extension UInt64 {
         time.convert(timestamp: Int(seconds))
 
         return """
-        (\(time.year)-\(time.month)-\(time.day) \(time.hour):\(time.minute):\(time.second) UTC\
+        \(self) (\(time.year)-\(String(time.month).pad())-\(String(time.day).pad()) \
+        \(String(time.hour).pad()):\(String(time.minute).pad()):\(String(time.second).pad()) UTC\
         , sequenceNumber:\(sequenceNumber), generatorIdentifier:\(generatorIdentifier))
         """
     }
