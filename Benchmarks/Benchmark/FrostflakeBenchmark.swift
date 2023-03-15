@@ -14,16 +14,16 @@ import Frostflake
 func benchmarks() {
     // Once during runtime setup can be done before registering benchmarks
     Benchmark.defaultConfiguration = .init(warmupIterations: 5,
-                                           throughputScalingFactor: .mega,
-                                           desiredDuration: .seconds(2),
-                                           desiredIterations: Int(UInt16.max) - 5 - 1)
+                                           scalingFactor: .mega,
+                                           maxDuration: .seconds(2),
+                                           maxIterations: Int(UInt16.max) - 5 - 1)
 
     Benchmark("Frostflake with locks") { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(benchmark.currentIteration),
                                            concurrentAccess: true)
 
         benchmark.startMeasurement()
-        for _ in benchmark.throughputIterations {
+        for _ in benchmark.scaledIterations {
             BenchmarkSupport.blackHole(frostflakeFactory.generate())
         }
     }
@@ -33,15 +33,15 @@ func benchmarks() {
                                            concurrentAccess: false)
 
         benchmark.startMeasurement()
-        for _ in benchmark.throughputIterations {
+        for _ in benchmark.scaledIterations {
             BenchmarkSupport.blackHole(frostflakeFactory.generate())
         }
     }
 
     Benchmark("Frostflake descriptions",
-              configuration: .init(throughputScalingFactor: .kilo)) { benchmark in
+              configuration: .init(scalingFactor: .kilo)) { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(benchmark.currentIteration))
-        for _ in benchmark.throughputIterations {
+        for _ in benchmark.scaledIterations {
             let frostflake = frostflakeFactory.generate()
             let description = frostflake.frostflakeDescription()
             BenchmarkSupport.blackHole(description)
@@ -55,10 +55,10 @@ func benchmarks() {
     Benchmark("Frostflake shared generator",
               configuration: .init(
                   warmupIterations: 0,
-                  throughputScalingFactor: .kilo,
-                  desiredIterations: .kilo(1)
+                  scalingFactor: .kilo,
+                  maxIterations: .kilo(1)
               )) { benchmark in
-        for _ in benchmark.throughputIterations {
+        for _ in benchmark.scaledIterations {
             BenchmarkSupport.blackHole(Frostflake.generate())
         }
     }
