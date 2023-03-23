@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-concurrency-helpers",
       "state" : {
-        "revision" : "50be9af823ee976161141f736926ab2f856e0ca6",
-        "version" : "0.0.9"
+        "revision" : "d89128e22dd81d77ec65e7f045999c92c59febb5",
+        "version" : "0.0.10"
       }
     },
     {
@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-latency-tools",
       "state" : {
-        "revision" : "bc451c5a3246c26e0d2feb0987427408349a8fe6",
-        "version" : "0.0.1"
+        "revision" : "93d2be69c484bebb28c5192249d7e1da15236d34",
+        "version" : "1.0.0"
       }
     },
     {
@@ -95,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-docc-plugin",
       "state" : {
-        "revision" : "10bc670db657d11bdd561e07de30a9041311b2b1",
-        "version" : "1.1.0"
+        "revision" : "9b1258905c21fc1b97bf03d1b4ca12c4ec4e5fda",
+        "version" : "1.2.0"
       }
     },
     {
