@@ -7,7 +7,6 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 import Benchmark
-import func Benchmark.blackHole
 import Frostflake
 
 let benchmarks = {
@@ -23,7 +22,7 @@ let benchmarks = {
 
         benchmark.startMeasurement()
         for _ in benchmark.scaledIterations {
-            blackHole(frostflakeFactory.generate())
+            Benchmark.blackHole(frostflakeFactory.generate())
         }
     }
 
@@ -33,7 +32,7 @@ let benchmarks = {
 
         benchmark.startMeasurement()
         for _ in benchmark.scaledIterations {
-            blackHole(frostflakeFactory.generate())
+            Benchmark.blackHole(frostflakeFactory.generate())
         }
     }
 
@@ -43,7 +42,7 @@ let benchmarks = {
         for _ in benchmark.scaledIterations {
             let frostflake = frostflakeFactory.generate()
             let description = frostflake.frostflakeDescription()
-            blackHole(description)
+            Benchmark.blackHole(description)
         }
     }
 
@@ -58,7 +57,7 @@ let benchmarks = {
                   maxIterations: .kilo(1)
               )) { benchmark in
         for _ in benchmark.scaledIterations {
-            blackHole(Frostflake.generate())
+            Benchmark.blackHole(Frostflake.generate())
         }
     }
 }

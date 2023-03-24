@@ -21,7 +21,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-system", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
         .package(url: "https://github.com/ordo-one/package-concurrency-helpers", .upToNextMajor(from: "0.0.1")),
-        .package(url: "https://github.com/ordo-one/package-benchmark", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/ordo-one/package-benchmark", .upToNextMajor(from: "1.2.0")),
         .package(url: "https://github.com/ordo-one/package-datetime", .upToNextMajor(from: "0.0.1")),
         .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting", from: Version("2.0.0"))
     ],
@@ -44,6 +44,19 @@ let package = Package(
             ]
         ),
 
+        // Test targets
+        .testTarget(
+            name: "FrostflakeTests",
+            dependencies: ["FrostflakeUtility",
+                           "Frostflake",
+                           .product(name: "CwlPreconditionTesting", package: "CwlPreconditionTesting",
+                                    condition: .when(platforms: [.macOS]))]
+        )
+    ]
+)
+
+if #available(macOS 13, *) {
+    package.targets += [
         // Benchmark targets
         .executableTarget(
             name: "Frostflake-Benchmark",
@@ -55,15 +68,6 @@ let package = Package(
                 "Frostflake",
             ],
             path: "Benchmarks/Benchmark"
-        ),
-
-        // Test targets
-        .testTarget(
-            name: "FrostflakeTests",
-            dependencies: ["FrostflakeUtility",
-                           "Frostflake",
-                           .product(name: "CwlPreconditionTesting", package: "CwlPreconditionTesting",
-                                    condition: .when(platforms: [.macOS]))]
         )
     ]
-)
+}
