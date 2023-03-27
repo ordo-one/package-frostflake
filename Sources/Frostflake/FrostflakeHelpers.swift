@@ -14,7 +14,7 @@ import DateTime
 @inline(__always)
 internal func currentSecondsSinceEpoch() -> UInt32 {
     let timestamp = InternalUTCClock.now
-    return UInt32(timestamp.secondsSinceEpoch())
+    return UInt32(timestamp.seconds())
 }
 
 private extension String {
