@@ -6,12 +6,10 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-import BenchmarkSupport
+import Benchmark
 import Frostflake
-@main extension BenchmarkRunner {}
 
-@_dynamicReplacement(for: registerBenchmarks)
-func benchmarks() {
+let benchmarks = {
     // Once during runtime setup can be done before registering benchmarks
     Benchmark.defaultConfiguration = .init(warmupIterations: 5,
                                            scalingFactor: .mega,
@@ -24,7 +22,7 @@ func benchmarks() {
 
         benchmark.startMeasurement()
         for _ in benchmark.scaledIterations {
-            BenchmarkSupport.blackHole(frostflakeFactory.generate())
+            Benchmark.blackHole(frostflakeFactory.generate())
         }
     }
 
@@ -34,7 +32,7 @@ func benchmarks() {
 
         benchmark.startMeasurement()
         for _ in benchmark.scaledIterations {
-            BenchmarkSupport.blackHole(frostflakeFactory.generate())
+            Benchmark.blackHole(frostflakeFactory.generate())
         }
     }
 
@@ -44,7 +42,7 @@ func benchmarks() {
         for _ in benchmark.scaledIterations {
             let frostflake = frostflakeFactory.generate()
             let description = frostflake.frostflakeDescription()
-            BenchmarkSupport.blackHole(description)
+            Benchmark.blackHole(description)
         }
     }
 
@@ -59,7 +57,7 @@ func benchmarks() {
                   maxIterations: .kilo(1)
               )) { benchmark in
         for _ in benchmark.scaledIterations {
-            BenchmarkSupport.blackHole(Frostflake.generate())
+            Benchmark.blackHole(Frostflake.generate())
         }
     }
 }
