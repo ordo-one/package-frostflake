@@ -44,19 +44,6 @@ let package = Package(
             ]
         ),
 
-        // Test targets
-        .testTarget(
-            name: "FrostflakeTests",
-            dependencies: ["FrostflakeUtility",
-                           "Frostflake",
-                           .product(name: "CwlPreconditionTesting", package: "CwlPreconditionTesting",
-                                    condition: .when(platforms: [.macOS]))]
-        )
-    ]
-)
-
-if #available(macOS 13, *) {
-    package.targets += [
         // Benchmark targets
         .executableTarget(
             name: "Frostflake-Benchmark",
@@ -68,6 +55,15 @@ if #available(macOS 13, *) {
                 "Frostflake",
             ],
             path: "Benchmarks/Benchmark"
+        ),
+
+        // Test targets
+        .testTarget(
+            name: "FrostflakeTests",
+            dependencies: ["FrostflakeUtility",
+                           "Frostflake",
+                           .product(name: "CwlPreconditionTesting", package: "CwlPreconditionTesting",
+                                    condition: .when(platforms: [.macOS]))]
         )
     ]
-}
+)
