@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-concurrency-helpers",
       "state" : {
-        "revision" : "d89128e22dd81d77ec65e7f045999c92c59febb5",
-        "version" : "0.0.10"
+        "revision" : "f3dde63a895dcea3edaab06eeb6487ef2fcbe635",
+        "version" : "0.0.11"
       }
     },
     {
