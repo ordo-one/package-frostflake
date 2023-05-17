@@ -52,24 +52,23 @@ let benchmarks = {
     // Limited to max 1M or we'll hit the max threshold here...
     Benchmark("Frostflake shared generator",
               configuration: .init(
-                warmupIterations: 0,
-                scalingFactor: .kilo,
-                maxIterations: .kilo(1)
+                  warmupIterations: 0,
+                  scalingFactor: .kilo,
+                  maxIterations: .kilo(1)
               )) { benchmark in
-                  for _ in benchmark.scaledIterations {
-                      Benchmark.blackHole(Frostflake.generate())
-                  }
-              }
+        for _ in benchmark.scaledIterations {
+            Benchmark.blackHole(Frostflake.generate())
+        }
+    }
 
     Benchmark("Frostflake shared generator with FrostflakeIdentifier() convenience",
               configuration: .init(
-                warmupIterations: 0,
-                scalingFactor: .kilo,
-                maxIterations: .kilo(1)
+                  warmupIterations: 0,
+                  scalingFactor: .kilo,
+                  maxIterations: .kilo(1)
               )) { benchmark in
-                  for _ in benchmark.scaledIterations {
-                      Benchmark.blackHole(FrostflakeIdentifier())
-                  }
-              }
-
+        for _ in benchmark.scaledIterations {
+            Benchmark.blackHole(FrostflakeIdentifier())
+        }
+    }
 }
