@@ -10,6 +10,8 @@
 public typealias FrostflakeIdentifier = UInt64
 
 public extension FrostflakeIdentifier {
+    @inlinable
+    @inline(__always)
     init() {
         self = Frostflake.sharedGenerator.generate()
     }
