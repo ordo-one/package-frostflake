@@ -6,9 +6,14 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-// swiftlint:disable line_length
 /// Alias for Frostflake identifier type
 public typealias FrostflakeIdentifier = UInt64
+
+public extension FrostflakeIdentifier {
+    init() {
+        self = Frostflake.sharedGenerator.generate()
+    }
+}
 
 public extension Frostflake {
     /// Default number of bits allocated to seconds, default 32 bits, gives us ~136 years

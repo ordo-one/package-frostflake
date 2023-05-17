@@ -43,13 +43,15 @@ public final class Frostflake {
 
     /// Convenience static variable when using the same generator in many places
     /// The global generator identifier **must** be set using `setup(generatorIdentifier:)` before accessing
-    /// this shared generator of we'll fatalError().
+    /// this shared generator of we'll fatalError(). This includes by creating `FrostflakeIdentifier()` instances too
+    /// which uses this shared generator in the implementation.
     ///
     ///  Sample usage:
     ///  ```swift
     /// Frostflake.setup(generatorIdentifier: 1)
     /// let frostflake1 =  Frostflake.generate()
     /// let frostflake2 =  Frostflake.generate()
+    /// let frostflake3 = FrostflakeIdentifier()
     ///  ```
     @inlinable
     @inline(__always)
@@ -58,7 +60,6 @@ public final class Frostflake {
     }
 
     // instance functions
-    // swiftlint:disable line_length
 
     /// Initialize the ``Frostflake`` class
     /// Creates an instance of the generator for a given unique generator id.

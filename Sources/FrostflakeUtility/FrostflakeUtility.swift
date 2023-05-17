@@ -6,8 +6,6 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-// swiftlint:disable line_length
-
 import ArgumentParser
 import Frostflake
 

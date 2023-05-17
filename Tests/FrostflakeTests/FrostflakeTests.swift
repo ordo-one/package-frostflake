@@ -107,6 +107,16 @@ final class FrostflakeTests: XCTestCase {
         }
     }
 
+    func testFrostflakeSharedGeneratorWithCustomInit() {
+        let frostflake = Frostflake(generatorIdentifier: 49)
+
+        Frostflake.setup(sharedGenerator: frostflake)
+
+        for _ in smallRangeTest {
+            blackHole(FrostflakeIdentifier())
+        }
+    }
+
     // Regression test for sc-493
     func testIncorrectForcingSecondRegenerationInterval() {
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(100))
