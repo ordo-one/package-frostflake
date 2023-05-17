@@ -14,6 +14,11 @@ import XCTest
 final class FrostflakeTests: XCTestCase {
     private let smallRangeTest = 1 ..< 1_000
 
+    override class func setUp() {
+        let frostflake = Frostflake(generatorIdentifier: 47)
+        Frostflake.setup(sharedGenerator: frostflake)
+    }
+
     // Verified using https://www.epochconverter.com as well manually
     func testUnixEpochConversion() {
         var unixEpoch = EpochDateTime.unixEpoch()
@@ -98,20 +103,12 @@ final class FrostflakeTests: XCTestCase {
     }
 
     func testFrostflakeSharedGenerator() {
-        let frostflake = Frostflake(generatorIdentifier: 47)
-
-        Frostflake.setup(sharedGenerator: frostflake)
-
         for _ in smallRangeTest {
             blackHole(Frostflake.generate())
         }
     }
 
     func testFrostflakeSharedGeneratorWithCustomInit() {
-        let frostflake = Frostflake(generatorIdentifier: 49)
-
-        Frostflake.setup(sharedGenerator: frostflake)
-
         for _ in smallRangeTest {
             blackHole(FrostflakeIdentifier())
         }
