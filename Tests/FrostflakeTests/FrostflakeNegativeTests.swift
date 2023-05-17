@@ -33,7 +33,7 @@
             if idGenerated < Frostflake.allowedSequenceNumberRange.count {
                 throw XCTSkip("This host is pretty slow, only \(idGenerated) generated")
             }
-            XCTAssert(exceptionBadInstruction != nil,
+            XCTAssertNotEqual(exceptionBadInstruction, nil,
                       "precondition on too many FrostFlake IDs per second was not triggered")
         }
     }
