@@ -54,9 +54,12 @@ func testFrostflake() {
 
 There's also an optional shared class generator (which gives approx. 1/2 the performance):
 ```swift
-Frostflake.setup(generatorIdentifier: 1)
-let frostflake1 =  Frostflake.generate()
-let frostflake2 =  Frostflake.generate()
+Frostflake.setup(generatorIdentifier: 1) // Must always be set up once, globally shared
+ let frostflake1 =  FrostflakeIdentifier()
+ let frostflake2 =  FrostflakeIdentifier()
+ // Or optionally:
+ let frostflake3 =  Frostflake.generate()
+ let frostflake4 =  Frostflake.generate()
 ```
 # Implementation notes
 The Frostflake is a 64-bit value just like Snowflake, but the bit allocation differs a little bit. 
