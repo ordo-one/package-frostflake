@@ -17,10 +17,10 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(url: "https://github.com/apple/swift-atomics", .upToNextMajor(from: "1.1.0")),
         .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/apple/swift-system", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
-        .package(url: "https://github.com/ordo-one/package-concurrency-helpers", .upToNextMajor(from: "0.0.1")),
         .package(url: "https://github.com/ordo-one/package-benchmark", .upToNextMajor(from: "1.2.0")),
         .package(url: "https://github.com/ordo-one/package-datetime", .upToNextMajor(from: "0.0.1")),
         .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting", from: Version("2.0.0"))
@@ -29,7 +29,7 @@ let package = Package(
         // Main library target
         .target(name: "Frostflake",
                 dependencies: [
-                    .product(name: "ConcurrencyHelpers", package: "package-concurrency-helpers"),
+                    .product(name: "Atomics", package: "swift-atomics"),
                     .product(name: "DateTime", package: "package-datetime"),
                 ],
                 path: "Sources/Frostflake"),

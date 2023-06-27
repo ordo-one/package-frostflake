@@ -28,15 +28,6 @@
       }
     },
     {
-      "identity" : "package-concurrency-helpers",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ordo-one/package-concurrency-helpers",
-      "state" : {
-        "revision" : "f3dde63a895dcea3edaab06eeb6487ef2fcbe635",
-        "version" : "0.0.11"
-      }
-    },
-    {
       "identity" : "package-datetime",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-datetime",
@@ -64,15 +55,6 @@
       }
     },
     {
-      "identity" : "package-latency-tools",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ordo-one/package-latency-tools",
-      "state" : {
-        "revision" : "93d2be69c484bebb28c5192249d7e1da15236d34",
-        "version" : "1.0.0"
-      }
-    },
-    {
       "identity" : "progress.swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/Progress.swift",
@@ -88,6 +70,15 @@
       "state" : {
         "revision" : "fee6933f37fde9a5e12a1e4aeaa93fe60116ff2a",
         "version" : "1.2.2"
+      }
+    },
+    {
+      "identity" : "swift-atomics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-atomics",
+      "state" : {
+        "revision" : "6c89474e62719ddcc1e9614989fff2f68208fe10",
+        "version" : "1.1.0"
       }
     },
     {

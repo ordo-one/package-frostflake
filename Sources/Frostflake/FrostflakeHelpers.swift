@@ -27,12 +27,27 @@ private extension String {
     }
 }
 
+/// Parts extration
+public extension FrostflakeIdentifier {
+    func frostflakeSeconds() -> UInt32 {
+        FrostflakeLayout.seconds(self)
+    }
+
+    func frostflakeGeneratorIdentifier() -> UInt16 {
+        FrostflakeLayout.generatorId(self)
+    }
+
+    func frostflakeSequenceNumber() -> UInt32 {
+        FrostflakeLayout.sequenceNumber(self)
+    }
+}
+
 /// Pretty printer for frostflakes for debugging
 public extension FrostflakeIdentifier {
     func frostflakeDescription() -> String {
-        let seconds = self >> Frostflake.secondsBits
-        let sequenceNumber = (self & 0xFFFF_FFFF) >> Frostflake.generatorIdentifierBits
-        let generatorIdentifier = (self & 0xFFFF_FFFF) & (0xFFFF_FFFF >> Frostflake.sequenceNumberBits)
+        let seconds = frostflakeSeconds()
+        let generatorIdentifier = frostflakeGeneratorIdentifier()
+        let sequenceNumber = frostflakeSequenceNumber()
 
         var time = EpochDateTime.unixEpoch()
         time.convert(timestamp: Int(seconds))

@@ -17,15 +17,79 @@ public extension FrostflakeIdentifier {
     }
 }
 
-public extension Frostflake {
+// Internal Layout
+@usableFromInline
+enum FrostflakeLayout {
+    /// Default number of bits allocated to generator part, default 11 bits, 2.048 unique concurrent generators in the system
+    @usableFromInline
+    static let generatorIdentifierBits = 11
+
     /// Default number of bits allocated to seconds, default 32 bits, gives us ~136 years
+    @usableFromInline
     static let secondsBits = 32
 
     /// Default number of bits allocated to sequence, default 21 bits, 2.097.152 id:s max per second
+    @usableFromInline
     static let sequenceNumberBits = 21
 
+    /// <generatorIdentifierBits: 11><secondsBits: 32><sequenceNumberBits: 21>
+
+    private static let sequenceNumberBitsLayout = 0 ..< sequenceNumberBits
+    private static let secondsBitsLayout = sequenceNumberBitsLayout.upperBound ..< sequenceNumberBitsLayout.upperBound + secondsBits
+    private static let generatorIdentifierBitsLayout = secondsBitsLayout.upperBound ..< secondsBitsLayout.upperBound + generatorIdentifierBits
+
+    /// The range of valid generator identifiers
+    @usableFromInline
+    static let validGeneratorIdentifierRange = 0 ..< (1 << generatorIdentifierBits)
+
+    /// The range of valid sequence numbers
+    @usableFromInline
+    static let allowedSequenceNumberRange = 0 ..< (1 << sequenceNumberBits)
+
+    /// Convenience default manual generator identifier for the command line utility will pick the highest available identifier
+    @usableFromInline
+    static let defaultManualGeneratorIdentifier = (1 << generatorIdentifierBits) - 1
+
+    @usableFromInline
+    static func composeIdentifier(generatorId: UInt16, seconds: UInt32, seqNum: UInt32 = 0) -> UInt64 {
+        var retValue = UInt64(generatorId)
+        retValue = retValue << secondsBits
+        retValue += UInt64(seconds)
+        retValue = retValue << sequenceNumberBits
+        retValue += UInt64(seqNum)
+        return retValue
+    }
+
+    @usableFromInline
+    static func maskValue<T: BinaryInteger>(_ id: UInt64, from: Int, to: Int) -> T {
+        T(truncatingIfNeeded: (id >> from) & UInt64((1 << (to - from)) - 1))
+    }
+
+    @usableFromInline
+    static func seconds(_ id: UInt64) -> UInt32 {
+        maskValue(id, from: secondsBitsLayout.lowerBound, to: secondsBitsLayout.upperBound)
+    }
+
+    @usableFromInline
+    static func generatorId(_ id: UInt64) -> UInt16 {
+        maskValue(id, from: generatorIdentifierBitsLayout.lowerBound, to: generatorIdentifierBitsLayout.upperBound)
+    }
+
+    @usableFromInline
+    static func sequenceNumber(_ id: UInt64) -> UInt32 {
+        maskValue(id, from: sequenceNumberBitsLayout.lowerBound, to: sequenceNumberBitsLayout.upperBound)
+    }
+}
+
+public extension Frostflake {
+    /// Default number of bits allocated to seconds, default 32 bits, gives us ~136 years
+    static let secondsBits = FrostflakeLayout.secondsBits
+
+    /// Default number of bits allocated to sequence, default 21 bits, 2.097.152 id:s max per second
+    static let sequenceNumberBits = FrostflakeLayout.sequenceNumberBits
+
     /// Default number of bits allocated to generator part, default 11 bits, 2.048 unique concurrent generators in the system
-    static let generatorIdentifierBits = 11
+    static let generatorIdentifierBits = FrostflakeLayout.generatorIdentifierBits
 
     /// The range of valid generator identifiers
     static let validGeneratorIdentifierRange = 0 ..< (1 << generatorIdentifierBits)

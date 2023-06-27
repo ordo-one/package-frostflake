@@ -6,7 +6,7 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-#if os(OSX)
+#if os(OSX) && DEBUG
 
     @testable import Frostflake
 
@@ -24,9 +24,9 @@
             let exceptionBadInstruction: BadInstructionException? = catchBadInstruction {
                 repeat {
                     for _ in Frostflake.allowedSequenceNumberRange {
-                        blackHole(frostflakeFactory.generate())
-                        blackHole(frostflakeFactory.generate())
                         idGenerated += 2
+                        blackHole(frostflakeFactory.generate())
+                        blackHole(frostflakeFactory.generate())
                     }
                 } while currentSecondsSinceEpoch() - testStarted <= 1
             }

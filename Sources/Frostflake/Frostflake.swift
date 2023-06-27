@@ -6,15 +6,14 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-import ConcurrencyHelpers
+import Atomics
 
 /// Frostflake generator, we tried with an Actor but it was too slow.
 public final class Frostflake {
-    public var currentSeconds: UInt32
-    public var sequenceNumber: UInt32
+    public var genNumber: ManagedAtomic<UInt64>
     public let generatorIdentifier: UInt16
+
     public let forcedTimeRegenerationInterval: UInt32
-    public let lock: Lock?
 
     // Class variables and functions
     private static var privateSharedGenerator: Frostflake?
@@ -76,23 +75,43 @@ public final class Frostflake {
     @inlinable
     public init(generatorIdentifier: UInt16,
                 forcedTimeRegenerationInterval: UInt32 = defaultForcedTimeRegenerationInterval,
-                concurrentAccess: Bool = true) {
-        assert(Self.validGeneratorIdentifierRange.contains(Int(generatorIdentifier)),
-               "Frostflake generatorIdentifier \(generatorIdentifier) used more than \(Self.generatorIdentifierBits) bits")
-        assert((Self.sequenceNumberBits + Self.generatorIdentifierBits) == 32,
-               "Frostflake sequenceNumberBits (\(Self.sequenceNumberBits)) + " +
-                   "generatorIdentifierBits (\(Self.generatorIdentifierBits)) != 32")
+                concurrentAccess _: Bool = true) {
+        assert(FrostflakeLayout.validGeneratorIdentifierRange.contains(Int(generatorIdentifier)),
+               "Frostflake generatorIdentifier \(generatorIdentifier) used more than \(FrostflakeLayout.generatorIdentifierBits) bits")
+        assert((FrostflakeLayout.sequenceNumberBits + Self.generatorIdentifierBits) == 32,
+               "Frostflake sequenceNumberBits (\(FrostflakeLayout.sequenceNumberBits)) + " +
+                   "generatorIdentifierBits (\(FrostflakeLayout.generatorIdentifierBits)) != 32")
 
-        if concurrentAccess {
-            lock = Lock()
-        } else {
-            lock = nil
-        }
-
-        sequenceNumber = 0
+        let initialValue = Self.composeInitialValue(genID: generatorIdentifier)
+        genNumber = ManagedAtomic<UInt64>(initialValue)
         self.generatorIdentifier = generatorIdentifier
         self.forcedTimeRegenerationInterval = forcedTimeRegenerationInterval
-        currentSeconds = currentSecondsSinceEpoch()
+    }
+
+    @inlinable
+    static func composeInitialValue(genID: UInt16, lastGenNum: UInt64 = 0) -> UInt64 {
+        let currentSeconds = currentSecondsSinceEpoch()
+
+        assert(
+            currentSeconds > FrostflakeLayout.seconds(lastGenNum),
+            "too many FrostflakeIdentifiers generated in one second (in release seqNums will increment seconds)")
+
+        return FrostflakeLayout.composeIdentifier(generatorId: genID, seconds: currentSeconds)
+    }
+
+    @inlinable
+    func checkRange(genNumber: UInt64) -> Bool {
+        let sequenceNumber = FrostflakeLayout.sequenceNumber(genNumber) + 1
+
+        if FrostflakeLayout.allowedSequenceNumberRange.contains(Int(sequenceNumber))
+            || forcedTimeRegenerationInterval <= 0
+            || sequenceNumber < forcedTimeRegenerationInterval
+            || currentSecondsSinceEpoch() > FrostflakeLayout.seconds(genNumber) {
+            return true
+        }
+        assert(sequenceNumber == (1 << FrostflakeLayout.sequenceNumberBits) || FrostflakeLayout.allowedSequenceNumberRange.contains(Int(sequenceNumber)), "sequenceNumber != 1 << sequenceNumberBits")
+
+        return false
     }
 
     /// Generates a new Frostflake identifier for the generator
@@ -108,40 +127,16 @@ public final class Frostflake {
     @inlinable
     @inline(__always)
     public func generate() -> FrostflakeIdentifier {
-        lock?.lock()
-
-        assert(Self.allowedSequenceNumberRange.contains(Int(sequenceNumber)), "sequenceNumber ouf of allowed range")
-
-        sequenceNumber += 1
-
-        // Have we used all the sequence number bits, we need get a new base timestamp
-        if Self.allowedSequenceNumberRange.contains(Int(sequenceNumber)) == false {
-            assert(sequenceNumber == (1 << Self.sequenceNumberBits), "sequenceNumber != 1 << sequenceNumberBits")
-
-            let newCurrentSeconds = currentSecondsSinceEpoch()
-
-            // The maximum rate is 1 << sequenceNumberBits per second (defaults to over 1M per second)
-            // Currently we'll bail here - one could consider sleeping / retrying, but really synthetic problem.
-            // Theoretically this could happen for NTP discrete timejumps back in time too, in which case
-            // we'd rather abort and go down.
-            precondition(newCurrentSeconds > currentSeconds, "too many FrostflakeIdentifiers generated in one second")
-
-            currentSeconds = newCurrentSeconds
-            sequenceNumber = 1
-        } else if forcedTimeRegenerationInterval > 0, (sequenceNumber % forcedTimeRegenerationInterval) == 0 {
-            let newCurrentSeconds = currentSecondsSinceEpoch()
-            if newCurrentSeconds > currentSeconds {
-                currentSeconds = newCurrentSeconds
-                sequenceNumber = 1
+        repeat {
+            let nextSeqNum = genNumber.wrappingIncrementThenLoad(ordering: .relaxed)
+            guard checkRange(genNumber: nextSeqNum) else {
+                let newSeq = Self.composeInitialValue(genID: generatorIdentifier, lastGenNum: nextSeqNum - 1)
+                if genNumber.weakCompareExchange(expected: nextSeqNum, desired: newSeq, ordering: .relaxed).exchanged {
+                    return newSeq
+                }
+                continue
             }
-        }
-
-        var returnValue = UInt64(currentSeconds) << Self.secondsBits
-        returnValue += UInt64(sequenceNumber) << Self.generatorIdentifierBits
-        returnValue += UInt64(generatorIdentifier)
-
-        lock?.unlock()
-
-        return returnValue
+            return nextSeqNum
+        } while true
     }
 }
