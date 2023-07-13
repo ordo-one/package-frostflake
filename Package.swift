@@ -1,7 +1,41 @@
 // swift-tools-version: 5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
+import class Foundation.ProcessInfo
 import PackageDescription
+
+let externalDependencies: [String: Range<Version>] = [
+    "https://github.com/apple/swift-argument-parser": .upToNextMajor(from: "1.0.0"),
+    "https://github.com/apple/swift-system": .upToNextMajor(from: "1.0.0"),
+    "https://github.com/apple/swift-docc-plugin": .upToNextMajor(from: "1.0.0"),
+    "https://github.com/mattgallagher/CwlPreconditionTesting": .upToNextMajor(from: "2.0.0")
+]
+
+let internalDependencies: [String: Range<Version>] = [
+    "package-concurrency-helpers": .upToNextMajor(from: "1.0.0"),
+    "package-benchmark": .upToNextMajor(from: "1.2.0"),
+    "package-datetime": .upToNextMajor(from: "1.0.1"),
+]
+
+func makeDependencies() -> [Package.Dependency] {
+    var dependencies: [Package.Dependency] = []
+    dependencies.reserveCapacity(externalDependencies.count + internalDependencies.count)
+
+    for extDep in externalDependencies {
+        dependencies.append(.package(url: extDep.key, extDep.value))
+    }
+
+    let localPath = ProcessInfo.processInfo.environment["LOCAL_PACKAGES_DIR"]
+
+    for intDep in internalDependencies {
+        if let localPath {
+            dependencies.append(.package(name: "\(intDep.key)", path: "\(localPath)/\(intDep.key)"))
+        } else {
+            dependencies.append(.package(url: "https://github.com/ordo-one/\(intDep.key)", intDep.value))
+        }
+    }
+    return dependencies
+}
 
 let package = Package(
     name: "package-frostflake",
@@ -19,15 +53,7 @@ let package = Package(
             targets: ["FrostflakeUtility"]
         ),
     ],
-    dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMajor(from: "1.0.0")),
-        .package(url: "https://github.com/apple/swift-system", .upToNextMajor(from: "1.0.0")),
-        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
-        .package(url: "https://github.com/ordo-one/package-concurrency-helpers", .upToNextMajor(from: "1.0.0")),
-        .package(url: "https://github.com/ordo-one/package-benchmark", .upToNextMajor(from: "1.2.0")),
-        .package(url: "https://github.com/ordo-one/package-datetime", .upToNextMajor(from: "1.0.1")),
-        .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting", from: Version("2.0.0"))
-    ],
+    dependencies: makeDependencies(),
     targets: [
         // Main library target
         .target(name: "Frostflake",
