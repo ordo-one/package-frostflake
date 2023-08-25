@@ -58,7 +58,7 @@ let package = Package(
         // Main library target
         .target(name: "Frostflake",
                 dependencies: [
-                    .product(name: "ConcurrencyHelpers", package: "package-concurrency-helpers"),
+                    .product(name: "PackageConcurrencyHelpers", package: "package-concurrency-helpers"),
                     .product(name: "DateTime", package: "package-datetime"),
                 ],
                 path: "Sources/Frostflake"),
