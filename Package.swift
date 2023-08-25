@@ -12,7 +12,7 @@ let externalDependencies: [String: Range<Version>] = [
 ]
 
 let internalDependencies: [String: Range<Version>] = [
-    "package-concurrency-helpers": .upToNextMajor(from: "1.0.0"),
+    "package-concurrency-helpers": .upToNextMajor(from: "2.0.0"),
     "package-benchmark": .upToNextMajor(from: "1.2.0"),
     "package-datetime": .upToNextMajor(from: "1.0.1"),
 ]

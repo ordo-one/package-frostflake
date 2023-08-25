@@ -6,7 +6,7 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-import ConcurrencyHelpers
+import PackageConcurrencyHelpers
 
 /// Frostflake generator, we tried with an Actor but it was too slow.
 public final class Frostflake {
