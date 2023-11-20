@@ -46,6 +46,7 @@ let package = Package(
     products: [
         .library(
             name: "Frostflake",
+            type: .dynamic,
             targets: ["Frostflake"]
         ),
         .executable(
