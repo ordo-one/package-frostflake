@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import class Foundation.ProcessInfo
@@ -12,8 +12,7 @@ let externalDependencies: [String: Range<Version>] = [
 ]
 
 let internalDependencies: [String: Range<Version>] = [
-    "package-concurrency-helpers": .upToNextMajor(from: "2.0.0"),
-    "package-benchmark": .upToNextMajor(from: "1.2.0"),
+    "package-concurrency-helpers": .upToNextMajor(from: "4.0.0-alpha.1"),
     "package-datetime": .upToNextMajor(from: "1.0.1"),
 ]
 
@@ -40,8 +39,7 @@ func makeDependencies() -> [Package.Dependency] {
 let package = Package(
     name: "package-frostflake",
     platforms: [
-        .macOS(.v13),
-        .iOS(.v16),
+        .macOS(.v14),
     ],
     products: [
         .library(
@@ -62,7 +60,11 @@ let package = Package(
                     .product(name: "PackageConcurrencyHelpers", package: "package-concurrency-helpers"),
                     .product(name: "DateTime", package: "package-datetime"),
                 ],
-                path: "Sources/Frostflake"),
+                path: "Sources/Frostflake",
+                swiftSettings: [
+                    .enableExperimentalFeature("AccessLevelOnImport")
+                ]
+            ),
 
         // Command line Frostflake generator
         .executableTarget(
@@ -72,19 +74,6 @@ let package = Package(
                 .product(name: "SystemPackage", package: "swift-system"),
                 "Frostflake",
             ]
-        ),
-
-        // Benchmark targets
-        .executableTarget(
-            name: "Frostflake-Benchmark",
-            dependencies: [
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "SystemPackage", package: "swift-system"),
-                .product(name: "Benchmark", package: "package-benchmark"),
-                .product(name: "BenchmarkPlugin", package: "package-benchmark"),
-                "Frostflake",
-            ],
-            path: "Benchmarks/Benchmark"
         ),
 
         // Test targets
