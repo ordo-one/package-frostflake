@@ -12,8 +12,8 @@ let externalDependencies: [String: Range<Version>] = [
 ]
 
 let internalDependencies: [String: Range<Version>] = [
-    "package-concurrency-helpers": .upToNextMajor(from: "4.0.0-alpha.1"),
-    "package-datetime": .upToNextMajor(from: "1.0.1"),
+    "package-concurrency-helpers": .upToNextMajor(from: "4.0.0-alpha.2"),
+    "package-datetime": .upToNextMajor(from: "2.0.0-alpha.1"),
 ]
 
 func makeDependencies() -> [Package.Dependency] {
