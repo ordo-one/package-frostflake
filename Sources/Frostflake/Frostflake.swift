@@ -71,7 +71,6 @@ public final class Frostflake {
     ///   - concurrentAccess: Specifies whether the generator can be accessed from multiple
     ///   tasks/threads concurrently - if the generator is **only** used from a synchronized state
     ///   like .eg. an Actor context, you can specify false here to avoid the internal locking overhead
-    @inlinable
     public init(generatorIdentifier: UInt16,
                 forcedTimeRegenerationInterval: UInt32 = defaultForcedTimeRegenerationInterval,
                 concurrentAccess: Bool = true) {
