@@ -46,9 +46,15 @@ final class FrostflakeTests: XCTestCase {
 
     func testTestEpochWithFutureDate() {
         var testEpoch = EpochDateTime.testEpoch()
-        testEpoch.convert(timestamp: 6_001) // + 100 minutes
+        testEpoch.convert(timestamp: 1653061201) // + 100 minutes
 
         // EpochDateTime(year: 2022, month: 5, day: 20, hour: 15, minute: 40, second: 1)
+        XCTAssertEqual(testEpoch.year, 2_022)
+        XCTAssertEqual(testEpoch.month, 5)
+        XCTAssertEqual(testEpoch.day, 20)
+        XCTAssertEqual(testEpoch.hour, 15)
+        XCTAssertEqual(testEpoch.minute, 40)
+        XCTAssertEqual(testEpoch.second, 1)
         XCTAssert(testEpoch.year == 2_022 &&
             testEpoch.month == 5 &&
             testEpoch.day == 20 &&
