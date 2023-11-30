@@ -7,8 +7,7 @@ import PackageDescription
 let externalDependencies: [String: Range<Version>] = [
     "https://github.com/apple/swift-argument-parser": .upToNextMajor(from: "1.0.0"),
     "https://github.com/apple/swift-system": .upToNextMajor(from: "1.0.0"),
-    "https://github.com/apple/swift-docc-plugin": .upToNextMajor(from: "1.0.0"),
-    "https://github.com/mattgallagher/CwlPreconditionTesting": .upToNextMajor(from: "2.0.0")
+    "https://github.com/apple/swift-docc-plugin": .upToNextMajor(from: "1.0.0")
 ]
 
 let internalDependencies: [String: Range<Version>] = [
@@ -73,10 +72,9 @@ let package = Package(
         ),
         .testTarget(
             name: "FrostflakeTests",
-            dependencies: ["FrostflakeUtility",
-                           "Frostflake",
-                           .product(name: "CwlPreconditionTesting", package: "CwlPreconditionTesting",
-                                    condition: .when(platforms: [.macOS]))]
+            dependencies: [
+                "FrostflakeUtility", "Frostflake"
+            ]
         )
     ]
 )

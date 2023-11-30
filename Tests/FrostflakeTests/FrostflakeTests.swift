@@ -69,7 +69,7 @@ final class FrostflakeTests: XCTestCase {
         for _ in 0 ..< 10 {
             let frostflake = frostflakeFactory.generate()
             let decription = frostflake.frostflakeDescription()
-            print(decription)
+            blackHole(decription)
         }
     }
 
