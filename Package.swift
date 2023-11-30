@@ -7,13 +7,11 @@ import PackageDescription
 let externalDependencies: [String: Range<Version>] = [
     "https://github.com/apple/swift-argument-parser": .upToNextMajor(from: "1.0.0"),
     "https://github.com/apple/swift-system": .upToNextMajor(from: "1.0.0"),
-    "https://github.com/apple/swift-docc-plugin": .upToNextMajor(from: "1.0.0"),
-    "https://github.com/mattgallagher/CwlPreconditionTesting": .upToNextMajor(from: "2.0.0")
+    "https://github.com/apple/swift-docc-plugin": .upToNextMajor(from: "1.0.0")
 ]
 
 let internalDependencies: [String: Range<Version>] = [
     "package-concurrency-helpers": .upToNextMajor(from: "2.0.0"),
-    "package-benchmark": .upToNextMajor(from: "1.2.0"),
     "package-datetime": .upToNextMajor(from: "1.0.1"),
 ]
 
@@ -72,27 +70,11 @@ let package = Package(
                 "Frostflake",
             ]
         ),
-
-        // Benchmark targets
-        .executableTarget(
-            name: "Frostflake-Benchmark",
-            dependencies: [
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "SystemPackage", package: "swift-system"),
-                .product(name: "Benchmark", package: "package-benchmark"),
-                .product(name: "BenchmarkPlugin", package: "package-benchmark"),
-                "Frostflake",
-            ],
-            path: "Benchmarks/Benchmark"
-        ),
-
-        // Test targets
         .testTarget(
             name: "FrostflakeTests",
-            dependencies: ["FrostflakeUtility",
-                           "Frostflake",
-                           .product(name: "CwlPreconditionTesting", package: "CwlPreconditionTesting",
-                                    condition: .when(platforms: [.macOS]))]
+            dependencies: [
+                "FrostflakeUtility", "Frostflake"
+            ]
         )
     ]
 )
