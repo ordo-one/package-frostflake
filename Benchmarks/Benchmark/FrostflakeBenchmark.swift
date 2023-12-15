@@ -1,29 +1,27 @@
 import Frostflake
-import BenchmarkSupport
-@main extension BenchmarkRunner {}
+import Benchmark
 
-@_dynamicReplacement(for: registerBenchmarks)
-func benchmarks() {
+let benchmarks = {
 
     // Once during runtime setup can be done before registering benchmarks
-
-    Benchmark("Frostflake with locks", throughputScalingFactor: .kilo, desiredDuration: .seconds(1)) { benchmark in
+    Benchmark.defaultConfiguration = .init(scalingFactor: .kilo, maxDuration: .seconds(3))
+    Benchmark("Frostflake with locks") { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
                                            concurrentAccess: true)
 
         benchmark.startMeasurement()
-        for _ in 0 ..< benchmark.throughputScalingFactor.rawValue {
-            BenchmarkSupport.blackHole(frostflakeFactory.generate())
+        for _ in benchmark.scaledIterations {
+            Benchmark.blackHole(frostflakeFactory.generate())
         }
     }
 
-    Benchmark("Frostflake without locks", throughputScalingFactor: .kilo, desiredDuration: .seconds(1)) { benchmark in
+    Benchmark("Frostflake without locks") { benchmark in
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16.random(in: 0...(1<<generatorIdentifierBits)-1),
                                            concurrentAccess: false)
 
         benchmark.startMeasurement()
-        for _ in 0 ..< benchmark.throughputScalingFactor.rawValue {
-            BenchmarkSupport.blackHole(frostflakeFactory.generate())
+        for _ in benchmark.scaledIterations {
+            Benchmark.blackHole(frostflakeFactory.generate())
         }
     }
 
