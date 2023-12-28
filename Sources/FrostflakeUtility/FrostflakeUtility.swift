@@ -7,7 +7,7 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 import ArgumentParser
-import Frostflake
+import FrostflakeDllKit
 
 @main
 struct FrostflakeUtility: AsyncParsableCommand {

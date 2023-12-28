@@ -6,15 +6,27 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-import DateTime
+#if canImport(Darwin)
+    import Darwin
+#elseif canImport(Glibc)
+    import Glibc
+#else
+    #error("Unsupported Platform")
+#endif
+
+import Foundation
 
 /// Get current seconds since UNIX epoch
 /// 32 bit number of seconds gives us ~136 years
-@inlinable
-@inline(__always)
-internal func currentSecondsSinceEpoch() -> UInt32 {
-    let timestamp = InternalUTCClock.now
-    return UInt32(timestamp.seconds())
+func currentSecondsSinceEpoch() -> UInt32 {
+    var currentTime = timespec()
+    let result = clock_gettime(CLOCK_REALTIME, &currentTime)
+
+    guard result == 0 else {
+        fatalError("Failed to get current time in clock_gettime(), errno = \(errno)")
+    }
+
+    return UInt32(currentTime.tv_sec)
 }
 
 private extension String {
@@ -34,12 +46,19 @@ public extension FrostflakeIdentifier {
         let sequenceNumber = (self & 0xFFFF_FFFF) >> Frostflake.generatorIdentifierBits
         let generatorIdentifier = (self & 0xFFFF_FFFF) & (0xFFFF_FFFF >> Frostflake.sequenceNumberBits)
 
-        var time = EpochDateTime.unixEpoch()
-        time.convert(timestamp: Int(seconds))
+        var tm = tm()
+        var time = Int(seconds)
+        gmtime_r(&time, &tm)
+        let year = Int(tm.tm_year + 1_900)
+        let month = Int(tm.tm_mon + 1)
+        let day = Int(tm.tm_mday)
+        let hour = Int(tm.tm_hour)
+        let minute = Int(tm.tm_min)
+        let second = Int(tm.tm_sec)
 
         return """
-        \(self) (\(time.year)-\(String(time.month).pad())-\(String(time.day).pad()) \
-        \(String(time.hour).pad()):\(String(time.minute).pad()):\(String(time.second).pad()) UTC\
+        \(self) (\(year)-\(String(month).pad())-\(String(day).pad()) \
+        \(String(hour).pad()):\(String(minute).pad()):\(String(second).pad()) UTC\
         , sequenceNumber:\(sequenceNumber), generatorIdentifier:\(generatorIdentifier))
         """
     }

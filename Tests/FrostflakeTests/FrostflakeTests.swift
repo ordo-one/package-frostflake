@@ -7,7 +7,7 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 @testable import DateTime
-@testable import Frostflake
+@testable import FrostflakeDllKit
 
 import XCTest
 
@@ -46,7 +46,7 @@ final class FrostflakeTests: XCTestCase {
 
     func testTestEpochWithFutureDate() {
         var testEpoch = EpochDateTime.testEpoch()
-        testEpoch.convert(timestamp: 1653061201) // + 100 minutes
+        testEpoch.convert(timestamp: 1_653_061_201) // + 100 minutes
 
         // EpochDateTime(year: 2022, month: 5, day: 20, hour: 15, minute: 40, second: 1)
         XCTAssertEqual(testEpoch.year, 2_022)
@@ -130,5 +130,10 @@ final class FrostflakeTests: XCTestCase {
         for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
             blackHole(frostflakeFactory.generate())
         }
+    }
+
+    func testDoubleSetup() {
+        let frostflake = Frostflake(generatorIdentifier: 47)
+        Frostflake.setup(sharedGenerator: frostflake)
     }
 }

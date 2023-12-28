@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import class Foundation.ProcessInfo
@@ -10,10 +10,7 @@ let externalDependencies: [String: Range<Version>] = [
     "https://github.com/apple/swift-docc-plugin": .upToNextMajor(from: "1.0.0")
 ]
 
-let internalDependencies: [String: Range<Version>] = [
-    "package-concurrency-helpers": .upToNextMajor(from: "2.0.0"),
-    "package-datetime": .upToNextMajor(from: "1.0.1"),
-]
+let internalDependencies: [String: Range<Version>] = [:]
 
 func makeDependencies() -> [Package.Dependency] {
     var dependencies: [Package.Dependency] = []
@@ -43,8 +40,9 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Frostflake",
-            targets: ["Frostflake"]
+            name: "FrostflakeDllKit",
+            type: .dynamic,
+            targets: ["FrostflakeDllKit"]
         ),
         .executable(
             name: "flake",
@@ -54,26 +52,30 @@ let package = Package(
     dependencies: makeDependencies(),
     targets: [
         // Main library target
-        .target(name: "Frostflake",
-                dependencies: [
-                    .product(name: "PackageConcurrencyHelpers", package: "package-concurrency-helpers"),
-                    .product(name: "DateTime", package: "package-datetime"),
-                ],
-                path: "Sources/Frostflake"),
-
+        .target(name: "FrostflakeDllKit",
+                dependencies: [],
+                path: "Sources/Frostflake",
+                swiftSettings: [
+                    .enableExperimentalFeature("AccessLevelOnImport"),
+                    .unsafeFlags([
+                        "-enable-library-evolution",
+                        "-emit-module-interface",
+                        "-user-module-version", "1.0"
+                    ])
+                ]),
         // Command line Frostflake generator
         .executableTarget(
             name: "FrostflakeUtility",
             dependencies: [
+                "FrostflakeDllKit",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "SystemPackage", package: "swift-system"),
-                "Frostflake",
+                .product(name: "SystemPackage", package: "swift-system")
             ]
         ),
         .testTarget(
             name: "FrostflakeTests",
             dependencies: [
-                "FrostflakeUtility", "Frostflake"
+                "FrostflakeUtility", "FrostflakeDllKit"
             ]
         )
     ]
