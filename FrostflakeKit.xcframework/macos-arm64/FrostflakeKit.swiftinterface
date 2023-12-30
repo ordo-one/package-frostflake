@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
-// swift-module-flags: -target arm64-apple-macosx13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -module-name FrostflakeDllKit
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
+// swift-module-flags: -target arm64-apple-macosx13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -module-name FrostflakeKit
 // swift-module-flags-ignorable: -enable-experimental-feature AccessLevelOnImport -user-module-version 1.0
 import Darwin
 import Foundation
@@ -13,16 +13,16 @@ final public class Frostflake {
   final public var sequenceNumber: Swift.UInt32
   final public let generatorIdentifier: Swift.UInt16
   final public let forcedTimeRegenerationInterval: Swift.UInt32
-  public static var sharedGenerator: FrostflakeDllKit.Frostflake {
+  public static var sharedGenerator: FrostflakeKit.Frostflake {
     get
   }
-  public static func setup(sharedGenerator: FrostflakeDllKit.Frostflake)
+  public static func setup(sharedGenerator: FrostflakeKit.Frostflake)
   public static func teardown()
-  @inlinable @inline(__always) public static func generate() -> FrostflakeDllKit.FrostflakeIdentifier {
+  @inlinable @inline(__always) public static func generate() -> FrostflakeKit.FrostflakeIdentifier {
         sharedGenerator.generate()
     }
   public init(generatorIdentifier: Swift.UInt16, forcedTimeRegenerationInterval: Swift.UInt32 = defaultForcedTimeRegenerationInterval, concurrentAccess: Swift.Bool = true)
-  final public func generate() -> FrostflakeDllKit.FrostflakeIdentifier
+  final public func generate() -> FrostflakeKit.FrostflakeIdentifier
   @objc deinit
 }
 public typealias FrostflakeIdentifier = Swift.UInt64
@@ -31,7 +31,7 @@ extension Swift.UInt64 {
         self = Frostflake.sharedGenerator.generate()
     }
 }
-extension FrostflakeDllKit.Frostflake {
+extension FrostflakeKit.Frostflake {
   public static let secondsBits: Swift.Int
   public static let sequenceNumberBits: Swift.Int
   public static let generatorIdentifierBits: Swift.Int

@@ -40,9 +40,9 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "FrostflakeDllKit",
+            name: "FrostflakeKit",
             type: .dynamic,
-            targets: ["FrostflakeDllKit"]
+            targets: ["FrostflakeKit"]
         ),
         .executable(
             name: "flake",
@@ -52,9 +52,9 @@ let package = Package(
     dependencies: makeDependencies(),
     targets: [
         // Main library target
-        .target(name: "FrostflakeDllKit",
+        .target(name: "FrostflakeKit",
                 dependencies: [],
-                path: "Sources/Frostflake",
+                path: "Sources/FrostflakeKit",
                 swiftSettings: [
                     .enableExperimentalFeature("AccessLevelOnImport"),
                     .unsafeFlags([
@@ -67,7 +67,7 @@ let package = Package(
         .executableTarget(
             name: "FrostflakeUtility",
             dependencies: [
-                "FrostflakeDllKit",
+                "FrostflakeKit",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "SystemPackage", package: "swift-system")
             ]
@@ -75,7 +75,7 @@ let package = Package(
         .testTarget(
             name: "FrostflakeTests",
             dependencies: [
-                "FrostflakeUtility", "FrostflakeDllKit"
+                "FrostflakeUtility", "FrostflakeKit"
             ]
         )
     ]
