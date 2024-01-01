@@ -18,6 +18,34 @@
                         <key>SupportedPlatform</key>
                         <string>macos</string>
                 </dict>
+		<dict>
+                        <key>BinaryPath</key>
+                        <string>libFrostflakeKit.so</string>
+                        <key>LibraryIdentifier</key>
+                        <string>linux-aarch64</string>
+                        <key>LibraryPath</key>
+                        <string>libFrostflakeKit.so</string>
+                        <key>SupportedArchitectures</key>
+                        <array>
+                                <string>aarch64</string>
+                        </array>
+                        <key>SupportedPlatform</key>
+                        <string>linux</string>
+                </dict>
+		<dict>
+                        <key>BinaryPath</key>
+                        <string>libFrostflakeKit.so</string>
+                        <key>LibraryIdentifier</key>
+                        <string>linux-x86_64</string>
+                        <key>LibraryPath</key>
+                        <string>libFrostflakeKit.so</string>
+                        <key>SupportedArchitectures</key>
+                        <array>
+                                <string>x86_64</string>
+                        </array>
+                        <key>SupportedPlatform</key>
+                        <string>linux</string>
+                </dict>
         </array>
         <key>CFBundlePackageType</key>
         <string>XFWK</string>
