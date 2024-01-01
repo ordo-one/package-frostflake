@@ -14,8 +14,6 @@
     #error("Unsupported Platform")
 #endif
 
-import Foundation
-
 /// Get current seconds since UNIX epoch
 /// 32 bit number of seconds gives us ~136 years
 func currentSecondsSinceEpoch() -> UInt32 {
@@ -35,7 +33,7 @@ private extension String {
         if toPad < 1 {
             return self
         }
-        return "".padding(toLength: toPad, withPad: "0", startingAt: 0) + self
+        return String(repeating: "0", count: toPad) + self
     }
 }
 

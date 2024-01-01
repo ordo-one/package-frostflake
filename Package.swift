@@ -35,8 +35,8 @@ func makeDependencies() -> [Package.Dependency] {
 let package = Package(
     name: "package-frostflake",
     platforms: [
-        .macOS(.v13),
-        .iOS(.v16),
+        .macOS(.v14),
+        .iOS(.v17),
     ],
     products: [
         .library(
@@ -53,7 +53,6 @@ let package = Package(
     targets: [
         // Main library target
         .target(name: "FrostflakeKit",
-                dependencies: [],
                 path: "Sources/FrostflakeKit",
                 swiftSettings: [
                     .enableExperimentalFeature("AccessLevelOnImport"),
