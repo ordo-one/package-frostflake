@@ -18,7 +18,7 @@ let package = Package(
         .executableTarget(
             name: "FrostflakeBenchmark",
             dependencies: [
-                .product(name: "Frostflake", package: "package-frostflake"),
+                .product(name: "FrostflakeKit", package: "package-frostflake"),
                 .product(name: "Benchmark", package: "package-benchmark"),
                 .product(name: "BenchmarkPlugin", package: "package-benchmark"),
                 // .product(name: "ArgumentParser", package: "swift-argument-parser"),

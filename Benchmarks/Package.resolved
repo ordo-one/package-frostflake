@@ -10,15 +10,6 @@
       }
     },
     {
-      "identity" : "package-concurrency-helpers",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ordo-one/package-concurrency-helpers",
-      "state" : {
-        "revision" : "673b7983a4b662887e143121b803e243c326a96e",
-        "version" : "2.1.0"
-      }
-    },
-    {
       "identity" : "package-datetime",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ordo-one/package-datetime",
@@ -42,15 +33,6 @@
       "location" : "https://github.com/ordo-one/package-jemalloc",
       "state" : {
         "revision" : "e8a5db026963f5bfeac842d9d3f2cc8cde323b49",
-        "version" : "1.0.0"
-      }
-    },
-    {
-      "identity" : "package-latency-tools",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ordo-one/package-latency-tools",
-      "state" : {
-        "revision" : "93d2be69c484bebb28c5192249d7e1da15236d34",
         "version" : "1.0.0"
       }
     },

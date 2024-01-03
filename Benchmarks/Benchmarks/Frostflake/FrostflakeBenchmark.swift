@@ -7,7 +7,7 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 import Benchmark
-import Frostflake
+import FrostflakeKit
 
 let benchmarks = {
     // Once during runtime setup can be done before registering benchmarks
