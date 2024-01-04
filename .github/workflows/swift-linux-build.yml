@@ -25,6 +25,7 @@ jobs:
         swift-version: ${{ matrix.swift }}
 
     - uses: vapor/swiftly-action@v0.1
+      if: ${{ false }}
     - uses: actions/checkout@v3
 
     - name: Start consul
