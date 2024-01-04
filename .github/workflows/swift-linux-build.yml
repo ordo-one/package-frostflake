@@ -20,10 +20,12 @@ jobs:
 
     steps:
     - uses: fwal/setup-swift@v1
+      if: ${{ false }}
       with:
         swift-version: ${{ matrix.swift }}
 
-    - uses: actions/checkout@v3    
+    - uses: vapor/swiftly-action@v0.1
+    - uses: actions/checkout@v3
 
     - name: Start consul
       uses: ./.github/actions/consul-start
