@@ -5,6 +5,8 @@
         <key>AvailableLibraries</key>
         <array>
                 <dict>
+                        <key>BinaryPath</key>
+                        <string>FrostflakeKit.framework/libFrostflakeKit.dylib</string>
                         <key>DebugSymbolsPath</key>
                         <string>FrostflakeKit.dSYMs</string>
                         <key>LibraryIdentifier</key>
