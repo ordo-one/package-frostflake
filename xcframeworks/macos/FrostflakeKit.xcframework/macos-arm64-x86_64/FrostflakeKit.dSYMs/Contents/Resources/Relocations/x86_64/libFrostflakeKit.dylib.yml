@@ -1,0 +1,43 @@
+---
+triple:          'x86_64-apple-darwin'
+binary-path:     '/Users/ordo/Dev/PRs/package-frostflake/.build/apple/Products/Release/libFrostflakeKit.dylib'
+relocations:
+  - { offsetInCU: 0x4F, offset: 0x29E30, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C22privateSharedGenerator33_6F348D836A383A26915DFC9C75E68E3FLLACSgvpZ', symObjAddr: 0x618, symBinAddr: 0x81F8, symSize: 0x0 }
+  - { offsetInCU: 0x69, offset: 0x29E4A, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C14currentSecondss6UInt32Vvg', symObjAddr: 0x0, symBinAddr: 0x2B80, symSize: 0x30 }
+  - { offsetInCU: 0x96, offset: 0x29E77, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C14currentSecondss6UInt32Vvs', symObjAddr: 0x30, symBinAddr: 0x2BB0, symSize: 0x30 }
+  - { offsetInCU: 0xD3, offset: 0x29EB4, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C14currentSecondss6UInt32VvM', symObjAddr: 0x60, symBinAddr: 0x2BE0, symSize: 0x30 }
+  - { offsetInCU: 0x100, offset: 0x29EE1, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C14currentSecondss6UInt32VvM.resume.0', symObjAddr: 0x90, symBinAddr: 0x2C10, symSize: 0x10 }
+  - { offsetInCU: 0x12B, offset: 0x29F0C, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C14sequenceNumbers6UInt32Vvg', symObjAddr: 0xA0, symBinAddr: 0x2C20, symSize: 0x30 }
+  - { offsetInCU: 0x158, offset: 0x29F39, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C14sequenceNumbers6UInt32Vvs', symObjAddr: 0xD0, symBinAddr: 0x2C50, symSize: 0x30 }
+  - { offsetInCU: 0x195, offset: 0x29F76, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C14sequenceNumbers6UInt32VvM', symObjAddr: 0x100, symBinAddr: 0x2C80, symSize: 0x30 }
+  - { offsetInCU: 0x1C2, offset: 0x29FA3, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C19generatorIdentifiers6UInt16Vvg', symObjAddr: 0x130, symBinAddr: 0x2CB0, symSize: 0x10 }
+  - { offsetInCU: 0x1EF, offset: 0x29FD0, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C30forcedTimeRegenerationIntervals6UInt32Vvg', symObjAddr: 0x140, symBinAddr: 0x2CC0, symSize: 0x10 }
+  - { offsetInCU: 0x21C, offset: 0x29FFD, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C15sharedGeneratorACvgZ', symObjAddr: 0x170, symBinAddr: 0x2CF0, symSize: 0x40 }
+  - { offsetInCU: 0x259, offset: 0x2A03A, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C5setup15sharedGeneratoryAC_tFZ', symObjAddr: 0x1B0, symBinAddr: 0x2D30, symSize: 0x60 }
+  - { offsetInCU: 0x2B6, offset: 0x2A097, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C8teardownyyFZ', symObjAddr: 0x210, symBinAddr: 0x2D90, symSize: 0x40 }
+  - { offsetInCU: 0x30C, offset: 0x2A0ED, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C8generates6UInt64VyFZ', symObjAddr: 0x250, symBinAddr: 0x2DD0, symSize: 0x60 }
+  - { offsetInCU: 0x367, offset: 0x2A148, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C8generates6UInt64VyF', symObjAddr: 0x2B0, symBinAddr: 0x2E30, symSize: 0x110 }
+  - { offsetInCU: 0x505, offset: 0x2A2E6, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C19generatorIdentifier30forcedTimeRegenerationInterval16concurrentAccessACs6UInt16V_s6UInt32VSbtcfC', symObjAddr: 0x3C0, symBinAddr: 0x2F40, symSize: 0xD0 }
+  - { offsetInCU: 0x5B2, offset: 0x2A393, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C19generatorIdentifier30forcedTimeRegenerationInterval16concurrentAccessACs6UInt16V_s6UInt32VSbtcfc', symObjAddr: 0x490, symBinAddr: 0x3010, symSize: 0xB0 }
+  - { offsetInCU: 0x64B, offset: 0x2A42C, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0Cfd', symObjAddr: 0x540, symBinAddr: 0x30C0, symSize: 0x20 }
+  - { offsetInCU: 0x686, offset: 0x2A467, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0CfD', symObjAddr: 0x560, symBinAddr: 0x30E0, symSize: 0x20 }
+  - { offsetInCU: 0x6D2, offset: 0x2A4B3, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C22privateSharedGenerator33_6F348D836A383A26915DFC9C75E68E3FLL_WZ', symObjAddr: 0x150, symBinAddr: 0x2CD0, symSize: 0x20 }
+  - { offsetInCU: 0x78B, offset: 0x2A56C, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0CMa', symObjAddr: 0x580, symBinAddr: 0x3100, symSize: 0x20 }
+  - { offsetInCU: 0x79F, offset: 0x2A580, size: 0x8, addend: 0x0, symName: '_$sSo16os_unfair_lock_sVMa', symObjAddr: 0x5D0, symBinAddr: 0x3150, symSize: 0x30 }
+  - { offsetInCU: 0x27, offset: 0x2A71D, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C37defaultForcedTimeRegenerationIntervals6UInt32VvgZ', symObjAddr: 0x0, symBinAddr: 0x3190, symSize: 0x10 }
+  - { offsetInCU: 0x3F, offset: 0x2A735, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C37defaultForcedTimeRegenerationIntervals6UInt32VvgZ', symObjAddr: 0x0, symBinAddr: 0x3190, symSize: 0x10 }
+  - { offsetInCU: 0x94, offset: 0x2A78A, size: 0x8, addend: 0x0, symName: '_$ss6UInt64V13FrostflakeKitEABycfC', symObjAddr: 0x10, symBinAddr: 0x31A0, symSize: 0x60 }
+  - { offsetInCU: 0xE3, offset: 0x2A7D9, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C11secondsBitsSivgZ', symObjAddr: 0x70, symBinAddr: 0x3200, symSize: 0x10 }
+  - { offsetInCU: 0x10E, offset: 0x2A804, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C18sequenceNumberBitsSivgZ', symObjAddr: 0x80, symBinAddr: 0x3210, symSize: 0x10 }
+  - { offsetInCU: 0x139, offset: 0x2A82F, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C23generatorIdentifierBitsSivgZ', symObjAddr: 0x90, symBinAddr: 0x3220, symSize: 0x10 }
+  - { offsetInCU: 0x164, offset: 0x2A85A, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C29validGeneratorIdentifierRangeSnySiGvgZ', symObjAddr: 0xA0, symBinAddr: 0x3230, symSize: 0x10 }
+  - { offsetInCU: 0x18F, offset: 0x2A885, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C26allowedSequenceNumberRangeSnySiGvgZ', symObjAddr: 0xB0, symBinAddr: 0x3240, symSize: 0x10 }
+  - { offsetInCU: 0x1BA, offset: 0x2A8B0, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit0A0C32defaultManualGeneratorIdentifierSivgZ', symObjAddr: 0xC0, symBinAddr: 0x3250, symSize: 0x10 }
+  - { offsetInCU: 0x2B, offset: 0x2A988, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit24currentSecondsSinceEpochs6UInt32VyF', symObjAddr: 0x0, symBinAddr: 0x3260, symSize: 0x130 }
+  - { offsetInCU: 0x6F, offset: 0x2A9CC, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit24currentSecondsSinceEpochs6UInt32VyF', symObjAddr: 0x0, symBinAddr: 0x3260, symSize: 0x130 }
+  - { offsetInCU: 0x239, offset: 0x2AB96, size: 0x8, addend: 0x0, symName: '_$ss6UInt64V13FrostflakeKitE21frostflakeDescriptionSSyF', symObjAddr: 0x130, symBinAddr: 0x3390, symSize: 0x690 }
+  - { offsetInCU: 0x97C, offset: 0x2B2D9, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit9blackHoleyyxlF', symObjAddr: 0x7C0, symBinAddr: 0x3A20, symSize: 0x10 }
+  - { offsetInCU: 0x2B, offset: 0x2B514, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit4LockCfD', symObjAddr: 0x0, symBinAddr: 0x3A30, symSize: 0x30 }
+  - { offsetInCU: 0x6D, offset: 0x2B556, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit4LockCfD', symObjAddr: 0x0, symBinAddr: 0x3A30, symSize: 0x30 }
+  - { offsetInCU: 0xCE, offset: 0x2B5B7, size: 0x8, addend: 0x0, symName: '_$s13FrostflakeKit4LockCMa', symObjAddr: 0x30, symBinAddr: 0x3A60, symSize: 0x14 }
+...

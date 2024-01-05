@@ -6,28 +6,17 @@
         <array>
                 <dict>
                         <key>BinaryPath</key>
-                        <string>libFrostflakeKit.dylib</string>
+                        <string>FrostflakeKit.framework/libFrostflakeKit.dylib</string>
+                        <key>DebugSymbolsPath</key>
+                        <string>FrostflakeKit.dSYMs</string>
                         <key>LibraryIdentifier</key>
-                        <string>macos-arm64</string>
+                        <string>macos-arm64-x86_64</string>
                         <key>LibraryPath</key>
-                        <string>libFrostflakeKit.dylib</string>
+                        <string>FrostflakeKit.framework</string>
                         <key>SupportedArchitectures</key>
                         <array>
                                 <string>arm64</string>
-                        </array>
-                        <key>SupportedPlatform</key>
-                        <string>macos</string>
-                </dict>
-		<dict>
-                        <key>BinaryPath</key>
-                        <string>libFrostflakeKit.dylib</string>
-                        <key>LibraryIdentifier</key>
-                        <string>macos-x86_64</string>
-                        <key>LibraryPath</key>
-                        <string>libFrostflakeKit.dylib</string>
-                        <key>SupportedArchitectures</key>
-                        <array>
-                                <string>x86_64</string>
+				<string>x86_64</string>
                         </array>
                         <key>SupportedPlatform</key>
                         <string>macos</string>
