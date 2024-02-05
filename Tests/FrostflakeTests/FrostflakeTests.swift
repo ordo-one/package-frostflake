@@ -13,10 +13,14 @@ import XCTest
 
 final class FrostflakeTests: XCTestCase {
     private let smallRangeTest = 1 ..< 1_000
+    static let frostflake = Frostflake(generatorIdentifier: 47)
 
     override class func setUp() {
-        let frostflake = Frostflake(generatorIdentifier: 47)
         Frostflake.setup(sharedGenerator: frostflake)
+    }
+
+    func testMultipleSharedSetups() {
+        Frostflake.setup(sharedGenerator: FrostflakeTests.frostflake) // Tests that we can set up multiple times with exact same instance
     }
 
     // Verified using https://www.epochconverter.com as well manually
