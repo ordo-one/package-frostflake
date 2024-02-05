@@ -10,9 +10,9 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../"),
-        .package(url: "https://github.com/ordo-one/package-benchmark.git", from: "1.13.0"),
-        //.package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
-        //.package(url: "https://github.com/apple/swift-system", from: "1.0.0")
+        .package(url: "https://github.com/ordo-one/package-benchmark.git", from: "1.13.0")
+        // .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
+        // .package(url: "https://github.com/apple/swift-system", from: "1.0.0")
     ],
     targets: [
         .executableTarget(
@@ -20,9 +20,9 @@ let package = Package(
             dependencies: [
                 .product(name: "Frostflake", package: "package-frostflake"),
                 .product(name: "Benchmark", package: "package-benchmark"),
-                .product(name: "BenchmarkPlugin", package: "package-benchmark"),
-                //.product(name: "ArgumentParser", package: "swift-argument-parser"),
-                //.product(name: "SystemPackage", package: "swift-system"),
+                .product(name: "BenchmarkPlugin", package: "package-benchmark")
+                // .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                // .product(name: "SystemPackage", package: "swift-system"),
             ],
             path: "Benchmarks/Frostflake"
         )

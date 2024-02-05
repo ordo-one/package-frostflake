@@ -12,7 +12,7 @@ import DateTime
 /// 32 bit number of seconds gives us ~136 years
 @inlinable
 @inline(__always)
-internal func currentSecondsSinceEpoch() -> UInt32 {
+func currentSecondsSinceEpoch() -> UInt32 {
     let timestamp = InternalUTCClock.now
     return UInt32(timestamp.seconds())
 }
