@@ -15,12 +15,23 @@ struct FrostflakeUtility: AsyncParsableCommand {
     var generatorIdentifier: Int = Frostflake.defaultManualGeneratorIdentifier
 
     @Option(help: "Decode a Frostflake timestamp by specifying a frostflake identifier")
-    var identifier: FrostflakeIdentifier?
+    var identifier: String?
+
+    @Flag(help: "Output Frostflake encoded in base58") var base58 = false
 
     mutating func run() async throws {
         if let frostflakeIdentifier = identifier {
-            print("Frostflake \(frostflakeIdentifier) decoded:")
-            print("\(frostflakeIdentifier.frostflakeDescription())")
+            if let value = UInt64(frostflakeIdentifier) {
+                print("Frostflake \(frostflakeIdentifier) decoded:")
+                print("\(value.frostflakeDescription())")
+            } else {
+                if let value = UInt64(base58: frostflakeIdentifier) {
+                    print("Frostflake \(frostflakeIdentifier) decoded:")
+                    print("\(value.frostflakeDescription())")
+                } else {
+                    print("Could not decode \(frostflakeIdentifier)")
+                }
+            }
         } else {
             guard Frostflake.validGeneratorIdentifierRange.contains(generatorIdentifier) else {
                 print("Frostflake generatorIdentifier should be in the range \(Frostflake.validGeneratorIdentifierRange)")
@@ -29,7 +40,11 @@ struct FrostflakeUtility: AsyncParsableCommand {
 
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorIdentifier),
                                                concurrentAccess: false)
-            print("\(frostflakeFactory.generate())")
+            if base58 {
+                print("\(frostflakeFactory.generate().base58)")
+            } else {
+                print("\(frostflakeFactory.generate())")
+            }
         }
     }
 }

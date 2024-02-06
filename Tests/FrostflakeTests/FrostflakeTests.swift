@@ -91,10 +91,26 @@ final class FrostflakeTests: XCTestCase {
         let frostflake = Frostflake(generatorIdentifier: 47)
         Frostflake.setup(sharedGenerator: frostflake)
     }
-    
+
     func testFrostflakeDescription() {
-        let frostflake: FrostflakeIdentifier = 7319193677673271295
-        XCTAssertEqual(frostflake.frostflakeDescription(), 
+        let frostflake: FrostflakeIdentifier = 7_319_193_677_673_271_295
+        XCTAssertEqual(frostflake.frostflakeDescription(),
                        "7319193677673271295 (2024-01-01 18:09:35 UTC, sequenceNumber:1, generatorIdentifier:2047)")
+    }
+
+    func testFrostflakeIdentifierBase58() {
+        let frostflakeFactory = Frostflake(generatorIdentifier: 987)
+
+        for _ in 0 ..< 10_000 {
+            let number: UInt64 = frostflakeFactory.generate()
+
+            let encoded = number.base58
+
+            if let decoded = UInt64(base58: encoded) {
+//                print("\(number) == \(encoded) == \(decoded)")
+                XCTAssertEqual(number, decoded)
+                XCTAssertEqual(encoded, decoded.base58)
+            }
+        }
     }
 }
