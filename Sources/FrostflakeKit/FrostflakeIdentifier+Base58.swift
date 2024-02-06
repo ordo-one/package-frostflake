@@ -9,14 +9,15 @@ extension FrostflakeIdentifier {
         }
         return indexes
     }()
+    fileprivate static let _base: UInt64 = 58
 
     public var base58: String {
         var number = self
         var encodedChars: [Character] = [] // Use array to collect characters
 
         while number > 0 {
-            let remainder = Int(number % 58)
-            number /= 58
+            let remainder = Int(number % Self._base)
+            number /= Self._base
             encodedChars.append(Self._base58Characters[remainder]) // Append character to the array
         }
 
@@ -32,7 +33,7 @@ extension FrostflakeIdentifier {
                 return nil // Character not in Base58 alphabet or not a valid ASCII character
             }
 
-            let (multiplied, overflowMult) = self.multipliedReportingOverflow(by: 58)
+            let (multiplied, overflowMult) = self.multipliedReportingOverflow(by: Self._base)
             if overflowMult {
                 return nil // Overflow in multiplication
             }
