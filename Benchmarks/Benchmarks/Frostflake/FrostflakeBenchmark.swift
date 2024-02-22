@@ -7,7 +7,7 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 import Benchmark
-import Frostflake
+import FrostflakeKit
 
 let benchmarks = {
     // Once during runtime setup can be done before registering benchmarks
@@ -70,5 +70,27 @@ let benchmarks = {
         for _ in benchmark.scaledIterations {
             Benchmark.blackHole(FrostflakeIdentifier())
         }
+    }
+    Benchmark("Frostflake base58Encoding",
+              configuration: .init(
+                warmupIterations: 0,
+                scalingFactor: .kilo,
+                maxIterations: .kilo(1)
+              )) { benchmark in
+      for _ in benchmark.scaledIterations {
+          Benchmark.blackHole(FrostflakeIdentifier().base58)
+      }
+    }
+
+    Benchmark("Frostflake base58Decoding",
+              configuration: .init(
+                warmupIterations: 0,
+                scalingFactor: .kilo,
+                maxIterations: .kilo(1)
+              )) { benchmark in
+      let base58String = FrostflakeIdentifier().base58
+      for _ in benchmark.scaledIterations {
+          Benchmark.blackHole(UInt64(base58: base58String))
+      }
     }
 }

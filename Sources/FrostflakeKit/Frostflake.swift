@@ -6,15 +6,13 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-import PackageConcurrencyHelpers
-
 /// Frostflake generator, we tried with an Actor but it was too slow.
 public final class Frostflake {
     public var currentSeconds: UInt32
     public var sequenceNumber: UInt32
     public let generatorIdentifier: UInt16
     public let forcedTimeRegenerationInterval: UInt32
-    public let lock: Lock?
+    private let lock: Lock?
 
     // Class variables and functions
     private static var privateSharedGenerator: Frostflake?
@@ -31,6 +29,10 @@ public final class Frostflake {
 
     /// Setup may only be called a single time for a global shared generator identifier
     public static func setup(sharedGenerator: Frostflake) {
+        /// That check is very helpful for tests when `setup` function can be invoked several times from `setUp` XCTest function.
+        if privateSharedGenerator?.generatorIdentifier == sharedGenerator.generatorIdentifier {
+            return
+        }
         if privateSharedGenerator != nil {
             preconditionFailure("called setup multiple times")
         }
@@ -73,7 +75,6 @@ public final class Frostflake {
     ///   - concurrentAccess: Specifies whether the generator can be accessed from multiple
     ///   tasks/threads concurrently - if the generator is **only** used from a synchronized state
     ///   like .eg. an Actor context, you can specify false here to avoid the internal locking overhead
-    @inlinable
     public init(generatorIdentifier: UInt16,
                 forcedTimeRegenerationInterval: UInt32 = defaultForcedTimeRegenerationInterval,
                 concurrentAccess: Bool = true) {
@@ -105,8 +106,6 @@ public final class Frostflake {
     /// let frostflake1 =  frostflakeFactory.generate()
     /// let frostflake2 =  frostflakeFactory.generate()
     ///  ```
-    @inlinable
-    @inline(__always)
     public func generate() -> FrostflakeIdentifier {
         lock?.lock()
 

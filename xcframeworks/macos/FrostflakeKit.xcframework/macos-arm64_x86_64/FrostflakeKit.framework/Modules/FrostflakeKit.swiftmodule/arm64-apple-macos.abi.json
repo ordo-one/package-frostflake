@@ -1,0 +1,1699 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "TopLevel",
+    "printedName": "TopLevel",
+    "children": [
+      {
+        "kind": "TypeDecl",
+        "name": "Frostflake",
+        "printedName": "Frostflake",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "currentSeconds",
+            "printedName": "currentSeconds",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt32",
+                "printedName": "Swift.UInt32",
+                "usr": "s:s6UInt32V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13FrostflakeKit0A0C14currentSecondss6UInt32Vvp",
+            "mangledName": "$s13FrostflakeKit0A0C14currentSecondss6UInt32Vvp",
+            "moduleName": "FrostflakeKit",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C14currentSecondss6UInt32Vvg",
+                "mangledName": "$s13FrostflakeKit0A0C14currentSecondss6UInt32Vvg",
+                "moduleName": "FrostflakeKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C14currentSecondss6UInt32Vvs",
+                "mangledName": "$s13FrostflakeKit0A0C14currentSecondss6UInt32Vvs",
+                "moduleName": "FrostflakeKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C14currentSecondss6UInt32VvM",
+                "mangledName": "$s13FrostflakeKit0A0C14currentSecondss6UInt32VvM",
+                "moduleName": "FrostflakeKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "sequenceNumber",
+            "printedName": "sequenceNumber",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt32",
+                "printedName": "Swift.UInt32",
+                "usr": "s:s6UInt32V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13FrostflakeKit0A0C14sequenceNumbers6UInt32Vvp",
+            "mangledName": "$s13FrostflakeKit0A0C14sequenceNumbers6UInt32Vvp",
+            "moduleName": "FrostflakeKit",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C14sequenceNumbers6UInt32Vvg",
+                "mangledName": "$s13FrostflakeKit0A0C14sequenceNumbers6UInt32Vvg",
+                "moduleName": "FrostflakeKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C14sequenceNumbers6UInt32Vvs",
+                "mangledName": "$s13FrostflakeKit0A0C14sequenceNumbers6UInt32Vvs",
+                "moduleName": "FrostflakeKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C14sequenceNumbers6UInt32VvM",
+                "mangledName": "$s13FrostflakeKit0A0C14sequenceNumbers6UInt32VvM",
+                "moduleName": "FrostflakeKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "generatorIdentifier",
+            "printedName": "generatorIdentifier",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt16",
+                "printedName": "Swift.UInt16",
+                "usr": "s:s6UInt16V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13FrostflakeKit0A0C19generatorIdentifiers6UInt16Vvp",
+            "mangledName": "$s13FrostflakeKit0A0C19generatorIdentifiers6UInt16Vvp",
+            "moduleName": "FrostflakeKit",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt16",
+                    "printedName": "Swift.UInt16",
+                    "usr": "s:s6UInt16V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C19generatorIdentifiers6UInt16Vvg",
+                "mangledName": "$s13FrostflakeKit0A0C19generatorIdentifiers6UInt16Vvg",
+                "moduleName": "FrostflakeKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "forcedTimeRegenerationInterval",
+            "printedName": "forcedTimeRegenerationInterval",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt32",
+                "printedName": "Swift.UInt32",
+                "usr": "s:s6UInt32V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13FrostflakeKit0A0C30forcedTimeRegenerationIntervals6UInt32Vvp",
+            "mangledName": "$s13FrostflakeKit0A0C30forcedTimeRegenerationIntervals6UInt32Vvp",
+            "moduleName": "FrostflakeKit",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C30forcedTimeRegenerationIntervals6UInt32Vvg",
+                "mangledName": "$s13FrostflakeKit0A0C30forcedTimeRegenerationIntervals6UInt32Vvg",
+                "moduleName": "FrostflakeKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "sharedGenerator",
+            "printedName": "sharedGenerator",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Frostflake",
+                "printedName": "FrostflakeKit.Frostflake",
+                "usr": "s:13FrostflakeKit0A0C"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13FrostflakeKit0A0C15sharedGeneratorACvpZ",
+            "mangledName": "$s13FrostflakeKit0A0C15sharedGeneratorACvpZ",
+            "moduleName": "FrostflakeKit",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Frostflake",
+                    "printedName": "FrostflakeKit.Frostflake",
+                    "usr": "s:13FrostflakeKit0A0C"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C15sharedGeneratorACvgZ",
+                "mangledName": "$s13FrostflakeKit0A0C15sharedGeneratorACvgZ",
+                "moduleName": "FrostflakeKit",
+                "static": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "setup",
+            "printedName": "setup(sharedGenerator:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Frostflake",
+                "printedName": "FrostflakeKit.Frostflake",
+                "usr": "s:13FrostflakeKit0A0C"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:13FrostflakeKit0A0C5setup15sharedGeneratoryAC_tFZ",
+            "mangledName": "$s13FrostflakeKit0A0C5setup15sharedGeneratoryAC_tFZ",
+            "moduleName": "FrostflakeKit",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "teardown",
+            "printedName": "teardown()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:13FrostflakeKit0A0C8teardownyyFZ",
+            "mangledName": "$s13FrostflakeKit0A0C8teardownyyFZ",
+            "moduleName": "FrostflakeKit",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "generate",
+            "printedName": "generate()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt64",
+                "printedName": "Swift.UInt64",
+                "usr": "s:s6UInt64V"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:13FrostflakeKit0A0C8generates6UInt64VyFZ",
+            "mangledName": "$s13FrostflakeKit0A0C8generates6UInt64VyFZ",
+            "moduleName": "FrostflakeKit",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "Inline",
+              "Inlinable",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(generatorIdentifier:forcedTimeRegenerationInterval:concurrentAccess:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Frostflake",
+                "printedName": "FrostflakeKit.Frostflake",
+                "usr": "s:13FrostflakeKit0A0C"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UInt16",
+                "printedName": "Swift.UInt16",
+                "usr": "s:s6UInt16V"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UInt32",
+                "printedName": "Swift.UInt32",
+                "hasDefaultArg": true,
+                "usr": "s:s6UInt32V"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:13FrostflakeKit0A0C19generatorIdentifier30forcedTimeRegenerationInterval16concurrentAccessACs6UInt16V_s6UInt32VSbtcfc",
+            "mangledName": "$s13FrostflakeKit0A0C19generatorIdentifier30forcedTimeRegenerationInterval16concurrentAccessACs6UInt16V_s6UInt32VSbtcfc",
+            "moduleName": "FrostflakeKit",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "generate",
+            "printedName": "generate()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt64",
+                "printedName": "Swift.UInt64",
+                "usr": "s:s6UInt64V"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:13FrostflakeKit0A0C8generates6UInt64VyF",
+            "mangledName": "$s13FrostflakeKit0A0C8generates6UInt64VyF",
+            "moduleName": "FrostflakeKit",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Var",
+            "name": "secondsBits",
+            "printedName": "secondsBits",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13FrostflakeKit0A0C11secondsBitsSivpZ",
+            "mangledName": "$s13FrostflakeKit0A0C11secondsBitsSivpZ",
+            "moduleName": "FrostflakeKit",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C11secondsBitsSivgZ",
+                "mangledName": "$s13FrostflakeKit0A0C11secondsBitsSivgZ",
+                "moduleName": "FrostflakeKit",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "sequenceNumberBits",
+            "printedName": "sequenceNumberBits",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13FrostflakeKit0A0C18sequenceNumberBitsSivpZ",
+            "mangledName": "$s13FrostflakeKit0A0C18sequenceNumberBitsSivpZ",
+            "moduleName": "FrostflakeKit",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C18sequenceNumberBitsSivgZ",
+                "mangledName": "$s13FrostflakeKit0A0C18sequenceNumberBitsSivgZ",
+                "moduleName": "FrostflakeKit",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "generatorIdentifierBits",
+            "printedName": "generatorIdentifierBits",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13FrostflakeKit0A0C23generatorIdentifierBitsSivpZ",
+            "mangledName": "$s13FrostflakeKit0A0C23generatorIdentifierBitsSivpZ",
+            "moduleName": "FrostflakeKit",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C23generatorIdentifierBitsSivgZ",
+                "mangledName": "$s13FrostflakeKit0A0C23generatorIdentifierBitsSivgZ",
+                "moduleName": "FrostflakeKit",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "validGeneratorIdentifierRange",
+            "printedName": "validGeneratorIdentifierRange",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Range",
+                "printedName": "Swift.Range<Swift.Int>",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "usr": "s:Sn"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13FrostflakeKit0A0C29validGeneratorIdentifierRangeSnySiGvpZ",
+            "mangledName": "$s13FrostflakeKit0A0C29validGeneratorIdentifierRangeSnySiGvpZ",
+            "moduleName": "FrostflakeKit",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Range",
+                    "printedName": "Swift.Range<Swift.Int>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sn"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C29validGeneratorIdentifierRangeSnySiGvgZ",
+                "mangledName": "$s13FrostflakeKit0A0C29validGeneratorIdentifierRangeSnySiGvgZ",
+                "moduleName": "FrostflakeKit",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "allowedSequenceNumberRange",
+            "printedName": "allowedSequenceNumberRange",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Range",
+                "printedName": "Swift.Range<Swift.Int>",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "usr": "s:Sn"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13FrostflakeKit0A0C26allowedSequenceNumberRangeSnySiGvpZ",
+            "mangledName": "$s13FrostflakeKit0A0C26allowedSequenceNumberRangeSnySiGvpZ",
+            "moduleName": "FrostflakeKit",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Range",
+                    "printedName": "Swift.Range<Swift.Int>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sn"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C26allowedSequenceNumberRangeSnySiGvgZ",
+                "mangledName": "$s13FrostflakeKit0A0C26allowedSequenceNumberRangeSnySiGvgZ",
+                "moduleName": "FrostflakeKit",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "defaultManualGeneratorIdentifier",
+            "printedName": "defaultManualGeneratorIdentifier",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13FrostflakeKit0A0C32defaultManualGeneratorIdentifierSivpZ",
+            "mangledName": "$s13FrostflakeKit0A0C32defaultManualGeneratorIdentifierSivpZ",
+            "moduleName": "FrostflakeKit",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C32defaultManualGeneratorIdentifierSivgZ",
+                "mangledName": "$s13FrostflakeKit0A0C32defaultManualGeneratorIdentifierSivgZ",
+                "moduleName": "FrostflakeKit",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "defaultForcedTimeRegenerationInterval",
+            "printedName": "defaultForcedTimeRegenerationInterval",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt32",
+                "printedName": "Swift.UInt32",
+                "usr": "s:s6UInt32V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13FrostflakeKit0A0C37defaultForcedTimeRegenerationIntervals6UInt32VvpZ",
+            "mangledName": "$s13FrostflakeKit0A0C37defaultForcedTimeRegenerationIntervals6UInt32VvpZ",
+            "moduleName": "FrostflakeKit",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13FrostflakeKit0A0C37defaultForcedTimeRegenerationIntervals6UInt32VvgZ",
+                "mangledName": "$s13FrostflakeKit0A0C37defaultForcedTimeRegenerationIntervals6UInt32VvgZ",
+                "moduleName": "FrostflakeKit",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:13FrostflakeKit0A0C",
+        "mangledName": "$s13FrostflakeKit0A0C",
+        "moduleName": "FrostflakeKit",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Darwin",
+        "printedName": "Darwin",
+        "declKind": "Import",
+        "moduleName": "FrostflakeKit"
+      },
+      {
+        "kind": "Function",
+        "name": "blackHole",
+        "printedName": "blackHole(_:)",
+        "children": [
+          {
+            "kind": "TypeNominal",
+            "name": "Void",
+            "printedName": "()"
+          },
+          {
+            "kind": "TypeNominal",
+            "name": "GenericTypeParam",
+            "printedName": "τ_0_0"
+          }
+        ],
+        "declKind": "Func",
+        "usr": "s:13FrostflakeKit9blackHoleyyxlF",
+        "mangledName": "$s13FrostflakeKit9blackHoleyyxlF",
+        "moduleName": "FrostflakeKit",
+        "genericSig": "<τ_0_0>",
+        "declAttributes": [
+          "AccessControl",
+          "Inline",
+          "RawDocComment"
+        ],
+        "funcSelfKind": "NonMutating"
+      },
+      {
+        "kind": "Import",
+        "name": "Darwin",
+        "printedName": "Darwin",
+        "declKind": "Import",
+        "moduleName": "FrostflakeKit"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "UInt64",
+        "printedName": "UInt64",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt64",
+                "printedName": "Swift.UInt64",
+                "usr": "s:s6UInt64V"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:s6UInt64V13FrostflakeKitEABycfc",
+            "mangledName": "$ss6UInt64V13FrostflakeKitEABycfc",
+            "moduleName": "FrostflakeKit",
+            "declAttributes": [
+              "Inline",
+              "Inlinable"
+            ],
+            "isFromExtension": true,
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "frostflakeDescription",
+            "printedName": "frostflakeDescription()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:s6UInt64V13FrostflakeKitE21frostflakeDescriptionSSyF",
+            "mangledName": "$ss6UInt64V13FrostflakeKitE21frostflakeDescriptionSSyF",
+            "moduleName": "FrostflakeKit",
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:s6UInt64V",
+        "mangledName": "$ss6UInt64V",
+        "moduleName": "Swift",
+        "declAttributes": [
+          "Frozen"
+        ],
+        "isExternal": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "FixedWidthInteger",
+            "printedName": "FixedWidthInteger",
+            "usr": "s:s17FixedWidthIntegerP",
+            "mangledName": "$ss17FixedWidthIntegerP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "UnsignedInteger",
+            "printedName": "UnsignedInteger",
+            "usr": "s:SU",
+            "mangledName": "$sSU"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_ExpressibleByBuiltinIntegerLiteral",
+            "printedName": "_ExpressibleByBuiltinIntegerLiteral",
+            "usr": "s:s35_ExpressibleByBuiltinIntegerLiteralP",
+            "mangledName": "$ss35_ExpressibleByBuiltinIntegerLiteralP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BinaryInteger",
+            "printedName": "BinaryInteger",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Words",
+                "printedName": "Words",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Words",
+                    "printedName": "Swift.UInt64.Words",
+                    "usr": "s:s6UInt64V5WordsV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sz",
+            "mangledName": "$sSz"
+          },
+          {
+            "kind": "Conformance",
+            "name": "LosslessStringConvertible",
+            "printedName": "LosslessStringConvertible",
+            "usr": "s:s25LosslessStringConvertibleP",
+            "mangledName": "$ss25LosslessStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Numeric",
+            "printedName": "Numeric",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Magnitude",
+                "printedName": "Magnitude",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt64",
+                    "printedName": "Swift.UInt64",
+                    "usr": "s:s6UInt64V"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sj",
+            "mangledName": "$sSj"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Strideable",
+            "printedName": "Strideable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Stride",
+                "printedName": "Stride",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sx",
+            "mangledName": "$sSx"
+          },
+          {
+            "kind": "Conformance",
+            "name": "AdditiveArithmetic",
+            "printedName": "AdditiveArithmetic",
+            "usr": "s:s18AdditiveArithmeticP",
+            "mangledName": "$ss18AdditiveArithmeticP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "ExpressibleByIntegerLiteral",
+            "printedName": "ExpressibleByIntegerLiteral",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "IntegerLiteralType",
+                "printedName": "IntegerLiteralType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt64",
+                    "printedName": "Swift.UInt64",
+                    "usr": "s:s6UInt64V"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s27ExpressibleByIntegerLiteralP",
+            "mangledName": "$ss27ExpressibleByIntegerLiteralP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Comparable",
+            "printedName": "Comparable",
+            "usr": "s:SL",
+            "mangledName": "$sSL"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Decodable",
+            "printedName": "Decodable",
+            "usr": "s:Se",
+            "mangledName": "$sSe"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Encodable",
+            "printedName": "Encodable",
+            "usr": "s:SE",
+            "mangledName": "$sSE"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomReflectable",
+            "printedName": "CustomReflectable",
+            "usr": "s:s17CustomReflectableP",
+            "mangledName": "$ss17CustomReflectableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_CustomPlaygroundQuickLookable",
+            "printedName": "_CustomPlaygroundQuickLookable",
+            "usr": "s:s30_CustomPlaygroundQuickLookableP",
+            "mangledName": "$ss30_CustomPlaygroundQuickLookableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_CVarArgAligned",
+            "printedName": "_CVarArgAligned",
+            "usr": "s:s15_CVarArgAlignedP",
+            "mangledName": "$ss15_CVarArgAlignedP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_HasCustomAnyHashableRepresentation",
+            "printedName": "_HasCustomAnyHashableRepresentation",
+            "usr": "s:s35_HasCustomAnyHashableRepresentationP",
+            "mangledName": "$ss35_HasCustomAnyHashableRepresentationP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SIMDScalar",
+            "printedName": "SIMDScalar",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "SIMDMaskScalar",
+                "printedName": "SIMDMaskScalar",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int64",
+                    "printedName": "Swift.Int64",
+                    "usr": "s:s5Int64V"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD2Storage",
+                "printedName": "SIMD2Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD2Storage",
+                    "printedName": "Swift.UInt64.SIMD2Storage",
+                    "usr": "s:s6UInt64V12SIMD2StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD4Storage",
+                "printedName": "SIMD4Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD4Storage",
+                    "printedName": "Swift.UInt64.SIMD4Storage",
+                    "usr": "s:s6UInt64V12SIMD4StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD8Storage",
+                "printedName": "SIMD8Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD8Storage",
+                    "printedName": "Swift.UInt64.SIMD8Storage",
+                    "usr": "s:s6UInt64V12SIMD8StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD16Storage",
+                "printedName": "SIMD16Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD16Storage",
+                    "printedName": "Swift.UInt64.SIMD16Storage",
+                    "usr": "s:s6UInt64V13SIMD16StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD32Storage",
+                "printedName": "SIMD32Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD32Storage",
+                    "printedName": "Swift.UInt64.SIMD32Storage",
+                    "usr": "s:s6UInt64V13SIMD32StorageV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SIMD64Storage",
+                "printedName": "SIMD64Storage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SIMD64Storage",
+                    "printedName": "Swift.UInt64.SIMD64Storage",
+                    "usr": "s:s6UInt64V13SIMD64StorageV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s10SIMDScalarP",
+            "mangledName": "$ss10SIMDScalarP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "StringLiteral",
+      "offset": 1045,
+      "length": 47,
+      "value": "\"accessed sharedGenerator before calling setup\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "StringLiteral",
+      "offset": 1614,
+      "length": 29,
+      "value": "\"called setup multiple times\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "BooleanLiteral",
+      "offset": 3699,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "StringLiteral",
+      "offset": 3808,
+      "length": 107,
+      "value": "\"Frostflake generatorIdentifier \""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "StringLiteral",
+      "offset": 3862,
+      "length": 4,
+      "value": "\" used more than \""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "StringLiteral",
+      "offset": 3909,
+      "length": 4,
+      "value": "\" bits\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3992,
+      "length": 2,
+      "value": "32"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "StringLiteral",
+      "offset": 4011,
+      "length": 63,
+      "value": "\"Frostflake sequenceNumberBits (\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "StringLiteral",
+      "offset": 4069,
+      "length": 1,
+      "value": "\") + \""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "StringLiteral",
+      "offset": 4096,
+      "length": 65,
+      "value": "\"generatorIdentifierBits (\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "StringLiteral",
+      "offset": 4153,
+      "length": 1,
+      "value": "\") != 32\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4296,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "StringLiteral",
+      "offset": 5005,
+      "length": 37,
+      "value": "\"sequenceNumber ouf of allowed range\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5071,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "BooleanLiteral",
+      "offset": 5237,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5283,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "StringLiteral",
+      "offset": 5314,
+      "length": 43,
+      "value": "\"sequenceNumber != 1 << sequenceNumberBits\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "StringLiteral",
+      "offset": 5853,
+      "length": 56,
+      "value": "\"too many FrostflakeIdentifiers generated in one second\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5988,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "IntegerLiteral",
+      "offset": 6041,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "IntegerLiteral",
+      "offset": 6097,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/Frostflake.swift",
+      "kind": "IntegerLiteral",
+      "offset": 6300,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeDefinitions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 651,
+      "length": 2,
+      "value": "32"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeDefinitions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 792,
+      "length": 2,
+      "value": "21"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeDefinitions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 963,
+      "length": 2,
+      "value": "11"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeDefinitions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1063,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeDefinitions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1070,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeDefinitions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1189,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeDefinitions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1196,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeDefinitions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1412,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeDefinitions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1444,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeDefinitions.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1953,
+      "length": 5,
+      "value": "1000"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "IntegerLiteral",
+      "offset": 641,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 669,
+      "length": 65,
+      "value": "\"Failed to get current time in clock_gettime(), errno = \""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 733,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "IntegerLiteral",
+      "offset": 841,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "IntegerLiteral",
+      "offset": 911,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 982,
+      "length": 3,
+      "value": "\"0\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1241,
+      "length": 11,
+      "value": "0xFFFFFFFF"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1334,
+      "length": 11,
+      "value": "0xFFFFFFFF"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1350,
+      "length": 11,
+      "value": "0xFFFFFFFF"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1516,
+      "length": 5,
+      "value": "1900"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1559,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 1719,
+      "length": 257,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 1738,
+      "length": 1,
+      "value": "\" (\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 1747,
+      "length": 1,
+      "value": "\"-\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 1770,
+      "length": 1,
+      "value": "\"-\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 1791,
+      "length": 1,
+      "value": "\" \""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 1823,
+      "length": 1,
+      "value": "\":\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 1847,
+      "length": 1,
+      "value": "\":\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 1871,
+      "length": 3,
+      "value": "\" UTC, sequenceNumber:\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 1919,
+      "length": 1,
+      "value": "\", generatorIdentifier:\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 1963,
+      "length": 1,
+      "value": "\")\""
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeLock.swift",
+      "kind": "IntegerLiteral",
+      "offset": 631,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/ordo\/Dev\/PRs\/package-frostflake\/Sources\/FrostflakeKit\/FrostflakeLock.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1240,
+      "length": 1,
+      "value": "1"
+    }
+  ]
+}
