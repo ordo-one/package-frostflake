@@ -6,43 +6,25 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-import DateTime
+#if canImport(Darwin)
+    import Darwin
+#elseif canImport(Glibc)
+    import Glibc
+#else
+    #error("Unsupported Platform")
+#endif
 
 /// Get current seconds since UNIX epoch
 /// 32 bit number of seconds gives us ~136 years
-@inlinable
-@inline(__always)
-internal func currentSecondsSinceEpoch() -> UInt32 {
-    let timestamp = InternalUTCClock.now
-    return UInt32(timestamp.seconds())
-}
+func currentSecondsSinceEpoch() -> UInt32 {
+    var currentTime = timespec()
+    let result = clock_gettime(CLOCK_REALTIME, &currentTime)
 
-private extension String {
-    func pad(_ padding: Int = 2) -> String {
-        let toPad = padding - count
-        if toPad < 1 {
-            return self
-        }
-        return "".padding(toLength: toPad, withPad: "0", startingAt: 0) + self
+    guard result == 0 else {
+        fatalError("Failed to get current time in clock_gettime(), errno = \(errno)")
     }
-}
 
-/// Pretty printer for frostflakes for debugging
-public extension FrostflakeIdentifier {
-    func frostflakeDescription() -> String {
-        let seconds = self >> Frostflake.secondsBits
-        let sequenceNumber = (self & 0xFFFF_FFFF) >> Frostflake.generatorIdentifierBits
-        let generatorIdentifier = (self & 0xFFFF_FFFF) & (0xFFFF_FFFF >> Frostflake.sequenceNumberBits)
-
-        var time = EpochDateTime.unixEpoch()
-        time.convert(timestamp: Int(seconds))
-
-        return """
-        \(self) (\(time.year)-\(String(time.month).pad())-\(String(time.day).pad()) \
-        \(String(time.hour).pad()):\(String(time.minute).pad()):\(String(time.second).pad()) UTC\
-        , sequenceNumber:\(sequenceNumber), generatorIdentifier:\(generatorIdentifier))
-        """
-    }
+    return UInt32(currentTime.tv_sec)
 }
 
 // For tests

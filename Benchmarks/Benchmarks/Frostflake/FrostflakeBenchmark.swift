@@ -41,8 +41,7 @@ let benchmarks = {
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(benchmark.currentIteration))
         for _ in benchmark.scaledIterations {
             let frostflake = frostflakeFactory.generate()
-            let description = frostflake.frostflakeDescription()
-            Benchmark.blackHole(description)
+            Benchmark.blackHole(frostflake.debugDescription)
         }
     }
 

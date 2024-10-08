@@ -6,9 +6,6 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-/// Alias for Frostflake identifier type
-public typealias FrostflakeIdentifier = UInt64
-
 public extension FrostflakeIdentifier {
     @inlinable
     @inline(__always)

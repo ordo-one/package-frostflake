@@ -6,7 +6,6 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-@testable import DateTime
 @testable import Frostflake
 
 import XCTest
@@ -68,8 +67,7 @@ final class FrostflakeTests: XCTestCase {
 
         for _ in 0 ..< 10 {
             let frostflake = frostflakeFactory.generate()
-            let decription = frostflake.frostflakeDescription()
-            blackHole(decription)
+            blackHole(frostflake.debugDescription)
         }
     }
 
