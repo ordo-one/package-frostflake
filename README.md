@@ -19,7 +19,7 @@ medium-flow generation the timestamp will periodically be updated to keep somewh
 sorting across services most of the time - with the aim that the unique identifier should be 
 suitable as e.g. a database key.
 
-The default output of a FrostflakeIdentifier is a base58 string for easier readability for humans, but
+The default output of a FrostflakeIdentifier is a base58 string for easier readability for humans (e.g. `FungET5sN9j`), but
 the UInt64 raw value is also accessible.
 
 # Adding dependencies
