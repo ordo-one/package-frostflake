@@ -3,7 +3,7 @@ extension FrostflakeIdentifier {
     private static let _base58Characters = Array(_base58Alphabet) // Convert to array for direct indexing
     // ASCII value of 'z' is 122, so we create an array of size 123.
     private static let _base58AlphabetIndexByChar: [Int?] = {
-        var indexes = [Int?](repeating: nil, count: Int(Character("z").asciiValue!) + 1) // 'z' is the highest ASCII character in the alphabet.
+        var indexes = [Int?](repeating: nil, count: Int(Character("z").asciiValue!) + 1) // 'z' is the highest ASCII character.
         for (index, char) in _base58Alphabet.utf8.enumerated() {
             indexes[Int(char)] = index
         }

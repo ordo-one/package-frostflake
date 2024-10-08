@@ -10,7 +10,7 @@ public struct FrostflakeIdentifier {
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
-    
+
     public var rawValue: UInt64
 }
 
@@ -26,15 +26,15 @@ extension FrostflakeIdentifier: CustomDebugStringConvertible {
         let sequenceNumber = (rawValue & 0xFFFF_FFFF) >> Frostflake.generatorIdentifierBits
         let generatorIdentifier = (rawValue & 0xFFFF_FFFF) & (0xFFFF_FFFF >> Frostflake.sequenceNumberBits)
 
-        var tm = tm()
+        var tmStruct = tm()
         var time = Int(seconds)
-        gmtime_r(&time, &tm)
-        let year = Int(tm.tm_year + 1_900)
-        let month = Int(tm.tm_mon + 1)
-        let day = Int(tm.tm_mday)
-        let hour = Int(tm.tm_hour)
-        let minute = Int(tm.tm_min)
-        let second = Int(tm.tm_sec)
+        gmtime_r(&time, &tmStruct)
+        let year = Int(tmStruct.tm_year + 1_900)
+        let month = Int(tmStruct.tm_mon + 1)
+        let day = Int(tmStruct.tm_mday)
+        let hour = Int(tmStruct.tm_hour)
+        let minute = Int(tmStruct.tm_min)
+        let second = Int(tmStruct.tm_sec)
 
         return """
         \(self.description) \(rawValue) (\(year)-\(String(month).pad())-\(String(day).pad()) \

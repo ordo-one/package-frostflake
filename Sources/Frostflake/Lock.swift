@@ -27,7 +27,7 @@ final class Lock {
     #endif
 
     /// Create a new lock.
-    public init() {
+    init() {
         #if os(macOS)
             mutex.initialize(to: os_unfair_lock())
         #else
@@ -53,7 +53,7 @@ final class Lock {
     ///
     /// Whenever possible, consider using `withLock` instead of this method and
     /// `unlock`, to simplify lock handling.
-    public func lock() {
+    func lock() {
         #if os(macOS)
             os_unfair_lock_lock(mutex)
         #else
@@ -66,7 +66,7 @@ final class Lock {
     ///
     /// Whenever possible, consider using `withLock` instead of this method and
     /// `lock`, to simplify lock handling.
-    public func unlock() {
+    func unlock() {
         #if os(macOS)
             os_unfair_lock_unlock(mutex)
         #else

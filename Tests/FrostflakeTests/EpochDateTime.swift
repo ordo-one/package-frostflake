@@ -5,7 +5,6 @@
 //  Created by Joakim Hassila on 2024-10-08.
 //
 
-
 #if canImport(Darwin)
 import Darwin
 #endif
@@ -33,13 +32,13 @@ public struct EpochDateTime {
     /// Converts a timestamp in seconds to the appropriate year/month/day/hour/minute/second from the Unix epoch
     public mutating func convert(timestamp: Int) {
         var timestamp = timestamp
-        var tm = tm()
-        gmtime_r(&timestamp, &tm)
-        year = Int(tm.tm_year + 1900)
-        month = Int(tm.tm_mon + 1)
-        day = Int(tm.tm_mday)
-        hour = Int(tm.tm_hour)
-        minute = Int(tm.tm_min)
-        second = Int(tm.tm_sec)
+        var time = tm()
+        gmtime_r(&timestamp, &time)
+        year = Int(time.tm_year + 1_900)
+        month = Int(time.tm_mon + 1)
+        day = Int(time.tm_mday)
+        hour = Int(time.tm_hour)
+        minute = Int(time.tm_min)
+        second = Int(time.tm_sec)
     }
 }
