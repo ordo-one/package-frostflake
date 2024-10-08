@@ -13,7 +13,7 @@ import XCTest
 final class FrostflakeTests: XCTestCase {
     private let smallRangeTest = 1 ..< 1_000
 
-    override class func setUp() {
+    override static func setUp() {
         let frostflake = Frostflake(generatorIdentifier: 47)
         Frostflake.setup(sharedGenerator: frostflake)
     }
