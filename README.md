@@ -51,7 +51,7 @@ import Frostflake
 func testFrostflake() {
   let frostflakeFactory = Frostflake(generatorIdentifier: 1)
   let frostflake = frostflakeFactory.generate()
-  let decription = frostflake.debugDescription()
+  let decription = frostflake.debugDescription
   print(decription)
 }
 ```
