@@ -10,10 +10,7 @@ let externalDependencies: [String: Range<Version>] = [
     "https://github.com/apple/swift-docc-plugin": .upToNextMajor(from: "1.0.0")
 ]
 
-let internalDependencies: [String: Range<Version>] = [
-    "package-concurrency-helpers": .upToNextMajor(from: "2.0.0"),
-    "package-datetime": .upToNextMajor(from: "1.0.1"),
-]
+let internalDependencies: [String: Range<Version>] = [:]
 
 func makeDependencies() -> [Package.Dependency] {
     var dependencies: [Package.Dependency] = []
@@ -39,7 +36,7 @@ let package = Package(
     name: "package-frostflake",
     platforms: [
         .macOS(.v13),
-        .iOS(.v16),
+        .iOS(.v16)
     ],
     products: [
         .library(
@@ -55,10 +52,6 @@ let package = Package(
     targets: [
         // Main library target
         .target(name: "Frostflake",
-                dependencies: [
-                    .product(name: "PackageConcurrencyHelpers", package: "package-concurrency-helpers"),
-                    .product(name: "DateTime", package: "package-datetime"),
-                ],
                 path: "Sources/Frostflake"),
 
         // Command line Frostflake generator

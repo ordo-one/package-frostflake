@@ -9,6 +9,20 @@
 import ArgumentParser
 import Frostflake
 
+extension FrostflakeIdentifier: ExpressibleByArgument {
+    public init?(argument: String) {
+        if let frostflakeIdentifier = FrostflakeIdentifier(base58: argument) {
+            self = frostflakeIdentifier
+        } else {
+            if let value = UInt64(argument) {
+                self = .init(rawValue: value)
+            } else {
+                return nil
+            }
+        }
+    }
+}
+
 @main
 struct FrostflakeUtility: AsyncParsableCommand {
     @Option(help: "Specify generatorIdentifier to create a Frostflake with that generator id.")
@@ -19,8 +33,8 @@ struct FrostflakeUtility: AsyncParsableCommand {
 
     mutating func run() async throws {
         if let frostflakeIdentifier = identifier {
-            print("Frostflake \(frostflakeIdentifier) decoded:")
-            print("\(frostflakeIdentifier.frostflakeDescription())")
+            print("Frostflake \(frostflakeIdentifier.description) decoded:")
+            print("\(frostflakeIdentifier.debugDescription)")
         } else {
             guard Frostflake.validGeneratorIdentifierRange.contains(generatorIdentifier) else {
                 print("Frostflake generatorIdentifier should be in the range \(Frostflake.validGeneratorIdentifierRange)")
@@ -29,7 +43,7 @@ struct FrostflakeUtility: AsyncParsableCommand {
 
             let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorIdentifier),
                                                concurrentAccess: false)
-            print("\(frostflakeFactory.generate())")
+            print("\(frostflakeFactory.generate().base58)")
         }
     }
 }
