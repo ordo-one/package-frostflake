@@ -6,8 +6,7 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-@testable import Frostflake
-
+import Frostflake
 import Foundation
 import Testing
 
