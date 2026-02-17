@@ -27,6 +27,8 @@ extension FrostflakeIdentifier {
 
     // Base58 Decoding
     public init?(base58: String) {
+        guard !base58.isEmpty else { return nil }
+
         var value: UInt64 = 0
 
         for character in base58.utf8 {

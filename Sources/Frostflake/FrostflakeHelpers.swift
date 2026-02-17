@@ -17,14 +17,23 @@
 /// Get current seconds since UNIX epoch
 /// 32 bit number of seconds gives us ~136 years
 func currentSecondsSinceEpoch() -> UInt32 {
+    let currentTime = getCurrentTime()
+    return UInt32(currentTime.tv_sec)
+}
+
+func currentNanoSecondsSinceEpoch() -> Int {
+    let currentTime = getCurrentTime()
+    return currentTime.tv_nsec
+}
+
+private func getCurrentTime() -> timespec {
     var currentTime = timespec()
     let result = clock_gettime(CLOCK_REALTIME, &currentTime)
 
     guard result == 0 else {
         fatalError("Failed to get current time in clock_gettime(), errno = \(errno)")
     }
-
-    return UInt32(currentTime.tv_sec)
+    return currentTime
 }
 
 // For tests

@@ -7,36 +7,41 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 /// Frostflake generator, we tried with an Actor but it was too slow.
-public final class Frostflake {
-    public var currentSeconds: UInt32
-    public var sequenceNumber: UInt32
+public final class Frostflake: Sendable {
+    nonisolated(unsafe) public var currentSeconds: UInt32
+    nonisolated(unsafe) public var sequenceNumber: UInt32
     public let generatorIdentifier: UInt16
     public let forcedTimeRegenerationInterval: UInt32
     private let lock: Lock?
 
     // Class variables and functions
-    private static var privateSharedGenerator: Frostflake?
+    private static let sharedGeneratorLock = Lock()
+    private nonisolated(unsafe) static var privateSharedGenerator: Frostflake?
 
     /// Convenience static variable when using the same generator in many places
     /// The global generator identifier must be set using `setup(generatorIdentifier:)` before accessing
     /// this shared generator or we'll fatalError().
     public static var sharedGenerator: Frostflake {
-        guard let generator = privateSharedGenerator else {
-            preconditionFailure("accessed sharedGenerator before calling setup")
+        sharedGeneratorLock.withLock {
+            guard let generator = privateSharedGenerator else {
+                preconditionFailure("accessed sharedGenerator before calling setup")
+            }
+            return generator
         }
-        return generator
     }
 
     /// Setup may only be called a single time for a global shared generator identifier
     public static func setup(sharedGenerator: Frostflake) {
-        /// That check is very helpful for tests when `setup` function can be invoked several times from `setUp` XCTest function.
-        if privateSharedGenerator?.generatorIdentifier == sharedGenerator.generatorIdentifier {
-            return
+        sharedGeneratorLock.withLock {
+            /// That check is very helpful for tests when `setup` function can be invoked several times from `setUp` XCTest function.
+            if privateSharedGenerator?.generatorIdentifier == sharedGenerator.generatorIdentifier {
+                return
+            }
+            if privateSharedGenerator != nil {
+                preconditionFailure("called setup multiple times")
+            }
+            privateSharedGenerator = sharedGenerator
         }
-        if privateSharedGenerator != nil {
-            preconditionFailure("called setup multiple times")
-        }
-        privateSharedGenerator = sharedGenerator
     }
 
     public static func teardown() {
@@ -90,6 +95,7 @@ public final class Frostflake {
             lock = nil
         }
 
+//        sequenceNumber = UInt32(currentNanoSecondsSinceEpoch() / 1_000)
         sequenceNumber = 0
         self.generatorIdentifier = generatorIdentifier
         self.forcedTimeRegenerationInterval = forcedTimeRegenerationInterval
