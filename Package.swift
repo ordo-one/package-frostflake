@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
     name: "package-frostflake",
     platforms: [
-        .macOS(.v13),
-        .iOS(.v16)
+        .macOS(.v15),
+        .iOS(.v18)
     ],
     products: [
         .library(
@@ -44,6 +44,5 @@ let package = Package(
                 "FrostflakeUtility", "Frostflake"
             ]
         )
-    ],
-    swiftLanguageVersions: [.v5]
+    ]
 )

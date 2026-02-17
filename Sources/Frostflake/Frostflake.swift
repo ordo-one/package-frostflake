@@ -6,24 +6,53 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
+import Synchronization
+
 /// Frostflake generator, we tried with an Actor but it was too slow.
 public final class Frostflake: Sendable {
-    nonisolated(unsafe) public var currentSeconds: UInt32
-    nonisolated(unsafe) public var sequenceNumber: UInt32
+    private struct MutableState: Sendable {
+        var currentSeconds: UInt32
+        var sequenceNumber: UInt32
+    }
+    
+    private enum State: ~Copyable, @unchecked Sendable {
+        case synchronized(Mutex<MutableState>)
+        case unsynchronized(UnsafeMutablePointer<MutableState>)
+    }
+    
+    private let state: State
     public let generatorIdentifier: UInt16
     public let forcedTimeRegenerationInterval: UInt32
-    private let lock: Lock?
+    
+    // Public accessors for state
+    public var currentSeconds: UInt32 {
+        switch state {
+        case .synchronized(let mutex):
+            return mutex.withLock { $0.currentSeconds }
+        case .unsynchronized(let pointer):
+            return pointer.pointee.currentSeconds
+        }
+    }
+    
+    public var sequenceNumber: UInt32 {
+        switch state {
+        case .synchronized(let mutex):
+            return mutex.withLock { $0.sequenceNumber }
+        case .unsynchronized(let pointer):
+            return pointer.pointee.sequenceNumber
+        }
+    }
 
     // Class variables and functions
-    private static let sharedGeneratorLock = Lock()
-    private nonisolated(unsafe) static var privateSharedGenerator: Frostflake?
+    private static let sharedGeneratorLock = Mutex<Frostflake?>(nil)
+    private nonisolated(unsafe) static var _teardownFlag = false
 
     /// Convenience static variable when using the same generator in many places
     /// The global generator identifier must be set using `setup(generatorIdentifier:)` before accessing
     /// this shared generator or we'll fatalError().
     public static var sharedGenerator: Frostflake {
-        sharedGeneratorLock.withLock {
-            guard let generator = privateSharedGenerator else {
+        sharedGeneratorLock.withLock { generator in
+            guard let generator else {
                 preconditionFailure("accessed sharedGenerator before calling setup")
             }
             return generator
@@ -32,20 +61,22 @@ public final class Frostflake: Sendable {
 
     /// Setup may only be called a single time for a global shared generator identifier
     public static func setup(sharedGenerator: Frostflake) {
-        sharedGeneratorLock.withLock {
+        sharedGeneratorLock.withLock { generator in
             /// That check is very helpful for tests when `setup` function can be invoked several times from `setUp` XCTest function.
-            if privateSharedGenerator?.generatorIdentifier == sharedGenerator.generatorIdentifier {
+            if generator?.generatorIdentifier == sharedGenerator.generatorIdentifier {
                 return
             }
-            if privateSharedGenerator != nil {
+            if generator != nil {
                 preconditionFailure("called setup multiple times")
             }
-            privateSharedGenerator = sharedGenerator
+            generator = sharedGenerator
         }
     }
 
     public static func teardown() {
-        privateSharedGenerator = nil
+        sharedGeneratorLock.withLock { generator in
+            generator = nil
+        }
     }
 
     /// Convenience static variable when using the same generator in many places
@@ -89,17 +120,31 @@ public final class Frostflake: Sendable {
                "Frostflake sequenceNumberBits (\(Self.sequenceNumberBits)) + " +
                    "generatorIdentifierBits (\(Self.generatorIdentifierBits)) != 32")
 
+        let initialState = MutableState(
+            currentSeconds: currentSecondsSinceEpoch(),
+            sequenceNumber: 0
+        )
+        
         if concurrentAccess {
-            lock = Lock()
+            state = .synchronized(Mutex(initialState))
         } else {
-            lock = nil
+            let pointer = UnsafeMutablePointer<MutableState>.allocate(capacity: 1)
+            pointer.initialize(to: initialState)
+            state = .unsynchronized(pointer)
         }
-
-//        sequenceNumber = UInt32(currentNanoSecondsSinceEpoch() / 1_000)
-        sequenceNumber = 0
+        
         self.generatorIdentifier = generatorIdentifier
         self.forcedTimeRegenerationInterval = forcedTimeRegenerationInterval
-        currentSeconds = currentSecondsSinceEpoch()
+    }
+    
+    deinit {
+        switch state {
+        case .synchronized:
+            break // Mutex cleans itself up
+        case .unsynchronized(let pointer):
+            pointer.deinitialize(count: 1)
+            pointer.deallocate()
+        }
     }
 
     /// Generates a new Frostflake identifier for the generator
@@ -113,15 +158,24 @@ public final class Frostflake: Sendable {
     /// let frostflake2 =  frostflakeFactory.generate()
     ///  ```
     public func generate() -> FrostflakeIdentifier {
-        lock?.lock()
+        switch state {
+        case .synchronized(let mutex):
+            return mutex.withLock { state in
+                generateInternal(state: &state)
+            }
+        case .unsynchronized(let pointer):
+            return generateInternal(state: &pointer.pointee)
+        }
+    }
+    
+    private func generateInternal(state: inout MutableState) -> FrostflakeIdentifier {
+        assert(Self.allowedSequenceNumberRange.contains(Int(state.sequenceNumber)), "sequenceNumber out of allowed range")
 
-        assert(Self.allowedSequenceNumberRange.contains(Int(sequenceNumber)), "sequenceNumber ouf of allowed range")
-
-        sequenceNumber += 1
+        state.sequenceNumber += 1
 
         // Have we used all the sequence number bits, we need get a new base timestamp
-        if Self.allowedSequenceNumberRange.contains(Int(sequenceNumber)) == false {
-            assert(sequenceNumber == (1 << Self.sequenceNumberBits), "sequenceNumber != 1 << sequenceNumberBits")
+        if Self.allowedSequenceNumberRange.contains(Int(state.sequenceNumber)) == false {
+            assert(state.sequenceNumber == (1 << Self.sequenceNumberBits), "sequenceNumber != 1 << sequenceNumberBits")
 
             let newCurrentSeconds = currentSecondsSinceEpoch()
 
@@ -129,23 +183,21 @@ public final class Frostflake: Sendable {
             // Currently we'll bail here - one could consider sleeping / retrying, but really synthetic problem.
             // Theoretically this could happen for NTP discrete timejumps back in time too, in which case
             // we'd rather abort and go down.
-            precondition(newCurrentSeconds > currentSeconds, "too many FrostflakeIdentifiers generated in one second")
+            precondition(newCurrentSeconds > state.currentSeconds, "too many FrostflakeIdentifiers generated in one second")
 
-            currentSeconds = newCurrentSeconds
-            sequenceNumber = 1
-        } else if forcedTimeRegenerationInterval > 0, (sequenceNumber % forcedTimeRegenerationInterval) == 0 {
+            state.currentSeconds = newCurrentSeconds
+            state.sequenceNumber = 1
+        } else if forcedTimeRegenerationInterval > 0, (state.sequenceNumber % forcedTimeRegenerationInterval) == 0 {
             let newCurrentSeconds = currentSecondsSinceEpoch()
-            if newCurrentSeconds > currentSeconds {
-                currentSeconds = newCurrentSeconds
-                sequenceNumber = 1
+            if newCurrentSeconds > state.currentSeconds {
+                state.currentSeconds = newCurrentSeconds
+                state.sequenceNumber = 1
             }
         }
 
-        var returnValue = UInt64(currentSeconds) << Self.secondsBits
-        returnValue += UInt64(sequenceNumber) << Self.generatorIdentifierBits
+        var returnValue = UInt64(state.currentSeconds) << Self.secondsBits
+        returnValue += UInt64(state.sequenceNumber) << Self.generatorIdentifierBits
         returnValue += UInt64(generatorIdentifier)
-
-        lock?.unlock()
 
         return .init(rawValue: returnValue)
     }
