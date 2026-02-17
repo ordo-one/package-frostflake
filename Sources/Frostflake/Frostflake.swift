@@ -15,9 +15,9 @@ public final class Frostflake: Sendable {
         var sequenceNumber: UInt32
     }
     
-    private enum State: ~Copyable, @unchecked Sendable {
+    private enum State: ~Copyable, Sendable {
         case synchronized(Mutex<MutableState>)
-        case unsynchronized(UnsafeMutablePointer<MutableState>)
+        case unsynchronized(MutableState)
     }
     
     private let state: State
@@ -30,7 +30,7 @@ public final class Frostflake: Sendable {
         case .synchronized(let mutex):
             return mutex.withLock { $0.currentSeconds }
         case .unsynchronized(let pointer):
-            return pointer.pointee.currentSeconds
+            return pointer.currentSeconds
         }
     }
     
@@ -39,7 +39,7 @@ public final class Frostflake: Sendable {
         case .synchronized(let mutex):
             return mutex.withLock { $0.sequenceNumber }
         case .unsynchronized(let pointer):
-            return pointer.pointee.sequenceNumber
+            return pointer.sequenceNumber
         }
     }
 
@@ -130,21 +130,11 @@ public final class Frostflake: Sendable {
         } else {
             let pointer = UnsafeMutablePointer<MutableState>.allocate(capacity: 1)
             pointer.initialize(to: initialState)
-            state = .unsynchronized(pointer)
+            state = .unsynchronized(initialState)
         }
         
         self.generatorIdentifier = generatorIdentifier
         self.forcedTimeRegenerationInterval = forcedTimeRegenerationInterval
-    }
-    
-    deinit {
-        switch state {
-        case .synchronized:
-            break // Mutex cleans itself up
-        case .unsynchronized(let pointer):
-            pointer.deinitialize(count: 1)
-            pointer.deallocate()
-        }
     }
 
     /// Generates a new Frostflake identifier for the generator
@@ -164,7 +154,8 @@ public final class Frostflake: Sendable {
                 generateInternal(state: &state)
             }
         case .unsynchronized(let pointer):
-            return generateInternal(state: &pointer.pointee)
+            var pointer = pointer
+            return generateInternal(state: &pointer)
         }
     }
     
