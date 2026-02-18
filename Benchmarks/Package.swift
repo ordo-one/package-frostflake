@@ -18,9 +18,11 @@ let package = Package(
             dependencies: [
                 .product(name: "Frostflake", package: "package-frostflake"),
                 .product(name: "Benchmark", package: "package-benchmark"),
-                .product(name: "BenchmarkPlugin", package: "package-benchmark"),
             ],
-            path: "Benchmarks/Frostflake"
+            path: "Benchmarks/Frostflake",
+            plugins: [
+                .plugin(name: "BenchmarkPlugin", package: "package-benchmark"),
+            ]
         )
     ]
 )
