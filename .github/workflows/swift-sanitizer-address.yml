@@ -43,9 +43,9 @@ jobs:
 
     - name: Run address sanitizer
       run: swift test --sanitize=address
-      
+
     - name: Clean before release build sanitizier
       run: swift package clean
-      
+
     - name: Run address sanitizer on release build
       run: swift test --sanitize=address -c release -Xswiftc -enable-testing

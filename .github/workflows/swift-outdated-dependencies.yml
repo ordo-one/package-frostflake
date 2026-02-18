@@ -1,10 +1,10 @@
-name: Swift outdated dependencies 
+name: Swift outdated dependencies
 
-on: 
+on:
   workflow_dispatch:
   schedule:
     - cron: '0 8 */100,1-7 * MON' # First Monday of the month
-    
+
 jobs:
   spm-dep-check:
     runs-on: [ubuntu-latest]

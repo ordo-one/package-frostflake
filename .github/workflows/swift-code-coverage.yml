@@ -47,7 +47,7 @@ jobs:
 
     - name: Upload codecov
       uses: codecov/codecov-action@v4
-      with: 
+      with:
         token: ${{ secrets.CODECOV_REPO_TOKEN }}
         files: info.lcov
         fail_ci_if_error: true
