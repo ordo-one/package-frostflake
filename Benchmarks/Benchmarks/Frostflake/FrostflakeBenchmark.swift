@@ -9,7 +9,7 @@
 import Benchmark
 import Frostflake
 
-let benchmarks = {
+let benchmarks: @Sendable () -> Void = {
     // Once during runtime setup can be done before registering benchmarks
     Benchmark.defaultConfiguration = .init(warmupIterations: 5,
                                            scalingFactor: .mega,

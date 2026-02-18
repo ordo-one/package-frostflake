@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:package-frostflake}",
+            "name": "Debug flake",
+            "target": "flake",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug flake"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:package-frostflake}",
+            "name": "Release flake",
+            "target": "flake",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release flake"
+        }
+    ]
+}
