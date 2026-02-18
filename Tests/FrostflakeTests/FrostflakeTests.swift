@@ -91,8 +91,9 @@ struct FrostflakeTests {
     @Test("Frostflake handles sequence overflow by waiting for next second")
     func frostflakeClassOverflowNextSecond() {
         let frostflakeFactory = Frostflake(generatorIdentifier: 0)
+        let remaining = Frostflake.allowedSequenceNumberRange.upperBound - Int(frostflakeFactory.sequenceNumber)
 
-        for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
+        for _ in 1 ..< remaining {
             blackHole(frostflakeFactory.generate())
         }
 
@@ -110,15 +111,16 @@ struct FrostflakeTests {
         let first = frostflakeFactory.generate()
         let second = frostflakeFactory.generate()
         #expect(first.rawValue != second.rawValue, "Sequential generates must produce unique identifiers")
-        #expect(frostflakeFactory.sequenceNumber == 2,
-                "Sequence number must advance across calls, got \(frostflakeFactory.sequenceNumber)")
+        #expect(second.rawValue > first.rawValue,
+                "Sequence number must advance across calls")
     }
 
     // Regression test for sc-493
     @Test("Sequence regeneration interval resets correctly after overflow")
     func incorrectForcingSecondRegenerationInterval() {
         let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(100))
-        for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
+        let remaining = Frostflake.allowedSequenceNumberRange.upperBound - Int(frostflakeFactory.sequenceNumber)
+        for _ in 1 ..< remaining {
             blackHole(frostflakeFactory.generate())
         }
         sleep(1)

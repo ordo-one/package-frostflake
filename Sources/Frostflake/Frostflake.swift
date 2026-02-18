@@ -124,9 +124,12 @@ public final class Frostflake: Sendable {
                "Frostflake sequenceNumberBits (\(Self.sequenceNumberBits)) + " +
                    "generatorIdentifierBits (\(Self.generatorIdentifierBits)) != 32")
 
+        let currentSeconds = currentSecondsSinceEpoch()
+        let currentNanoSeconds = currentNanoSecondsSinceEpoch()
+
         let initialState = MutableState(
-            currentSeconds: currentSecondsSinceEpoch(),
-            sequenceNumber: 0
+            currentSeconds: currentSeconds,
+            sequenceNumber: UInt32((currentNanoSeconds / 1_000) % 1_000_000)
         )
 
         if concurrentAccess {
