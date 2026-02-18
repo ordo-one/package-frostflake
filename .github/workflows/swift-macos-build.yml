@@ -13,12 +13,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-15]
-#        swift: [ "5.10", "6.0" ]
+        os: [macos-26]
 
     runs-on: ${{ matrix.os }}
     env:
-      DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_23.3.app/Contents/Developer
 
     steps:
     - uses: swift-actions/setup-swift@v2
@@ -33,7 +32,7 @@ jobs:
         echo BENCHMARK_DISABLE_JEMALLOC=true >> $GITHUB_ENV
         brew install jemalloc
 
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Start consul
       uses: ./.github/actions/consul-start
@@ -49,10 +48,10 @@ jobs:
     - name: Run tests
       run: |
         if [ -d Tests ]; then
-          swift test --parallel
+          swift test
         fi
     - name: Run tests (release)
       run: |
         if [ -d Tests ]; then
-          swift test -c release --parallel
+          swift test -c release
         fi
