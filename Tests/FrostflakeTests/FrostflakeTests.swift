@@ -109,6 +109,17 @@ struct FrostflakeTests {
         }
     }
 
+    // Regression test for unsynchronized state not being written back (sc-29118)
+    @Test("Unsynchronized generator persists sequence number between calls")
+    func unsynchronizedStatePersistence() {
+        let frostflakeFactory = Frostflake(generatorIdentifier: 1, concurrentAccess: false)
+        let first = frostflakeFactory.generate()
+        let second = frostflakeFactory.generate()
+        #expect(first.rawValue != second.rawValue, "Sequential generates must produce unique identifiers")
+        #expect(frostflakeFactory.sequenceNumber == 2,
+                "Sequence number must advance across calls, got \(frostflakeFactory.sequenceNumber)")
+    }
+
     // Regression test for sc-493
     @Test("Sequence regeneration interval resets correctly after overflow")
     func incorrectForcingSecondRegenerationInterval() {
