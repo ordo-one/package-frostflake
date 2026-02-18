@@ -6,8 +6,8 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-import ArgumentParser
-import Frostflake
+public import ArgumentParser
+public import Frostflake
 
 extension FrostflakeIdentifier: ExpressibleByArgument {
     public init?(argument: String) {

@@ -3,6 +3,18 @@
 
 import PackageDescription
 
+let extraSettings: [SwiftSetting] = [
+    .enableExperimentalFeature("SuppressedAssociatedTypes"),
+    .enableExperimentalFeature("LifetimeDependence"),
+    .enableExperimentalFeature("Lifetimes"),
+    .enableUpcomingFeature("LifetimeDependence"),
+    .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+    .enableUpcomingFeature("InferIsolatedConformances"),
+    .enableUpcomingFeature("ExistentialAny"),
+    .enableUpcomingFeature("MemberImportVisibility"),
+    .enableUpcomingFeature("InternalImportsByDefault"),
+]
+
 let package = Package(
     name: "package-frostflake",
     platforms: [
@@ -27,8 +39,9 @@ let package = Package(
     targets: [
         // Main library target
         .target(name: "Frostflake",
-                path: "Sources/Frostflake"),
-
+                path: "Sources/Frostflake",
+                swiftSettings: extraSettings
+        ),
         // Command line Frostflake generator
         .executableTarget(
             name: "FrostflakeUtility",
@@ -36,13 +49,15 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "SystemPackage", package: "swift-system"),
                 "Frostflake",
-            ]
+            ],
+            swiftSettings: extraSettings
         ),
         .testTarget(
             name: "FrostflakeTests",
             dependencies: [
                 "FrostflakeUtility", "Frostflake"
-            ]
+            ],
+            swiftSettings: extraSettings
         )
     ]
 )
