@@ -47,12 +47,6 @@ struct FrostflakeTests {
         testEpoch.convert(timestamp: 1_653_061_201) // + 100 minutes
 
         // EpochDateTime(year: 2022, month: 5, day: 20, hour: 15, minute: 40, second: 1)
-        #expect(testEpoch.year == 2_022)
-        #expect(testEpoch.month == 5)
-        #expect(testEpoch.day == 20)
-        #expect(testEpoch.hour == 15)
-        #expect(testEpoch.minute == 40)
-        #expect(testEpoch.second == 1)
         #expect(testEpoch.year == 2_022 &&
             testEpoch.month == 5 &&
             testEpoch.day == 20 &&
