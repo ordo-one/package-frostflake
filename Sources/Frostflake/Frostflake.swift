@@ -15,31 +15,26 @@ public final class Frostflake: Sendable {
         var sequenceNumber: UInt32
     }
 
-    private enum State: ~Copyable, Sendable {
-        case synchronized(Mutex<MutableState>)
-        case unsynchronized(MutableState)
-    }
-
-    private let state: State
+    private let mutex: Mutex<MutableState>
+    private nonisolated(unsafe) var unsynchronizedState: MutableState
+    private let _concurrentAccess: Bool
     public let generatorIdentifier: UInt16
     public let forcedTimeRegenerationInterval: UInt32
 
     // Public accessors for state
     public var currentSeconds: UInt32 {
-        switch state {
-        case .synchronized(let mutex):
+        if _concurrentAccess {
             return mutex.withLock { $0.currentSeconds }
-        case .unsynchronized(let state):
-            return state.currentSeconds
+        } else {
+            return unsynchronizedState.currentSeconds
         }
     }
 
     public var sequenceNumber: UInt32 {
-        switch state {
-        case .synchronized(let mutex):
+        if _concurrentAccess {
             return mutex.withLock { $0.sequenceNumber }
-        case .unsynchronized(let state):
-            return state.sequenceNumber
+        } else {
+            return unsynchronizedState.sequenceNumber
         }
     }
 
@@ -125,13 +120,9 @@ public final class Frostflake: Sendable {
             sequenceNumber: 0
         )
 
-        if concurrentAccess {
-            state = .synchronized(Mutex(initialState))
-        } else {
-            let pointer = UnsafeMutablePointer<MutableState>.allocate(capacity: 1)
-            pointer.initialize(to: initialState)
-            state = .unsynchronized(initialState)
-        }
+        unsynchronizedState = initialState
+        mutex = Mutex(initialState)
+        _concurrentAccess = concurrentAccess
 
         self.generatorIdentifier = generatorIdentifier
         self.forcedTimeRegenerationInterval = forcedTimeRegenerationInterval
@@ -148,14 +139,15 @@ public final class Frostflake: Sendable {
     /// let frostflake2 =  frostflakeFactory.generate()
     ///  ```
     public func generate() -> FrostflakeIdentifier {
-        switch state {
-        case .synchronized(let mutex):
+        if _concurrentAccess {
             return mutex.withLock { state in
                 generateInternal(state: &state)
             }
-        case .unsynchronized(let state):
-            var state = state
-            return generateInternal(state: &state)
+        } else {
+            var state = unsynchronizedState
+            let result = generateInternal(state: &state)
+            unsynchronizedState = state
+            return result
         }
     }
 
