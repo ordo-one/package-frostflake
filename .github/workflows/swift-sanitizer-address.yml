@@ -48,4 +48,4 @@ jobs:
       run: swift package clean
 
     - name: Run address sanitizer on release build
-      run: swift test --sanitize=address -c release -Xswiftc -enable-testing
+      run: swift test --sanitize=address -c release
