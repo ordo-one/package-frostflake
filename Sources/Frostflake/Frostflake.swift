@@ -14,32 +14,32 @@ public final class Frostflake: Sendable {
         var currentSeconds: UInt32
         var sequenceNumber: UInt32
     }
-    
+
     private enum State: ~Copyable, Sendable {
         case synchronized(Mutex<MutableState>)
         case unsynchronized(MutableState)
     }
-    
+
     private let state: State
     public let generatorIdentifier: UInt16
     public let forcedTimeRegenerationInterval: UInt32
-    
+
     // Public accessors for state
     public var currentSeconds: UInt32 {
         switch state {
         case .synchronized(let mutex):
             return mutex.withLock { $0.currentSeconds }
-        case .unsynchronized(let pointer):
-            return pointer.currentSeconds
+        case .unsynchronized(let state):
+            return state.currentSeconds
         }
     }
-    
+
     public var sequenceNumber: UInt32 {
         switch state {
         case .synchronized(let mutex):
             return mutex.withLock { $0.sequenceNumber }
-        case .unsynchronized(let pointer):
-            return pointer.sequenceNumber
+        case .unsynchronized(let state):
+            return state.sequenceNumber
         }
     }
 
@@ -124,7 +124,7 @@ public final class Frostflake: Sendable {
             currentSeconds: currentSecondsSinceEpoch(),
             sequenceNumber: 0
         )
-        
+
         if concurrentAccess {
             state = .synchronized(Mutex(initialState))
         } else {
@@ -132,7 +132,7 @@ public final class Frostflake: Sendable {
             pointer.initialize(to: initialState)
             state = .unsynchronized(initialState)
         }
-        
+
         self.generatorIdentifier = generatorIdentifier
         self.forcedTimeRegenerationInterval = forcedTimeRegenerationInterval
     }
@@ -153,12 +153,12 @@ public final class Frostflake: Sendable {
             return mutex.withLock { state in
                 generateInternal(state: &state)
             }
-        case .unsynchronized(let pointer):
-            var pointer = pointer
-            return generateInternal(state: &pointer)
+        case .unsynchronized(let state):
+            var state = state
+            return generateInternal(state: &state)
         }
     }
-    
+
     private func generateInternal(state: inout MutableState) -> FrostflakeIdentifier {
         assert(Self.allowedSequenceNumberRange.contains(Int(state.sequenceNumber)), "sequenceNumber out of allowed range")
 
