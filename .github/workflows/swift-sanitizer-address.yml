@@ -47,5 +47,7 @@ jobs:
     - name: Clean before release build sanitizier
       run: swift package clean
 
-    - name: Run address sanitizer on release build
-      run: swift test --sanitize=address -c release
+    # Disable release tests now as there's a bug in Swift Testing with release builds and argument parser
+    # and executable targets
+    # - name: Run address sanitizer on release build
+    #   run: swift test --sanitize=address -c release

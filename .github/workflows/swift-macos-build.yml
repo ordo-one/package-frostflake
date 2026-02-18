@@ -50,8 +50,10 @@ jobs:
         if [ -d Tests ]; then
           swift test
         fi
-    - name: Run tests (release)
-      run: |
-        if [ -d Tests ]; then
-          swift test -c release
-        fi
+    # Disable release tests now as there's a bug in Swift Testing with release builds and argument parser
+    # and executable targets
+    # - name: Run tests (release)
+    #   run: |
+    #     if [ -d Tests ]; then
+    #       swift test -c release
+    #     fi
