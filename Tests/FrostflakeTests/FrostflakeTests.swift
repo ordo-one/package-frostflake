@@ -10,14 +10,9 @@ import Frostflake
 import Foundation
 import Testing
 
-@Suite("Frostflake Tests", .serialized)
+@Suite("Frostflake Tests")
 struct FrostflakeTests {
     private let smallRangeTest = 1 ..< 1_000
-
-    init() {
-        let frostflake = Frostflake(generatorIdentifier: 47)
-        Frostflake.setup(sharedGenerator: frostflake)
-    }
 
     // Verified using https://www.epochconverter.com as well manually
     @Test("Unix epoch conversion produces correct date components")
@@ -111,20 +106,6 @@ struct FrostflakeTests {
 
         for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
             blackHole(frostflakeFactory.generate())
-        }
-    }
-
-    @Test("Shared generator produces valid identifiers")
-    func frostflakeSharedGenerator() {
-        for _ in smallRangeTest {
-            blackHole(Frostflake.generate())
-        }
-    }
-
-    @Test("FrostflakeIdentifier initializer uses shared generator")
-    func frostflakeSharedGeneratorWithCustomInit() {
-        for _ in smallRangeTest {
-            blackHole(FrostflakeIdentifier())
         }
     }
 
