@@ -18,7 +18,7 @@ jobs:
       run: |
         sudo apt-get install -y libjemalloc-dev
 
-    - uses: swift-actions/setup-swift@next
+    - uses: swift-actions/setup-swift@v2
       with:
         swift-version: "6"
 
