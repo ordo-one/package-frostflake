@@ -10,18 +10,18 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../"),
-        .package(url: "https://github.com/ordo-one/package-benchmark.git", from: "1.13.0"),
+        .package(url: "https://github.com/ordo-one/package-benchmark.git", from: "1.13.0")
     ],
     targets: [
         .executableTarget(
             name: "FrostflakeBenchmark",
             dependencies: [
                 .product(name: "Frostflake", package: "package-frostflake"),
-                .product(name: "Benchmark", package: "package-benchmark"),
+                .product(name: "Benchmark", package: "package-benchmark")
             ],
             path: "Benchmarks/Frostflake",
             plugins: [
-                .plugin(name: "BenchmarkPlugin", package: "package-benchmark"),
+                .plugin(name: "BenchmarkPlugin", package: "package-benchmark")
             ]
         )
     ]

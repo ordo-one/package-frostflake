@@ -1,5 +1,5 @@
-import Testing
 import Frostflake
+import Testing
 
 struct SharedGeneratorSuiteTrait: SuiteTrait, TestScoping {
     let isRecursive = false

@@ -50,7 +50,6 @@ public final class Frostflake: Sendable {
 
     // Class variables and functions
     private static let sharedGeneratorLock = Mutex<Frostflake?>(nil)
-    private nonisolated(unsafe) static var _teardownFlag = false
 
     /// Convenience static variable when using the same generator in many places
     /// The global generator identifier must be set using `setup(generatorIdentifier:)` before accessing

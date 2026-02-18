@@ -6,8 +6,8 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-import Frostflake
 import Foundation
+import Frostflake
 import Testing
 
 @Suite("Frostflake Tests")
