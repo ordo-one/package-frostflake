@@ -12,7 +12,7 @@ import Testing
 
 @Suite("Frostflake Tests")
 struct FrostflakeTests {
-    private let smallRangeTest = 1 ..< 1_000
+    private let smallRangeTest: Range<UInt64> = 1 ..< 1_000
 
     // Verified using https://www.epochconverter.com as well manually
     @Test("Unix epoch conversion produces correct date components")
@@ -68,7 +68,7 @@ struct FrostflakeTests {
     @Test("Frostflake generates unique identifiers across multiple generators")
     func frostflake() async {
         for generatorId in smallRangeTest {
-            let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId))
+            let frostflakeFactory = Frostflake(generatorIdentifier: generatorId)
 
             for _ in smallRangeTest {
                 blackHole(frostflakeFactory.generate())
@@ -79,7 +79,7 @@ struct FrostflakeTests {
     @Test("Frostflake works correctly without concurrent access locks")
     func frostflakeClassWithoutLocks() async {
         for generatorId in smallRangeTest {
-            let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId),
+            let frostflakeFactory = Frostflake(generatorIdentifier: generatorId,
                                                concurrentAccess: false)
 
             for _ in smallRangeTest {
@@ -118,7 +118,7 @@ struct FrostflakeTests {
     // Regression test for sc-493
     @Test("Sequence regeneration interval resets correctly after overflow")
     func incorrectForcingSecondRegenerationInterval() {
-        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(100))
+        let frostflakeFactory = Frostflake(generatorIdentifier: 100)
         let remaining = Frostflake.allowedSequenceNumberRange.upperBound - Int(frostflakeFactory.sequenceNumber)
         for _ in 1 ..< remaining {
             blackHole(frostflakeFactory.generate())

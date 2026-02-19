@@ -31,7 +31,7 @@ public extension Frostflake {
     static let allowedSequenceNumberRange = 0 ..< (1 << Frostflake.sequenceNumberBits)
 
     /// Convenience default manual generator identifier for the command line utility will pick the highest available identifier
-    static let defaultManualGeneratorIdentifier = (1 << generatorIdentifierBits) - 1
+    static let defaultManualGeneratorIdentifier: UInt64 = (1 << generatorIdentifierBits) - 1
 
     /// We will try to generate a new second timestamp every N generations (for low-flow components this will reset the
     /// timestamp a few times per day, for high-flow users it will cause a call to `gettimeofday()` needlessly instead.)

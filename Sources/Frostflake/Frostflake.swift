@@ -50,12 +50,19 @@ public final class Frostflake: Sendable {
 
     // Class variables and functions
     private static let sharedGeneratorLock = Mutex<Frostflake?>(nil)
+    // Lock-free cache for the shared generator — set once during setup(), read on every generate().
+    // This avoids acquiring sharedGeneratorLock on the hot path (which would be a second lock
+    // on top of the generator's own internal mutex).
+    nonisolated(unsafe) private static var _cachedGenerator: Frostflake?
 
     /// Convenience static variable when using the same generator in many places
     /// The global generator identifier must be set using `setup(generatorIdentifier:)` before accessing
     /// this shared generator or we'll fatalError().
     public static var sharedGenerator: Frostflake {
-        sharedGeneratorLock.withLock { generator in
+        if let cached = _cachedGenerator {
+            return cached
+        }
+        return sharedGeneratorLock.withLock { generator in
             guard let generator else {
                 preconditionFailure("accessed sharedGenerator before calling setup")
             }
@@ -75,9 +82,11 @@ public final class Frostflake: Sendable {
             }
             generator = sharedGenerator
         }
+        _cachedGenerator = sharedGenerator
     }
 
     public static func teardown() {
+        _cachedGenerator = nil
         sharedGeneratorLock.withLock { generator in
             generator = nil
         }
