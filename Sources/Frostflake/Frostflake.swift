@@ -173,12 +173,12 @@ public final class Frostflake: Sendable {
     }
 
     private func generateInternal(state: inout MutableState) -> FrostflakeIdentifier {
-        assert(Self.allowedSequenceNumberRange.contains(Int(state.sequenceNumber)), "sequenceNumber out of allowed range")
+        assert(state.sequenceNumber < (1 << Self.sequenceNumberBits), "sequenceNumber out of allowed range")
 
         state.sequenceNumber += 1
 
         // Have we used all the sequence number bits, we need get a new base timestamp
-        if Self.allowedSequenceNumberRange.contains(Int(state.sequenceNumber)) == false {
+        if state.sequenceNumber >= (1 << Self.sequenceNumberBits) {
             assert(state.sequenceNumber == (1 << Self.sequenceNumberBits), "sequenceNumber != 1 << sequenceNumberBits")
 
             let newCurrentSeconds = currentSecondsSinceEpoch()
