@@ -25,7 +25,7 @@ public extension Frostflake {
     static let generatorIdentifierBits = 11
 
     /// The range of valid generator identifiers
-    static let validGeneratorIdentifierRange = 0 ..< (1 << generatorIdentifierBits)
+    static let validGeneratorIdentifierRange: Range<UInt64> = 0 ..< (1 << generatorIdentifierBits)
 
     /// The range of valid sequence numbers
     static let allowedSequenceNumberRange = 0 ..< (1 << Frostflake.sequenceNumberBits)

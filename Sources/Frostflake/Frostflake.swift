@@ -26,7 +26,7 @@ public final class Frostflake: Sendable {
     }
 
     private let state: State
-    public let generatorIdentifier: UInt16
+    public let generatorIdentifier: UInt64
     public let forcedTimeRegenerationInterval: UInt32
 
     // Public accessors for state
@@ -115,10 +115,10 @@ public final class Frostflake: Sendable {
     ///   - concurrentAccess: Specifies whether the generator can be accessed from multiple
     ///   tasks/threads concurrently - if the generator is **only** used from a synchronized state
     ///   like .eg. an Actor context, you can specify false here to avoid the internal locking overhead
-    public init(generatorIdentifier: UInt16,
+    public init(generatorIdentifier: UInt64,
                 forcedTimeRegenerationInterval: UInt32 = defaultForcedTimeRegenerationInterval,
                 concurrentAccess: Bool = true) {
-        assert(Self.validGeneratorIdentifierRange.contains(Int(generatorIdentifier)),
+        assert(Self.validGeneratorIdentifierRange.contains(generatorIdentifier),
                "Frostflake generatorIdentifier \(generatorIdentifier) used more than \(Self.generatorIdentifierBits) bits")
         assert((Self.sequenceNumberBits + Self.generatorIdentifierBits) == 32,
                "Frostflake sequenceNumberBits (\(Self.sequenceNumberBits)) + " +
@@ -192,7 +192,7 @@ public final class Frostflake: Sendable {
 
         var returnValue = UInt64(state.currentSeconds) << Self.secondsBits
         returnValue += UInt64(state.sequenceNumber) << Self.generatorIdentifierBits
-        returnValue += UInt64(generatorIdentifier)
+        returnValue += generatorIdentifier
 
         return .init(rawValue: returnValue)
     }
