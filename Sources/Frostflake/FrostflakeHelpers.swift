@@ -21,7 +21,7 @@ func currentSecondsSinceEpoch() -> UInt32 {
     return UInt32(currentTime.tv_sec)
 }
 
-func currentNanoSecondsSinceEpoch() -> Int {
+func currentNanoSecondsInSecond() -> Int {
     let currentTime = getCurrentTime()
     return currentTime.tv_nsec
 }
