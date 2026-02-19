@@ -33,18 +33,18 @@ public final class Frostflake: Sendable {
     public var currentSeconds: UInt32 {
         switch state {
         case .synchronized(let mutex):
-            return mutex.withLock { $0.currentSeconds }
+            mutex.withLock { $0.currentSeconds }
         case .unsynchronized(let box):
-            return box.state.currentSeconds
+            box.state.currentSeconds
         }
     }
 
     public var sequenceNumber: UInt32 {
         switch state {
         case .synchronized(let mutex):
-            return mutex.withLock { $0.sequenceNumber }
+            mutex.withLock { $0.sequenceNumber }
         case .unsynchronized(let box):
-            return box.state.sequenceNumber
+            box.state.sequenceNumber
         }
     }
 
@@ -155,14 +155,11 @@ public final class Frostflake: Sendable {
     public func generate() -> FrostflakeIdentifier {
         switch state {
         case .synchronized(let mutex):
-            return mutex.withLock { state in
+            mutex.withLock { state in
                 generateInternal(state: &state)
             }
         case .unsynchronized(let box):
-            var state = box.state
-            let result = generateInternal(state: &state)
-            box.state = state
-            return result
+            generateInternal(state: &box.state)
         }
     }
 
