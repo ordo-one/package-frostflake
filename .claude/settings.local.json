@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(swift test:*)",
-      "Bash(swift package benchmark:*)",
-      "Bash(swift build:*)"
-    ]
-  }
-}
