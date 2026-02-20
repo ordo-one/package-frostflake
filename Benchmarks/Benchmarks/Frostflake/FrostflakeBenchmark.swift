@@ -9,7 +9,7 @@
 import Benchmark
 import Frostflake
 
-let benchmarks = {
+let benchmarks: @Sendable () -> Void = {
     // Once during runtime setup can be done before registering benchmarks
     Benchmark.defaultConfiguration = .init(warmupIterations: 5,
                                            scalingFactor: .mega,
@@ -17,7 +17,7 @@ let benchmarks = {
                                            maxIterations: Int(UInt16.max) - 5 - 1)
 
     Benchmark("Frostflake with locks") { benchmark in
-        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(benchmark.currentIteration),
+        let frostflakeFactory = Frostflake(generatorIdentifier: UInt64(benchmark.currentIteration),
                                            concurrentAccess: true)
 
         benchmark.startMeasurement()
@@ -27,7 +27,7 @@ let benchmarks = {
     }
 
     Benchmark("Frostflake without locks") { benchmark in
-        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(benchmark.currentIteration),
+        let frostflakeFactory = Frostflake(generatorIdentifier: UInt64(benchmark.currentIteration),
                                            concurrentAccess: false)
 
         benchmark.startMeasurement()
@@ -38,7 +38,7 @@ let benchmarks = {
 
     Benchmark("Frostflake descriptions",
               configuration: .init(scalingFactor: .kilo)) { benchmark in
-        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(benchmark.currentIteration))
+        let frostflakeFactory = Frostflake(generatorIdentifier: UInt64(benchmark.currentIteration))
         for _ in benchmark.scaledIterations {
             let frostflake = frostflakeFactory.generate()
             Benchmark.blackHole(frostflake.debugDescription)

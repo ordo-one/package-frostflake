@@ -6,8 +6,8 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-import ArgumentParser
-import Frostflake
+public import ArgumentParser
+public import Frostflake
 
 extension FrostflakeIdentifier: ExpressibleByArgument {
     public init?(argument: String) {
@@ -26,7 +26,7 @@ extension FrostflakeIdentifier: ExpressibleByArgument {
 @main
 struct FrostflakeUtility: AsyncParsableCommand {
     @Option(help: "Specify generatorIdentifier to create a Frostflake with that generator id.")
-    var generatorIdentifier: Int = Frostflake.defaultManualGeneratorIdentifier
+    var generatorIdentifier: UInt64 = Frostflake.defaultManualGeneratorIdentifier
 
     @Option(help: "Decode a Frostflake timestamp by specifying a frostflake identifier")
     var identifier: FrostflakeIdentifier?
@@ -41,7 +41,7 @@ struct FrostflakeUtility: AsyncParsableCommand {
                 return
             }
 
-            let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorIdentifier),
+            let frostflakeFactory = Frostflake(generatorIdentifier: generatorIdentifier,
                                                concurrentAccess: false)
             print("\(frostflakeFactory.generate().base58)")
         }
