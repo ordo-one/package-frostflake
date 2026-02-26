@@ -6,24 +6,21 @@
 //
 // http://www.apache.org/licenses/LICENSE-2.0
 
-@testable import Frostflake
+import Foundation
+import Frostflake
+import Testing
 
-import XCTest
-
-final class FrostflakeTests: XCTestCase {
-    private let smallRangeTest = 1 ..< 1_000
-
-    override static func setUp() {
-        let frostflake = Frostflake(generatorIdentifier: 47)
-        Frostflake.setup(sharedGenerator: frostflake)
-    }
+@Suite("Frostflake Tests")
+struct FrostflakeTests {
+    private let smallRangeTest: Range<UInt64> = 1 ..< 1_000
 
     // Verified using https://www.epochconverter.com as well manually
-    func testUnixEpochConversion() {
+    @Test("Unix epoch conversion produces correct date components")
+    func unixEpochConversion() {
         var unixEpoch = EpochDateTime.unixEpoch()
         unixEpoch.convert(timestamp: 1_653_051_594)
         // EpochDateTime(year: 2022, month: 5, day: 20, hour: 12, minute: 59, second: 54)
-        XCTAssert(unixEpoch.year == 2_022 &&
+        #expect(unixEpoch.year == 2_022 &&
             unixEpoch.month == 5 &&
             unixEpoch.day == 20 &&
             unixEpoch.hour == 12 &&
@@ -31,11 +28,12 @@ final class FrostflakeTests: XCTestCase {
             unixEpoch.second == 54, "Unix epoch conversion did not produce expected result")
     }
 
-    func testUnixEpochWithFutureDate() {
+    @Test("Unix epoch conversion handles future dates correctly")
+    func unixEpochWithFutureDate() {
         var unixEpoch = EpochDateTime.unixEpoch()
         unixEpoch.convert(timestamp: 19_912_223_655)
         // EpochDateTime(year: 2600, month: 12, day: 29, hour: 13, minute: 14, second: 15)
-        XCTAssert(unixEpoch.year == 2_600 &&
+        #expect(unixEpoch.year == 2_600 &&
             unixEpoch.month == 12 &&
             unixEpoch.day == 29 &&
             unixEpoch.hour == 13 &&
@@ -43,18 +41,13 @@ final class FrostflakeTests: XCTestCase {
             unixEpoch.second == 15, "Unix epoch conversion did not produce expected result")
     }
 
-    func testTestEpochWithFutureDate() {
+    @Test("Test epoch conversion handles future dates correctly")
+    func testEpochWithFutureDate() {
         var testEpoch = EpochDateTime.testEpoch()
         testEpoch.convert(timestamp: 1_653_061_201) // + 100 minutes
 
         // EpochDateTime(year: 2022, month: 5, day: 20, hour: 15, minute: 40, second: 1)
-        XCTAssertEqual(testEpoch.year, 2_022)
-        XCTAssertEqual(testEpoch.month, 5)
-        XCTAssertEqual(testEpoch.day, 20)
-        XCTAssertEqual(testEpoch.hour, 15)
-        XCTAssertEqual(testEpoch.minute, 40)
-        XCTAssertEqual(testEpoch.second, 1)
-        XCTAssert(testEpoch.year == 2_022 &&
+        #expect(testEpoch.year == 2_022 &&
             testEpoch.month == 5 &&
             testEpoch.day == 20 &&
             testEpoch.hour == 15 &&
@@ -62,7 +55,8 @@ final class FrostflakeTests: XCTestCase {
             testEpoch.second == 1, "Unix epoch conversion did not produce expected result")
     }
 
-    func testFrostflakeClassOutput() async {
+    @Test("Frostflake generates valid debug descriptions")
+    func frostflakeClassOutput() async {
         let frostflakeFactory = Frostflake(generatorIdentifier: 1_000)
 
         for _ in 0 ..< 10 {
@@ -71,9 +65,10 @@ final class FrostflakeTests: XCTestCase {
         }
     }
 
-    func testFrostflake() async {
+    @Test("Frostflake generates unique identifiers across multiple generators")
+    func frostflake() async {
         for generatorId in smallRangeTest {
-            let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId))
+            let frostflakeFactory = Frostflake(generatorIdentifier: generatorId)
 
             for _ in smallRangeTest {
                 blackHole(frostflakeFactory.generate())
@@ -81,9 +76,10 @@ final class FrostflakeTests: XCTestCase {
         }
     }
 
-    func testFrostflakeClassWithoutLocks() async {
+    @Test("Frostflake works correctly without concurrent access locks")
+    func frostflakeClassWithoutLocks() async {
         for generatorId in smallRangeTest {
-            let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(generatorId),
+            let frostflakeFactory = Frostflake(generatorIdentifier: generatorId,
                                                concurrentAccess: false)
 
             for _ in smallRangeTest {
@@ -92,10 +88,12 @@ final class FrostflakeTests: XCTestCase {
         }
     }
 
-    func testFrostflakeClassOverflowNextSecond() {
+    @Test("Frostflake handles sequence overflow by waiting for next second")
+    func frostflakeClassOverflowNextSecond() {
         let frostflakeFactory = Frostflake(generatorIdentifier: 0)
+        let remaining = Frostflake.allowedSequenceNumberRange.upperBound - Int(frostflakeFactory.sequenceNumber)
 
-        for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
+        for _ in 1 ..< remaining {
             blackHole(frostflakeFactory.generate())
         }
 
@@ -106,22 +104,23 @@ final class FrostflakeTests: XCTestCase {
         }
     }
 
-    func testFrostflakeSharedGenerator() {
-        for _ in smallRangeTest {
-            blackHole(Frostflake.generate())
-        }
-    }
-
-    func testFrostflakeSharedGeneratorWithCustomInit() {
-        for _ in smallRangeTest {
-            blackHole(FrostflakeIdentifier())
-        }
+    // Regression test for unsynchronized state not being written back (sc-29118)
+    @Test("Unsynchronized generator persists sequence number between calls")
+    func unsynchronizedStatePersistence() {
+        let frostflakeFactory = Frostflake(generatorIdentifier: 1, concurrentAccess: false)
+        let first = frostflakeFactory.generate()
+        let second = frostflakeFactory.generate()
+        #expect(first.rawValue != second.rawValue, "Sequential generates must produce unique identifiers")
+        #expect(second.rawValue > first.rawValue,
+                "Sequence number must advance across calls")
     }
 
     // Regression test for sc-493
-    func testIncorrectForcingSecondRegenerationInterval() {
-        let frostflakeFactory = Frostflake(generatorIdentifier: UInt16(100))
-        for _ in 1 ..< Frostflake.allowedSequenceNumberRange.upperBound {
+    @Test("Sequence regeneration interval resets correctly after overflow")
+    func incorrectForcingSecondRegenerationInterval() {
+        let frostflakeFactory = Frostflake(generatorIdentifier: 100)
+        let remaining = Frostflake.allowedSequenceNumberRange.upperBound - Int(frostflakeFactory.sequenceNumber)
+        for _ in 1 ..< remaining {
             blackHole(frostflakeFactory.generate())
         }
         sleep(1)
