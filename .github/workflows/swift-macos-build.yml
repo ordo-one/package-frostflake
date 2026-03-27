@@ -14,6 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [macos-26]
+#        swift: [ "5.10", "6.0" ]
 
     runs-on: ${{ matrix.os }}
     env:
@@ -48,12 +49,13 @@ jobs:
     - name: Run tests
       run: |
         if [ -d Tests ]; then
-          swift test
+          swift test --parallel
         fi
-    # Disable release tests now as there's a bug in Swift Testing with release builds and argument parser
-    # and executable targets
-    # - name: Run tests (release)
-    #   run: |
-    #     if [ -d Tests ]; then
-    #       swift test -c release
-    #     fi
+    # Disable release tests now in package-frostflake as there's a bug in
+    # Swift Testing with release builds and argument parser and executable targets
+    - name: Run tests (release)
+      if: github.repository != 'ordo-one/package-frostflake'
+      run: |
+        if [ -d Tests ]; then
+          swift test -c release --parallel
+        fi

@@ -47,7 +47,8 @@ jobs:
     - name: Clean before release build sanitizier
       run: swift package clean
 
-    # Disable release tests now as there's a bug in Swift Testing with release builds and argument parser
-    # and executable targets
-    # - name: Run address sanitizer on release build
-    #   run: swift test --sanitize=address -c release
+    # Disable release tests now in package-frostflake as there's a bug in
+    # Swift Testing with release builds and argument parser and executable targets
+    - name: Run address sanitizer on release build
+      if: github.repository != 'ordo-one/package-frostflake'
+      run: swift test --sanitize=address -c release -Xswiftc -enable-testing

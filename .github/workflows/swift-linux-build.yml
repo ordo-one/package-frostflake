@@ -14,6 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
+#        swift: [ "5.10", "6.0" ]
 
     runs-on: ${{ matrix.os }}
 
@@ -42,5 +43,5 @@ jobs:
     - name: Run tests
       run: |
         if [ -d Tests ]; then
-          swift test
+          swift test --parallel
         fi
