@@ -11,4 +11,3 @@ runs:
       shell: bash
       run: |
         consul agent -dev -log-level=warn &
-
